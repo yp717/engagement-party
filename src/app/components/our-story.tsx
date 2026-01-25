@@ -8,127 +8,95 @@ interface OurStoryProps {
   className?: string;
 }
 
-const photos = [
-  {
-    src: "/photos/black-and-white-post-engagement.jpeg",
-    alt: "Post engagement",
-    rotate: 0,
-    top: "15%",
-    left: "5%",
-    zIndex: 3,
-    width: { mobile: 140, tablet: 180, desktop: 220 },
-    height: { mobile: 180, tablet: 230, desktop: 280 },
-  },
-  {
-    src: "/photos/scotland-analog.jpeg",
-    alt: "Scotland",
-    rotate: 0,
-    top: "5%",
-    left: "24%",
-    zIndex: 3,
-    width: { mobile: 180, tablet: 240, desktop: 450 },
-    height: { mobile: 130, tablet: 170, desktop: 315 },
-  },
-  {
-    src: "/photos/alaras-birthday.jpeg",
-    alt: "Alara's Birthday",
-    rotate: 0,
-    top: "35%",
-    left: "16%",
-    zIndex: 4,
-    width: { mobile: 130, tablet: 170, desktop: 200 },
-    height: { mobile: 170, tablet: 220, desktop: 260 },
-  },
-  {
-    src: "/photos/alara-yannis-at-zaika.jpeg",
-    alt: "At Zaika",
-    rotate: 0,
-    top: "25%",
-    left: "55%",
-    zIndex: 0,
-    width: { mobile: 200, tablet: 260, desktop: 320 },
-    height: { mobile: 140, tablet: 180, desktop: 220 },
-  },
-];
-
 export default function OurStory({ className }: OurStoryProps) {
   return (
     <section className={cn("bg-cream w-full py-16 md:py-24", className)}>
-      <div className="max-w-6xl mx-auto px-4 md:px-8">
+      <div className="max-w-4xl mx-auto px-4 md:px-8">
         {/* Section Title */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16 md:mb-24"
+          className="text-center mb-12 md:mb-16"
         >
           <h2 className="font-pinyon text-4xl md:text-5xl lg:text-6xl text-primary mb-4">
             Our Story
           </h2>
         </motion.div>
 
-        {/* Photo Collage */}
-        <div className="relative min-h-[600px] md:min-h-[700px] lg:min-h-[800px]">
-          <style>
-            {photos.map(
-              (photo, index) => `
-              .photo-frame-${index} {
-                width: ${photo.width.mobile}px;
-                height: ${photo.height.mobile}px;
-              }
-              @media (min-width: 768px) {
-                .photo-frame-${index} {
-                  width: ${photo.width.tablet}px;
-                  height: ${photo.height.tablet}px;
-                }
-              }
-              @media (min-width: 1024px) {
-                .photo-frame-${index} {
-                  width: ${photo.width.desktop}px;
-                  height: ${photo.height.desktop}px;
-                }
-              }
-            `
-            )}
-          </style>
-          {photos.map((photo, index) => (
-            <motion.div
-              key={photo.src}
-              initial={{ opacity: 0, scale: 0.8, rotate: 0 }}
-              whileInView={{ opacity: 1, scale: 1, rotate: photo.rotate }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{
-                duration: 0.6,
-                delay: index * 0.1,
-                ease: "easeOut",
-              }}
-              className="absolute"
-              style={{
-                top: photo.top,
-                left: photo.left,
-                transform: `rotate(${photo.rotate}deg)`,
-                zIndex: photo.zIndex,
-              }}
-            >
-              {/* Photo Frame with White Border */}
-              <div className="relative bg-white p-1 md:p-1.5 shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <div className={`relative overflow-hidden photo-frame-${index}`}>
-                  <Image
-                    src={photo.src}
-                    alt={photo.alt}
-                    fill
-                    className="object-cover sepia-[60%] brightness-90 contrast-105"
-                    sizes={`(max-width: 768px) ${photo.width.mobile}px, (max-width: 1024px) ${photo.width.tablet}px, ${photo.width.desktop}px`}
-                    quality={85}
-                  />
-                  {/* Sepia overlay for warmer tone */}
-                  <div className="absolute inset-0 bg-[#704214]/10 mix-blend-multiply" />
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        {/* Centered Image */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="flex justify-center mb-12 md:mb-16"
+        >
+          <div className="relative bg-white p-1 md:p-1.5 shadow-lg">
+            <div className="relative w-[300px] h-[400px] md:w-[400px] md:h-[533px] lg:w-[500px] lg:h-[667px] overflow-hidden">
+              <Image
+                src="/photos/black-and-white-post-engagement.jpeg"
+                alt="Yannis and Alara"
+                fill
+                className="object-cover sepia-[60%] brightness-90 contrast-105"
+                sizes="(max-width: 768px) 300px, (max-width: 1024px) 400px, 500px"
+                quality={90}
+                priority
+              />
+              {/* Sepia overlay for warmer tone */}
+              <div className="absolute inset-0 bg-[#704214]/10 mix-blend-multiply" />
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Story Text */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="text-center space-y-6 md:space-y-8"
+        >
+          <p className="font-serif text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
+            Alara and Yannis first met in 2020, at the quiet end of the
+            pandemic. When the world was slowly finding its rhythm again they
+            found each other.
+          </p>
+          <p className="font-serif text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
+            Over the years, they shared places, moments, and ordinary days that
+            slowly grew into something steady and lasting. When Yannis decided
+            to propose, he wanted the ring to carry that same care. He worked
+            together with designer Sophie Whitelaw to create a custom ring. The
+            emerald cuts bring structure and intention to the design. The curved
+            setting adds softness and movement, echoing the way Alara balances
+            determination with warmth and joy, and makes everything feel lighter
+            just by being there.
+          </p>
+          <p className="font-serif text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
+            Their engagement brought them back to where it all began.
+          </p>
+          <p className="font-serif text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
+            In May 2025, Yannis planned a trip to Scotland — their first trip
+            together, years earlier, and a place that had always held a quiet
+            significance for them. They travelled by sleeper train to Edinburgh,
+            then on through the Highlands, letting the landscape unfold slowly
+            around them.
+          </p>
+          <p className="font-serif text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
+            On the very first day, standing in the rain on the cobbled steps of
+            Edinburgh’s Old Town, overlooking the city below, Yannis asked Alara
+            to marry him.
+          </p>
+          <p className="font-serif text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
+            She said yes.
+          </p>
+          <p className="font-serif text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
+            And so, with full hearts and a story that feels beautifully
+            complete, they begin their next chapter. And we would like you to be
+            a part of it.
+          </p>
+        </motion.div>
       </div>
     </section>
   );

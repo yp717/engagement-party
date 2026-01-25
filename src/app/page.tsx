@@ -4,6 +4,7 @@ import Details from "./components/details";
 import Transportation from "./components/transportation";
 import DressCode from "./components/dress-code";
 import OurStory from "./components/our-story";
+import FAQs from "./components/FAQs";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
         </div>
       </div>
       <OurStory className="col-span-1" />
+      <FAQs />
     </main>
   );
 }
