@@ -7,23 +7,28 @@ import { ChevronDown } from "lucide-react";
 const faqs = [
   {
     question: "What time should I arrive?",
-    answer: "Please arrive 15 minutes before the event begins to allow time for seating.",
+    answer:
+      "Please arrive 15 minutes before the event begins to allow time for seating.",
   },
   {
     question: "Is there parking available?",
-    answer: "Limited parking is available. We recommend using public transportation or ride-sharing services.",
+    answer:
+      "Limited parking is available. We recommend using public transportation or ride-sharing services.",
   },
   {
     question: "Can I bring a plus one?",
-    answer: "Please check your invitation for the number of guests included. If you need to add additional guests, please contact us.",
+    answer:
+      "Please check your invitation for the number of guests included. If you need to add additional guests, please contact us.",
   },
   {
     question: "What if I have dietary restrictions?",
-    answer: "Please indicate any dietary restrictions or allergies when you RSVP, and we will accommodate your needs.",
+    answer:
+      "Please indicate any dietary restrictions or allergies when you RSVP, and we will accommodate your needs.",
   },
   {
     question: "What is the dress code?",
-    answer: "Cocktail attire is requested. Please see the Dress Code section for more details.",
+    answer:
+      "Cocktail attire is requested. Please see the Dress Code section for more details.",
   },
 ];
 

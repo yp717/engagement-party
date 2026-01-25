@@ -52,30 +52,30 @@ export default function CheckeredHeader({ title }: CheckeredHeaderProps) {
                 borderColor: "var(--cream)",
               }}
             />
-            
-              {/* Bow/Ribbon Icon */}
-              <div className="relative flex flex-col items-center">
-                <svg
-                  className="w-7 h-7 md:w-9 md:h-9 mb-3 text-cream"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  {/* Left bow loop */}
-                  <path d="M8 6C6 6 4 8 4 10C4 12 6 14 8 14" />
-                  {/* Right bow loop */}
-                  <path d="M16 6C18 6 20 8 20 10C20 12 18 14 16 14" />
-                  {/* Center knot */}
-                  <circle cx="12" cy="10" r="1.5" fill="currentColor" />
-                  {/* Left ribbon tail */}
-                  <path d="M4 10L5 13L4 16" />
-                  {/* Right ribbon tail */}
-                  <path d="M20 10L19 13L20 16" />
-                </svg>
-              
+
+            {/* Bow/Ribbon Icon */}
+            <div className="relative flex flex-col items-center">
+              <svg
+                className="w-7 h-7 md:w-9 md:h-9 mb-3 text-cream"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                {/* Left bow loop */}
+                <path d="M8 6C6 6 4 8 4 10C4 12 6 14 8 14" />
+                {/* Right bow loop */}
+                <path d="M16 6C18 6 20 8 20 10C20 12 18 14 16 14" />
+                {/* Center knot */}
+                <circle cx="12" cy="10" r="1.5" fill="currentColor" />
+                {/* Left ribbon tail */}
+                <path d="M4 10L5 13L4 16" />
+                {/* Right ribbon tail */}
+                <path d="M20 10L19 13L20 16" />
+              </svg>
+
               {/* Text */}
               <h2 className="font-pinyon text-2xl md:text-3xl lg:text-4xl text-cream relative z-10">
                 {title}

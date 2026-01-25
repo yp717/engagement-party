@@ -30,8 +30,9 @@ export default function DressCode() {
             Cocktail Attire
           </p>
           <p className="text-lg md:text-xl text-[#1a1a1a]/70 font-light max-w-2xl mx-auto leading-relaxed">
-            We invite you to dress elegantly for the occasion. Think sophisticated
-            and refined—cocktail dresses, suits, or your finest evening wear.
+            We invite you to dress elegantly for the occasion. Think
+            sophisticated and refined—cocktail dresses, suits, or your finest
+            evening wear.
           </p>
         </motion.div>
       </div>
