@@ -39,7 +39,7 @@ export default function Navigation() {
             onClick={() => scrollToSection("rsvp")}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-10 py-3 md:px-12 md:py-4 bg-[#5C2825] text-white font-light text-sm md:text-base tracking-wide uppercase rounded-full hover:bg-[#5C2825]/90 transition-colors"
+            className="px-10 py-3 md:px-12 md:py-4 bg-primary text-white font-light text-sm md:text-base tracking-wide uppercase rounded-full hover:bg-primary/90 transition-colors"
           >
             RSVP
           </motion.button>

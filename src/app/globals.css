@@ -4,12 +4,16 @@
   --background: #fafafa;
   --foreground: #1a1a1a;
   --accent-burgundy: #800020;
+  --primary: #5C2825;
+  --cream: #F5F3ED;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-accent: var(--accent-burgundy);
+  --color-primary: var(--primary);
+  --color-cream: var(--cream);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-serif: var(--font-playfair);

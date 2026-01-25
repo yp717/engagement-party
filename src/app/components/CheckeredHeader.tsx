@@ -16,17 +16,17 @@ export default function CheckeredHeader({ title }: CheckeredHeaderProps) {
           background: `
             repeating-linear-gradient(
               45deg,
-              #5C2825 0px,
-              #5C2825 28.28px,
-              #F5F3ED 28.28px,
-              #F5F3ED 56.56px
+              var(--primary) 0px,
+              var(--primary) 28.28px,
+              var(--cream) 28.28px,
+              var(--cream) 56.56px
             ),
             repeating-linear-gradient(
               -45deg,
-              #5C2825 0px,
-              #5C2825 28.28px,
-              #F5F3ED 28.28px,
-              #F5F3ED 56.56px
+              var(--primary) 0px,
+              var(--primary) 28.28px,
+              var(--cream) 28.28px,
+              var(--cream) 56.56px
             )
           `,
           backgroundSize: "40px 40px",
@@ -46,20 +46,20 @@ export default function CheckeredHeader({ title }: CheckeredHeaderProps) {
           {/* Oval Background */}
           <div className="relative px-12 md:px-16 py-6 md:py-8">
             <div
-              className="absolute inset-0 rounded-full"
+              className="absolute inset-0 rounded-full border-2"
               style={{
-                backgroundColor: "#5C2825",
-                border: "2px solid #F5F3ED",
+                backgroundColor: "var(--primary)",
+                borderColor: "var(--cream)",
               }}
             />
             
               {/* Bow/Ribbon Icon */}
               <div className="relative flex flex-col items-center">
                 <svg
-                  className="w-7 h-7 md:w-9 md:h-9 mb-3"
+                  className="w-7 h-7 md:w-9 md:h-9 mb-3 text-cream"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#F5F3ED"
+                  stroke="currentColor"
                   strokeWidth="1.2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -69,7 +69,7 @@ export default function CheckeredHeader({ title }: CheckeredHeaderProps) {
                   {/* Right bow loop */}
                   <path d="M16 6C18 6 20 8 20 10C20 12 18 14 16 14" />
                   {/* Center knot */}
-                  <circle cx="12" cy="10" r="1.5" fill="#F5F3ED" />
+                  <circle cx="12" cy="10" r="1.5" fill="currentColor" />
                   {/* Left ribbon tail */}
                   <path d="M4 10L5 13L4 16" />
                   {/* Right ribbon tail */}
@@ -77,7 +77,7 @@ export default function CheckeredHeader({ title }: CheckeredHeaderProps) {
                 </svg>
               
               {/* Text */}
-              <h2 className="font-pinyon text-2xl md:text-3xl lg:text-4xl text-[#F5F3ED] relative z-10">
+              <h2 className="font-pinyon text-2xl md:text-3xl lg:text-4xl text-cream relative z-10">
                 {title}
               </h2>
             </div>

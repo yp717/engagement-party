@@ -129,7 +129,7 @@ export default function RSVP() {
             type="submit"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full md:w-auto px-12 py-4 bg-[#800020] text-white font-light tracking-wider uppercase text-sm hover:bg-[#800020]/90 transition-colors"
+            className="w-full md:w-auto px-12 py-4 bg-primary text-white font-light tracking-wider uppercase text-sm hover:bg-primary/90 transition-colors"
           >
             {submitted ? "Thank You!" : "Submit RSVP"}
           </motion.button>
