@@ -5,7 +5,7 @@ import { useState, useRef } from "react";
 
 /**
  * Hero2 Component - Live Photo Effect
- * 
+ *
  * Displays a static image that transitions to a video on hover,
  * creating an iPhone Live Photo-like experience.
  */

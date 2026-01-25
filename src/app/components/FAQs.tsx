@@ -75,7 +75,7 @@ export default function FAQs() {
               {/* Dotted Divider - Only show if not last item */}
               {index < faqs.length - 1 && (
                 <div className="flex justify-center pt-4 md:pt-6">
-                  <div className="w-full max-w-md border-t-1 border border-cream/40" ></div>
+                  <div className="w-full max-w-md border-t-1 border border-cream/40"></div>
                 </div>
               )}
             </motion.div>

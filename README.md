@@ -35,8 +35,6 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-
-While we love having children around, on this occasion all guests have been listed on the invite. 
+While we love having children around, on this occasion all guests have been listed on the invite.
 
 We could leave little sticky notes around the site like I leave them for Alara: https://codepen.io/aitchiss/pen/QWKmPqx
-
