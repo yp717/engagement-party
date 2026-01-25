@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import CheckeredHeader from "./CheckeredHeader";
 
-export default function DateLocation() {
+export default function Details() {
   return (
     <section className="bg-primary w-full">
       <CheckeredHeader title="The Details" />
@@ -52,8 +52,8 @@ export default function DateLocation() {
               </p>
               <p className="font-serif text-lg md:text-xl text-cream leading-relaxed">
                 The evening will feature a dinner, drinks, dancing (optional for
-                the software engineers), and wonderful company. Your presence would make our
-                celebration complete.
+                the software engineers), and wonderful company. Your presence
+                would make our celebration complete.
               </p>
             </div>
 
