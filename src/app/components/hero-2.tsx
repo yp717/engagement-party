@@ -52,7 +52,7 @@ export default function Hero2() {
             src={staticImagePath}
             alt="Yannis and Alara in Istanbul"
             fill
-            className="object-cover"
+            className="object-cover grayscale brightness-90 contrast-105"
             priority
             sizes="(max-width: 768px) 80vw, 600px"
             quality={90}
@@ -60,19 +60,26 @@ export default function Hero2() {
         </div>
 
         {/* Video - Plays on hover, fades in */}
-        <video
-          ref={videoRef}
-          src={videoPath}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+        <div
+          className={`absolute inset-0 transition-opacity duration-300 ${
             isHovering ? "opacity-100" : "opacity-0"
           }`}
-          muted
-          loop
-          playsInline
-          preload="metadata"
+          style={{
+            filter: "grayscale(100%) brightness(0.9) contrast(1.05)",
+          }}
         >
-          Your browser does not support the video tag.
-        </video>
+          <video
+            ref={videoRef}
+            src={videoPath}
+            className="absolute inset-0 w-full h-full object-cover"
+            muted
+            loop
+            playsInline
+            preload="metadata"
+          >
+            Your browser does not support the video tag.
+          </video>
+        </div>
       </div>
     </div>
   );
