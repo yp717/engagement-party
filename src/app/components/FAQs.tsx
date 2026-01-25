@@ -1,8 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
-import { ChevronDown } from "lucide-react";
 
 const faqs = [
   {
@@ -33,29 +31,24 @@ const faqs = [
 ];
 
 export default function FAQs() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  const toggleFAQ = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
-
   return (
-    <section className="py-24 md:py-32 px-4 bg-transparent">
-      <div className="max-w-4xl mx-auto">
+    <section className="py-24 md:py-32 px-4 bg-primary">
+      <div className="max-w-3xl mx-auto">
+        {/* Title */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-16 md:mb-20"
         >
-          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-[#1a1a1a] mb-4">
-            FAQs
+          <h2 className="font-pinyon text-4xl md:text-5xl lg:text-6xl text-cream mb-4">
+            We&apos;ve got answer
           </h2>
-          <div className="w-24 h-px bg-[#1a1a1a]/20 mx-auto"></div>
         </motion.div>
 
-        <div className="space-y-4">
+        {/* FAQ Items - All Expanded */}
+        <div className="space-y-8 md:space-y-12">
           {faqs.map((faq, index) => (
             <motion.div
               key={index}
@@ -63,32 +56,23 @@ export default function FAQs() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="border-b border-[#1a1a1a]/10"
+              className="text-center"
             >
-              <button
-                onClick={() => toggleFAQ(index)}
-                className="w-full py-6 flex items-center justify-between text-left hover:text-[#800020] transition-colors"
-              >
-                <span className="text-lg md:text-xl font-light text-[#1a1a1a]">
-                  {faq.question}
-                </span>
-                <ChevronDown
-                  className={`w-5 h-5 text-[#1a1a1a]/60 transition-transform ${
-                    openIndex === index ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-              {openIndex === index && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="pb-6"
-                >
-                  <p className="text-base md:text-lg text-[#1a1a1a]/70 font-light leading-relaxed">
-                    {faq.answer}
-                  </p>
-                </motion.div>
+              {/* Question */}
+              <h3 className="text-lg md:text-xl lg:text-2xl font-light text-cream uppercase tracking-wide mb-4 md:mb-6">
+                {faq.question}
+              </h3>
+
+              {/* Answer */}
+              <p className="font-serif text-base md:text-lg lg:text-xl text-cream leading-relaxed text-left max-w-2xl mx-auto mb-6 md:mb-8">
+                {faq.answer}
+              </p>
+
+              {/* Dotted Divider - Only show if not last item */}
+              {index < faqs.length - 1 && (
+                <div className="flex justify-center pt-4 md:pt-6">
+                  <div className="w-full max-w-md border-t border-dotted border-cream/40" />
+                </div>
               )}
             </motion.div>
           ))}

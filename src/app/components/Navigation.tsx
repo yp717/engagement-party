@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useRef } from "react";
+import EllipticalButton from "./EllipticalButton";
 
 export default function Navigation() {
   const scrollToSection = (id: string) => {
@@ -35,14 +34,9 @@ export default function Navigation() {
               FAQs
             </button>
           </div>
-          <motion.button
-            onClick={() => scrollToSection("rsvp")}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-10 py-3 md:px-12 md:py-4 bg-primary text-white font-light text-sm md:text-base tracking-wide uppercase rounded-full hover:bg-primary/90 transition-colors"
-          >
+          <EllipticalButton onClick={() => scrollToSection("rsvp")}>
             RSVP
-          </motion.button>
+          </EllipticalButton>
         </div>
       </div>
     </nav>
