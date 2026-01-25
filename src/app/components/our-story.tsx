@@ -65,13 +65,12 @@ export default function OurStory({ className }: OurStoryProps) {
           </p>
           <p className="font-serif text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
             Over the years, they shared places, moments, and ordinary days that
-            slowly grew into something steady and lasting. When Yannis decided
-            to propose, he wanted the ring to carry that same care. He worked
-            together with designer Sophie Whitelaw to create a custom ring. The
-            emerald cuts bring structure and intention to the design. The curved
-            setting adds softness and movement, echoing the way Alara balances
-            determination with warmth and joy, and makes everything feel lighter
-            just by being there.
+            slowly grew into something steady and lasting. They taught each
+            other how to love, how to care, and how to be patient. Alara tried
+            to keep pace with Yannis&apos; ever-growing list of restaurants and
+            recipes, and Yannis learned that Alara&apos;s stories always take
+            the scenic route, with every possible detour and no particular rush
+            to end.
           </p>
           <p className="font-serif text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
             Their engagement brought them back to where it all began.
