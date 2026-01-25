@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function OurStory() {
   return (
-    <section className="py-24 md:py-32 px-4 bg-[#fafafa]">
+    <section className="py-24 md:py-32 px-4 bg-transparent">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

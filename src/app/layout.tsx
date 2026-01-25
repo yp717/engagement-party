@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Playfair_Display, Dancing_Script } from "next/font/google";
+import { Geist, Geist_Mono, Playfair_Display, Dancing_Script, Pinyon_Script } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -24,6 +24,12 @@ const dancingScript = Dancing_Script({
   weight: ["400", "500", "600", "700"],
 });
 
+const pinyonScript = Pinyon_Script({
+  variable: "--font-pinyon",
+  subsets: ["latin"],
+  weight: ["400"],
+});
+
 export const metadata: Metadata = {
   title: "Yannis & Alara | Engagement Party",
   description: "Join us in celebrating our engagement at The Libertine, London",
@@ -37,7 +43,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${playfairDisplay.variable} ${dancingScript.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${playfairDisplay.variable} ${dancingScript.variable} ${pinyonScript.variable} antialiased`}
       >
         {children}
       </body>

@@ -2,23 +2,13 @@
 
 import { motion } from "framer-motion";
 import { Calendar, Clock, MapPin } from "lucide-react";
+import CheckeredHeader from "./CheckeredHeader";
 
 export default function DateLocation() {
   return (
-    <section className="py-24 md:py-32 px-4 bg-white">
-      <div className="max-w-4xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-[#1a1a1a] mb-4">
-            Join Us
-          </h2>
-          <div className="w-24 h-px bg-[#1a1a1a]/20 mx-auto"></div>
-        </motion.div>
+    <section className="">
+      <CheckeredHeader title="The Details" />
+      <div className="max-w-4xl mx-auto mt-16">
 
         <div className="space-y-12 md:space-y-16">
           <motion.div

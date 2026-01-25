@@ -14,6 +14,7 @@
   --font-mono: var(--font-geist-mono);
   --font-serif: var(--font-playfair);
   --font-cursive: var(--font-dancing);
+  --font-pinyon: var(--font-pinyon);
 }
 
 .font-serif {
@@ -22,6 +23,10 @@
 
 .font-cursive {
   font-family: var(--font-dancing), cursive;
+}
+
+.font-pinyon {
+  font-family: var(--font-pinyon), cursive;
 }
 
 html {

@@ -12,7 +12,7 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-[#1a1a1a]/10">
+    <nav className="w-full mt-16">
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-8 md:gap-12">
@@ -39,7 +39,7 @@ export default function Navigation() {
             onClick={() => scrollToSection("rsvp")}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-6 py-2 md:px-8 md:py-3 bg-[#800020] text-white font-light text-sm md:text-base tracking-wide hover:bg-[#800020]/90 transition-colors"
+            className="px-10 py-3 md:px-12 md:py-4 bg-[#5C2825] text-white font-light text-sm md:text-base tracking-wide uppercase rounded-full hover:bg-[#5C2825]/90 transition-colors"
           >
             RSVP
           </motion.button>

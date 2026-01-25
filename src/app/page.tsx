@@ -1,3 +1,4 @@
+import PaperBackground from "./components/PaperBackground";
 import Navigation from "./components/Navigation";
 import Hero from "./components/Hero";
 import DateLocation from "./components/DateLocation";
@@ -9,11 +10,12 @@ import Contact from "./components/Contact";
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen relative">
       <Navigation />
-      <Hero />
-      <div id="details">
-        <DateLocation />
+      <PaperBackground />
+      {/* <Hero /> */}
+      <DateLocation />
+      {/* <div id="details">
         <DressCode />
       </div>
       <div id="our-story">
@@ -25,7 +27,7 @@ export default function Home() {
       <div id="faqs">
         <FAQs />
       </div>
-      <Contact />
+      <Contact /> */}
     </main>
   );
 }
