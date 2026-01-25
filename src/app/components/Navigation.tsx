@@ -1,6 +1,6 @@
 "use client";
 
-import EllipticalButton from "./EllipticalButton";
+import EllipticalButton from "./elliptical-button";
 
 export default function Navigation() {
   const scrollToSection = (id: string) => {

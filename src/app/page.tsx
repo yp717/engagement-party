@@ -1,10 +1,10 @@
-import PaperBackground from "./components/PaperBackground";
-import Navigation from "./components/Navigation";
+import PaperBackground from "./components/paper-background";
+import Navigation from "./components/navigation";
 import Details from "./components/details";
 import Transportation from "./components/transportation";
 import DressCode from "./components/dress-code";
 import OurStory from "./components/our-story";
-import FAQs from "./components/FAQs";
+import FAQs from "./components/faqs";
 
 export default function Home() {
   return (

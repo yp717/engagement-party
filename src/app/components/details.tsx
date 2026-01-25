@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import CheckeredHeader from "./CheckeredHeader";
+import CheckeredHeader from "./checkered-header";
 
 export default function Details() {
   return (
