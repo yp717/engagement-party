@@ -14,7 +14,9 @@ export default function Transportation({ className }: TransportationProps) {
       </h3>
       <p className="text-md md:text-xl text-cream leading-relaxed">
         Transportation will not be provided to the venue. The venue is easily
-        accessible by Tube, Bus, and Taxi. There is no parking available at the venue. The nearest Tube Station is <em>Bank Station</em> just 1 minute away, and <em>Liverpool Street Station</em> is a 10 minute walk away.
+        accessible by Tube, Bus, and Taxi. There is no parking available at the
+        venue. The nearest Tube Station is <em>Bank Station</em> just 1 minute
+        away, and <em>Liverpool Street Station</em> is a 10 minute walk away.
       </p>
     </section>
   );
