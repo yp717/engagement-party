@@ -11,7 +11,7 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="w-full mt-16">
+    <nav className="w-full pt-16">
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-8 md:gap-12">

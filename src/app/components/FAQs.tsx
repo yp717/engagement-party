@@ -5,28 +5,32 @@ import { motion } from "framer-motion";
 const faqs = [
   {
     question: "What time should I arrive?",
-    answer:
-      "Please arrive 15 minutes before the event begins to allow time for seating.",
+    answer: "The final time of the event will be announced closer to the date.",
   },
   {
     question: "Is there parking available?",
     answer:
-      "Limited parking is available. We recommend using public transportation or ride-sharing services.",
+      "There is no parking available at the venue. Please see the Details section for more information.",
   },
   {
     question: "Can I bring a plus one?",
     answer:
-      "Please check your invitation for the number of guests included. If you need to add additional guests, please contact us.",
+      "We have included the names of all invited guests on the invitations. Unfortunately, due to limited capacity at the venue, we are not able to accommodate any additional guests.",
   },
   {
     question: "What if I have dietary restrictions?",
     answer:
-      "Please indicate any dietary restrictions or allergies when you RSVP, and we will accommodate your needs.",
+      "Please indicate any dietary restrictions or allergies when you RSVP, and we will inform the venue to accommodate your needs.",
   },
   {
     question: "What is the dress code?",
     answer:
-      "Cocktail attire is requested. Please see the Dress Code section for more details.",
+      "The dress code Cocktail Formal. Please see the Dress Code section for more information and inspiration. (If in doubt, ask Alara - that's what Yannis always does)",
+  },
+  {
+    question: "Are children allowed at the venue?",
+    answer:
+      "While we love having children around, unfortunately the venue does not permit entry for anyone under the age of 12. For all invited guests names please refer to your invitation.",
   },
 ];
 
@@ -43,7 +47,7 @@ export default function FAQs() {
           className="text-center mb-16 md:mb-20"
         >
           <h2 className="font-pinyon text-4xl md:text-5xl lg:text-6xl text-cream mb-4">
-            We&apos;ve got answer
+            You&apos;ve got questions, Alara&apos;s got answers.
           </h2>
         </motion.div>
 
@@ -71,7 +75,7 @@ export default function FAQs() {
               {/* Dotted Divider - Only show if not last item */}
               {index < faqs.length - 1 && (
                 <div className="flex justify-center pt-4 md:pt-6">
-                  <div className="w-full max-w-md border-t border-dotted border-cream/40" />
+                  <div className="w-full max-w-md border-t-1 border border-cream/40" ></div>
                 </div>
               )}
             </motion.div>

@@ -7,7 +7,7 @@ import CheckeredHeader from "./checkered-header";
 export default function Details() {
   return (
     <section className="bg-primary w-full">
-      <CheckeredHeader title="The Details" />
+      <CheckeredHeader />
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-16 md:py-24">
         <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
           {/* Left Column - Image */}

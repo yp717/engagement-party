@@ -24,7 +24,7 @@ export default function PaperBackground() {
       <PaperTexture
         width={dimensions.width}
         height={dimensions.height}
-        image="/photos/scotland-analog.jpeg"
+        image="/photos/alara-yannis-at-zaika.jpeg"
         colorBack="#fafafa"
         colorFront="#ffffff"
         contrast={0.3}
