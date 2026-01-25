@@ -9,28 +9,18 @@ interface CheckeredHeaderProps {
 export default function CheckeredHeader({ title }: CheckeredHeaderProps) {
   return (
     <div className="relative py-16 md:py-24 overflow-hidden">
-      {/* Checkered Pattern Background - Diamond Pattern */}
+      {/* Diamond Pattern Background */}
       <div
         className="absolute inset-0 opacity-100"
         style={{
           background: `
-            repeating-linear-gradient(
-              45deg,
-              var(--primary) 0px,
-              var(--primary) 28.28px,
-              var(--cream) 28.28px,
-              var(--cream) 56.56px
-            ),
-            repeating-linear-gradient(
-              -45deg,
-              var(--primary) 0px,
-              var(--primary) 28.28px,
-              var(--cream) 28.28px,
-              var(--cream) 56.56px
-            )
+            linear-gradient(135deg, var(--cream) 25%, transparent 25%),
+            linear-gradient(225deg, var(--cream) 25%, transparent 25%),
+            linear-gradient(315deg, var(--cream) 25%, transparent 25%),
+            linear-gradient(45deg, var(--cream) 25%, transparent 25%)
           `,
-          backgroundSize: "40px 40px",
-          backgroundPosition: "0 0, 20px 20px",
+          backgroundSize: "20px 20px",
+          backgroundColor: "var(--primary)",
         }}
       />
 
