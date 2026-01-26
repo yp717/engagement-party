@@ -39,13 +39,111 @@ export default function OurStory({ className }: OurStoryProps) {
                 src="/photos/black-and-white-post-engagement.jpeg"
                 alt="Yannis and Alara"
                 fill
-                className="object-cover sepia-[60%] brightness-90 contrast-105"
+                className="object-cover"
+                style={{
+                  filter: "grayscale(100%) brightness(0.9) contrast(1.05)",
+                }}
                 sizes="(max-width: 768px) 300px, (max-width: 1024px) 400px, 500px"
                 quality={90}
                 priority
               />
-              {/* Sepia overlay for warmer tone */}
-              <div className="absolute inset-0 bg-[#704214]/10 mix-blend-multiply" />
+              
+              {/* Analog Film Grain Layers - Multiple layers for depth */}
+              {/* Coarse grain layer */}
+              <div className="absolute inset-0 z-[5] pointer-events-none opacity-25 mix-blend-overlay">
+                <svg
+                  className="w-full h-full"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <filter id="grainCoarseStory">
+                      <feTurbulence
+                        type="fractalNoise"
+                        baseFrequency="0.7"
+                        numOctaves="3"
+                        stitchTiles="stitch"
+                      />
+                      <feColorMatrix
+                        type="saturate"
+                        values="0"
+                      />
+                    </filter>
+                  </defs>
+                  <rect
+                    width="100%"
+                    height="100%"
+                    filter="url(#grainCoarseStory)"
+                    opacity="0.5"
+                  />
+                </svg>
+              </div>
+
+              {/* Fine grain layer */}
+              <div className="absolute inset-0 z-[5] pointer-events-none opacity-20 mix-blend-overlay">
+                <svg
+                  className="w-full h-full"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <filter id="grainFineStory">
+                      <feTurbulence
+                        type="fractalNoise"
+                        baseFrequency="1.2"
+                        numOctaves="5"
+                        stitchTiles="stitch"
+                      />
+                      <feColorMatrix
+                        type="saturate"
+                        values="0"
+                      />
+                    </filter>
+                  </defs>
+                  <rect
+                    width="100%"
+                    height="100%"
+                    filter="url(#grainFineStory)"
+                    opacity="0.3"
+                  />
+                </svg>
+              </div>
+
+              {/* Medium grain layer */}
+              <div className="absolute inset-0 z-[5] pointer-events-none opacity-15 mix-blend-soft-light">
+                <svg
+                  className="w-full h-full"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <filter id="grainMediumStory">
+                      <feTurbulence
+                        type="fractalNoise"
+                        baseFrequency="0.95"
+                        numOctaves="4"
+                        stitchTiles="stitch"
+                      />
+                      <feColorMatrix
+                        type="saturate"
+                        values="0"
+                      />
+                    </filter>
+                  </defs>
+                  <rect
+                    width="100%"
+                    height="100%"
+                    filter="url(#grainMediumStory)"
+                    opacity="0.4"
+                  />
+                </svg>
+              </div>
+
+              {/* Subtle Vignette */}
+              <div
+                className="absolute inset-0 z-[6] pointer-events-none"
+                style={{
+                  background:
+                    "radial-gradient(ellipse at center, transparent 0%, transparent 60%, rgba(0, 0, 0, 0.3) 100%)",
+                }}
+              />
             </div>
           </div>
         </motion.div>

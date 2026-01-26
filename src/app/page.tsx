@@ -1,6 +1,7 @@
 import Header from "./components/header";
 import Details from "./components/details";
 import OurStory from "./components/our-story";
+import PhotoGallery from "./components/photo-gallery";
 import FAQs from "./components/FAQs";
 import Hero2 from "./components/hero-2";
 import PasswordProtection from "./components/password-protection";
@@ -39,6 +40,11 @@ export default function Home() {
         {/* Our Story */}
         <section id="our-story" className="snap-start">
           <OurStory />
+        </section>
+
+        {/* Photo Gallery */}
+        <section id="photo-gallery" className="snap-start">
+          <PhotoGallery />
         </section>
 
         {/* FAQs */}

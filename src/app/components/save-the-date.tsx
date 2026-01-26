@@ -9,10 +9,17 @@ export default function SaveTheDate() {
         {/* SVG Frame - responsive sizing */}
         <div className="absolute -inset-6 sm:-inset-8 md:-inset-12 lg:-inset-16 xl:-inset-20 flex items-center justify-center pointer-events-none">
           <div
-            className="w-full h-full bg-contain bg-center bg-no-repeat opacity-100 frame-responsive"
+            className="w-full h-full opacity-100 frame-responsive"
             style={{
-              backgroundImage: "url('/sketches/frame-1-svg.svg')",
-              filter: "brightness(0) saturate(100%) invert(10%) sepia(15%) saturate(2000%) hue-rotate(320deg) brightness(0.2)",
+              backgroundColor: "var(--primary)",
+              WebkitMaskImage: "url('/sketches/frame-1-svg.svg')",
+              WebkitMaskSize: "90%",
+              WebkitMaskPosition: "center",
+              WebkitMaskRepeat: "no-repeat",
+              maskImage: "url('/sketches/frame-1-svg.svg')",
+              maskSize: "90%",
+              maskPosition: "center",
+              maskRepeat: "no-repeat",
             }}
           />
         </div>

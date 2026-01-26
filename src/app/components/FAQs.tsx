@@ -1,6 +1,13 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import WineGlass from "./sketches/wine-glass";
+import Heart1 from "./sketches/heart-1";
+import Heart2 from "./sketches/heart-2";
+import Candlestick from "./sketches/candlestick";
+import Chandelier from "./sketches/chandelier";
+import BubblesTiltLeft from "./sketches/bubbles-tilt-left";
 
 const faqs = [
   {
@@ -35,16 +42,82 @@ const faqs = [
 ];
 
 export default function FAQs() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  // Parallax transforms for decorative elements
+  const wineGlassY = useTransform(scrollYProgress, [0, 1], [0, -50]);
+  const heartY = useTransform(scrollYProgress, [0, 1], [0, -30]);
+  const heart2Y = useTransform(scrollYProgress, [0, 1], [0, -35]);
+  const candlestickY = useTransform(scrollYProgress, [0, 1], [0, -40]);
+  const chandelierY = useTransform(scrollYProgress, [0, 1], [0, -45]);
+  const bubblesY = useTransform(scrollYProgress, [0, 1], [0, -25]);
+
   return (
-    <section className="min-h-screen flex items-start py-24 md:py-32 px-4 bg-primary overflow-y-auto">
-      <div className="max-w-3xl mx-auto w-full my-auto">
+    <section
+      ref={sectionRef}
+      className="min-h-screen relative flex items-start py-24 md:py-32 px-4 bg-primary overflow-y-auto"
+    >
+      {/* Decorative SVG Elements with Parallax */}
+      {/* Wine Glass - Top Right */}
+      <motion.div
+        style={{ y: wineGlassY }}
+        className="absolute top-20 right-8 md:right-20 opacity-40 pointer-events-none hidden md:block"
+      >
+        <WineGlass className="w-24 md:w-32 h-auto" style={{ color: "var(--cream)" }} />
+      </motion.div>
+
+      {/* Heart - Middle Left */}
+      <motion.div
+        style={{ y: heartY }}
+        className="absolute top-[650px] left-16 md:left-52 opacity-50 pointer-events-none"
+      >
+        <Heart1 className="w-12 md:w-16 h-auto" style={{ color: "var(--cream)" }} />
+      </motion.div>
+
+      {/* Heart 2 - Middle Right */}
+      <motion.div
+        style={{ y: heart2Y }}
+        className="absolute top-[800px] right-8 md:right-20 opacity-40 pointer-events-none hidden md:block"
+      >
+        <Heart2 className="w-14 md:w-18 h-auto" style={{ color: "var(--cream)" }} />
+      </motion.div>
+
+      {/* Candlestick - Bottom Right */}
+      <motion.div
+        style={{ y: candlestickY }}
+        className="absolute bottom-32 right-12 md:right-24 opacity-30 pointer-events-none hidden lg:block"
+      >
+        <Candlestick className="w-12 md:w-16 h-auto" style={{ color: "var(--cream)" }} />
+      </motion.div>
+
+      {/* Chandelier - Top Right */}
+      <motion.div
+        style={{ y: chandelierY }}
+        className="absolute top-96 right-6 md:right-64 opacity-40 pointer-events-none hidden lg:block"
+      >
+        <Chandelier className="w-16 md:w-20 h-auto" style={{ color: "var(--cream)" }} />
+      </motion.div>
+
+      {/* Bubbles - Top Left */}
+      <motion.div
+        style={{ y: bubblesY }}
+        className="absolute top-40 left-8 md:left-20 opacity-50 pointer-events-none hidden md:block"
+      >
+        <BubblesTiltLeft className="w-14 md:w-18 h-auto" style={{ color: "var(--cream)" }} />
+      </motion.div>
+
+      <div className="max-w-3xl mx-auto w-full my-auto relative z-10">
         {/* Title */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16 md:mb-20"
+          className="text-left mb-16 md:mb-20"
         >
           <h2 className="font-pinyon text-4xl md:text-5xl lg:text-6xl text-cream mb-4">
             You&apos;ve got questions, Alara&apos;s got answers.
@@ -60,7 +133,7 @@ export default function FAQs() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="text-center"
+              className="text-left"
             >
               {/* Question */}
               <h3 className="text-lg md:text-xl lg:text-2xl font-light text-cream uppercase tracking-wide mb-4 md:mb-6">
@@ -68,13 +141,13 @@ export default function FAQs() {
               </h3>
 
               {/* Answer */}
-              <p className="font-serif text-base md:text-lg lg:text-xl text-cream leading-relaxed text-left max-w-2xl mx-auto mb-6 md:mb-8">
+              <p className="font-serif text-base md:text-lg lg:text-xl text-cream leading-relaxed mb-6 md:mb-8">
                 {faq.answer}
               </p>
 
               {/* Dotted Divider - Only show if not last item */}
               {index < faqs.length - 1 && (
-                <div className="flex justify-center pt-4 md:pt-6">
+                <div className="flex justify-start pt-4 md:pt-6">
                   <div className="w-full max-w-md border-t-1 border border-cream/40"></div>
                 </div>
               )}
