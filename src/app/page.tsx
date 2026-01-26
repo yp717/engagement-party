@@ -9,6 +9,7 @@ import CheckeredHeader from "./components/checkered-header";
 import Hero from "./components/Hero";
 import Hero2 from "./components/hero-2";
 import PasswordProtection from "./components/password-protection";
+import RSVP from "./components/RSVP";
 
 export default function Home() {
   return (
@@ -26,6 +27,7 @@ export default function Home() {
         </div>
         <OurStory className="col-span-1" />
         <CheckeredHeader />
+        <RSVP />
         <FAQs />
       </main>
     </PasswordProtection>
