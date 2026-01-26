@@ -10,7 +10,7 @@ interface OurStoryProps {
 
 export default function OurStory({ className }: OurStoryProps) {
   return (
-    <section className={cn("bg-cream w-full h-screen overflow-y-auto py-16 md:py-24", className)}>
+    <section className={cn("bg-cream w-full min-h-screen overflow-y-auto py-16 md:py-24", className)}>
       <div className="max-w-4xl mx-auto px-4 md:px-8 w-full">
         {/* Section Title */}
         <motion.div
@@ -67,7 +67,7 @@ export default function OurStory({ className }: OurStoryProps) {
             Over the years, they shared places, moments, and ordinary days that
             slowly grew into something steady and lasting. They taught each
             other how to love, how to care, and how to be patient. Alara tried
-            to keep pace with Yannis&apos; ever-growing list of restaurants and
+            to keep up with Yannis&apos; ever-growing list of restaurants and
             recipes, and Yannis learned that Alara&apos;s stories always take
             the scenic route, with every possible detour and no particular rush
             to end.

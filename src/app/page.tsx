@@ -6,9 +6,9 @@ import Hero2 from "./components/hero-2";
 import PasswordProtection from "./components/password-protection";
 import RSVP from "./components/RSVP";
 import SaveTheDate from "./components/save-the-date";
-import Footer from "./components/footer";
 import CheckeredDivider from "./components/checkered-divider";
 import StripedDivider from "./components/striped-divider";
+import CheckeredDividerNarrow from "./components/checkered-divider-narrow";
 
 export default function Home() {
   return (
@@ -46,13 +46,13 @@ export default function Home() {
           <FAQs />
         </section>
 
+        {/* Checkered Pattern Divider - Narrow */}
+        <CheckeredDividerNarrow />
+
         {/* RSVP */}
         <section id="rsvp" className="snap-start">
           <RSVP />
         </section>
-
-        {/* Footer */}
-        <Footer />
       </main>
     </PasswordProtection>
   );

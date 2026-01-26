@@ -1,148 +1,89 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import RibbonSketch from "./ribbon-sketch";
+import Footer from "./footer";
 
 export default function RSVP() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    guests: "",
-    dietary: "",
-  });
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: Implement form submission (API route or form service)
-    console.log("Form submitted:", formData);
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
-  };
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const scrollToTop = () => {
+    const element = document.getElementById("hero");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
-    <section className="h-screen flex items-center justify-center py-16 md:py-24 px-4 bg-cream">
-      <div className="max-w-xl w-full mx-auto">
-        {/* Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <h2 className="font-pinyon text-4xl md:text-5xl lg:text-6xl text-primary mb-4">
-            RSVP
-          </h2>
-          <p className="font-serif text-sm md:text-base text-primary/60 tracking-wider">
-            Please let us know if you can attend
-          </p>
-        </motion.div>
+    <section className="h-screen relative flex items-center justify-center py-16 md:py-24 px-2 sm:px-4 bg-primary overflow-hidden">
+      {/* Footer positioned at bottom */}
+      <div className="absolute bottom-0 left-0 right-0 z-20">
+        <Footer />
+      </div>
+      <div className="relative w-full max-w-3xl">
+        {/* White Oval Frame - More oval on mobile */}
+        <div className="relative w-full min-w-[90vw] sm:min-w-0 aspect-[2.5/1] sm:aspect-[2.2/1] flex items-center justify-center">
+          {/* Oval Border */}
+          <div
+            className="absolute inset-0 rounded-full border-12 border-cream"
+            style={{
+              borderRadius: "50%",
+            }}
+          />
 
-        {/* Form */}
-        <motion.form
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          onSubmit={handleSubmit}
-          className="space-y-6"
-        >
-          {/* Name */}
-          <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-serif text-primary/70 mb-2"
+          {/* Content inside oval */}
+          <div className="relative z-10 text-center px-8 md:px-16 py-8 md:py-10 flex flex-col items-center justify-center">
+            {/* Ribbon Sketch */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="-mb-8"
             >
-              Full Name *
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              required
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full px-4 py-3 bg-white border border-primary/20 focus:border-primary/50 focus:outline-none transition-colors font-serif text-primary"
-            />
-          </div>
+              <RibbonSketch className="text-cream w-32 md:w-40 lg:w-48" />
+            </motion.div>
 
-          {/* Email */}
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-serif text-primary/70 mb-2"
+            {/* Main Question */}
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="font-pinyon text-4xl md:text-5xl lg:text-6xl text-cream mb-6 md:mb-8"
             >
-              Email *
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full px-4 py-3 bg-white border border-primary/20 focus:border-primary/50 focus:outline-none transition-colors font-serif text-primary"
-            />
-          </div>
+              Will you be joining us?
+            </motion.h2>
 
-          {/* Number of Guests */}
-          <div>
-            <label
-              htmlFor="guests"
-              className="block text-sm font-serif text-primary/70 mb-2"
+            {/* RSVP Button */}
+            <motion.a
+              href="https://example.com/rsvp"
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="font-serif text-lg md:text-xl text-cream tracking-[0.3em] uppercase mb-4 md:mb-6 hover:text-cream/80 transition-colors cursor-pointer"
             >
-              Number of Guests *
-            </label>
-            <input
-              type="number"
-              id="guests"
-              name="guests"
-              required
-              min="1"
-              value={formData.guests}
-              onChange={handleChange}
-              className="w-full px-4 py-3 bg-white border border-primary/20 focus:border-primary/50 focus:outline-none transition-colors font-serif text-primary"
-            />
-          </div>
+              RSVP HERE
+            </motion.a>
 
-          {/* Dietary Requirements */}
-          <div>
-            <label
-              htmlFor="dietary"
-              className="block text-sm font-serif text-primary/70 mb-2"
+            {/* Back to Top Link */}
+            <motion.button
+              onClick={scrollToTop}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="font-serif text-sm md:text-base text-cream tracking-[0.3em] uppercase underline hover:text-cream/80 transition-colors"
             >
-              Dietary Requirements or Allergies
-            </label>
-            <textarea
-              id="dietary"
-              name="dietary"
-              rows={3}
-              value={formData.dietary}
-              onChange={handleChange}
-              className="w-full px-4 py-3 bg-white border border-primary/20 focus:border-primary/50 focus:outline-none transition-colors font-serif text-primary resize-none"
-            />
+              BACK TO TOP
+            </motion.button>
           </div>
-
-          {/* Submit Button */}
-          <motion.button
-            type="submit"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="w-full py-4 bg-primary text-cream font-serif text-sm tracking-[0.2em] uppercase hover:bg-primary/90 transition-colors"
-          >
-            {submitted ? "Thank You!" : "Submit RSVP"}
-          </motion.button>
-        </motion.form>
+        </div>
       </div>
     </section>
   );

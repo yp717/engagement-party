@@ -139,7 +139,7 @@ export default function Hero2() {
         />
 
         {/* Curved Text - Positioned on top of video */}
-        <div className="absolute top-0 left-0 right-0 z-10 pointer-events-none">
+        <div className="absolute top-64 md:top-0 left-0 right-0 z-10 pointer-events-none">
           <svg
             viewBox="0 0 500 150"
             className="w-full h-auto"
