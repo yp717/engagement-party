@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import EllipticalButton from "./elliptical-button";
 
 export default function Header() {
@@ -33,6 +34,12 @@ export default function Header() {
             >
               FAQs
             </button>
+            <Link
+              href="/quiz"
+              className="text-lg underline font-light text-cream/80 hover:text-cream transition-colors"
+            >
+              Quiz
+            </Link>
           </div>
           <EllipticalButton onClick={() => scrollToSection("rsvp")}>
             RSVP
