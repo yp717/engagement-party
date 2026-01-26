@@ -58,10 +58,12 @@ section {
 
 /* Password shake animation */
 @keyframes password-shake {
+
   0%,
   100% {
     transform: translateX(0);
   }
+
   10%,
   30%,
   50%,
@@ -69,6 +71,7 @@ section {
   90% {
     transform: translateX(-4px);
   }
+
   20%,
   40%,
   60%,
@@ -79,4 +82,9 @@ section {
 
 .password-shake {
   animation: password-shake 0.5s ease-in-out;
+}
+
+/* Responsive frame sizing for Save the Date */
+.frame-responsive {
+  background-size: 90%;
 }
