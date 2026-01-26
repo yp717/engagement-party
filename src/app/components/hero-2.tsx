@@ -41,6 +41,103 @@ export default function Hero2() {
           Your browser does not support the video tag.
         </video>
 
+        {/* Analog Film Grain Layers - Multiple layers for depth */}
+        {/* Coarse grain layer */}
+        <div className="absolute inset-0 z-[5] pointer-events-none opacity-25 mix-blend-mode-overlay">
+          <svg
+            className="w-full h-full"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <filter id="grainCoarse">
+                <feTurbulence
+                  type="fractalNoise"
+                  baseFrequency="0.7"
+                  numOctaves="3"
+                  stitchTiles="stitch"
+                />
+                <feColorMatrix
+                  type="saturate"
+                  values="0"
+                />
+              </filter>
+            </defs>
+            <rect
+              width="100%"
+              height="100%"
+              filter="url(#grainCoarse)"
+              opacity="0.5"
+            />
+          </svg>
+        </div>
+
+        {/* Fine grain layer */}
+        <div className="absolute inset-0 z-[5] pointer-events-none opacity-20 mix-blend-mode-overlay">
+          <svg
+            className="w-full h-full"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <filter id="grainFine">
+                <feTurbulence
+                  type="fractalNoise"
+                  baseFrequency="1.2"
+                  numOctaves="5"
+                  stitchTiles="stitch"
+                />
+                <feColorMatrix
+                  type="saturate"
+                  values="0"
+                />
+              </filter>
+            </defs>
+            <rect
+              width="100%"
+              height="100%"
+              filter="url(#grainFine)"
+              opacity="0.3"
+            />
+          </svg>
+        </div>
+
+        {/* Medium grain layer */}
+        <div className="absolute inset-0 z-[5] pointer-events-none opacity-15 mix-blend-mode-soft-light">
+          <svg
+            className="w-full h-full"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <filter id="grainMedium">
+                <feTurbulence
+                  type="fractalNoise"
+                  baseFrequency="0.95"
+                  numOctaves="4"
+                  stitchTiles="stitch"
+                />
+                <feColorMatrix
+                  type="saturate"
+                  values="0"
+                />
+              </filter>
+            </defs>
+            <rect
+              width="100%"
+              height="100%"
+              filter="url(#grainMedium)"
+              opacity="0.4"
+            />
+          </svg>
+        </div>
+
+        {/* Subtle Vignette */}
+        <div
+          className="absolute inset-0 z-[6] pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, transparent 0%, transparent 60%, rgba(0, 0, 0, 0.3) 100%)",
+          }}
+        />
+
         {/* Curved Text - Positioned on top of video */}
         <div className="absolute top-0 left-0 right-0 z-10 pointer-events-none">
           <svg
