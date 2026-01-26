@@ -7,6 +7,7 @@ import PasswordProtection from "./components/password-protection";
 import RSVP from "./components/RSVP";
 import SaveTheDate from "./components/save-the-date";
 import Footer from "./components/footer";
+import CheckeredDivider from "./components/checkered-divider";
 
 export default function Home() {
   return (
@@ -22,6 +23,9 @@ export default function Home() {
         <section id="save-the-date" className="snap-start">
           <SaveTheDate />
         </section>
+
+        {/* Checkered Pattern Divider */}
+        <CheckeredDivider />
 
         {/* Details - Transportation & Dress Code */}
         <section id="details" className="snap-start">
