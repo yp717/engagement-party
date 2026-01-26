@@ -8,6 +8,7 @@ import RSVP from "./components/RSVP";
 import SaveTheDate from "./components/save-the-date";
 import Footer from "./components/footer";
 import CheckeredDivider from "./components/checkered-divider";
+import StripedDivider from "./components/striped-divider";
 
 export default function Home() {
   return (
@@ -31,6 +32,9 @@ export default function Home() {
         <section id="details" className="snap-start">
           <Details />
         </section>
+
+        {/* Striped Pattern Divider */}
+        <StripedDivider />
 
         {/* Our Story */}
         <section id="our-story" className="snap-start">

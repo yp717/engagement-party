@@ -52,7 +52,7 @@ export default function Details() {
           >
             {/* Transportation */}
             <div className="space-y-3">
-              <h3 className="font-cursive text-2xl md:text-3xl text-cream">
+              <h3 className="font-pinyon text-2xl md:text-3xl text-cream">
                 Transportation
               </h3>
               <p className="text-base md:text-lg text-cream/80 leading-relaxed">
@@ -65,7 +65,7 @@ export default function Details() {
 
             {/* Dress Code */}
             <div className="space-y-3">
-              <h3 className="font-cursive text-2xl md:text-3xl text-cream">
+              <h3 className="font-pinyon text-2xl md:text-3xl text-cream">
                 Dress Code
               </h3>
               <p className="text-base md:text-lg text-cream/80 leading-relaxed">
