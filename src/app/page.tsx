@@ -1,12 +1,11 @@
 import PaperBackground from "./components/paper-background";
-import Navigation from "./components/Navigation";
+import Header from "./components/header";
 import Details from "./components/details";
 import Transportation from "./components/transportation";
 import DressCode from "./components/dress-code";
 import OurStory from "./components/our-story";
 import FAQs from "./components/FAQs";
 import CheckeredHeader from "./components/checkered-header";
-import Hero from "./components/Hero";
 import Hero2 from "./components/hero-2";
 import PasswordProtection from "./components/password-protection";
 import RSVP from "./components/RSVP";
@@ -15,7 +14,7 @@ export default function Home() {
   return (
     <PasswordProtection>
       <main className="min-h-screen relative bg-cream">
-        <Navigation />
+        <Header />
         {/* <PaperBackground /> */}
         <Hero2 />
         <Details />

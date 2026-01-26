@@ -6,6 +6,7 @@ import { useRef, useEffect } from "react";
  * Hero2 Component - Continuous Video Loop
  *
  * Displays a video that plays continuously in a loop.
+ * Features curved "We're Engaged" text above the video.
  */
 export default function Hero2() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -22,8 +23,9 @@ export default function Hero2() {
   const videoPath = "/photos/engagi-video.MOV";
 
   return (
-    <div className="relative w-full bg-transparent overflow-hidden flex items-center justify-center py-8 md:py-12">
-      <div className="relative w-[80%] max-w-[800px] aspect-[4/3] border-8 border-white">
+    <div className="relative w-full h-screen overflow-hidden">
+      {/* Video Container */}
+      <div className="relative w-full h-full">
         <video
           ref={videoRef}
           src={videoPath}
@@ -38,6 +40,42 @@ export default function Hero2() {
         >
           Your browser does not support the video tag.
         </video>
+
+        {/* Curved Text - Positioned on top of video */}
+        <div className="absolute top-0 left-0 right-0 z-10 pointer-events-none">
+          <svg
+            viewBox="0 0 500 150"
+            className="w-full h-auto"
+            preserveAspectRatio="xMidYMid meet"
+            style={{ marginTop: "10%" }}
+          >
+            <defs>
+              {/* Arc path for the curved text */}
+              <path
+                id="textArc"
+                d="M 30 120 Q 250 20, 470 120"
+                fill="none"
+              />
+            </defs>
+            <text
+              className="fill-cream"
+              style={{
+                fontFamily: "var(--font-playfair), serif",
+                fontSize: "42px",
+                fontWeight: 400,
+                letterSpacing: "0.15em",
+              }}
+            >
+              <textPath
+                href="#textArc"
+                startOffset="50%"
+                textAnchor="middle"
+              >
+                WE&apos;RE ENGAGED
+              </textPath>
+            </text>
+          </svg>
+        </div>
       </div>
     </div>
   );
