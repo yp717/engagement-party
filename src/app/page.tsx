@@ -13,21 +13,33 @@ import RSVP from "./components/RSVP";
 export default function Home() {
   return (
     <PasswordProtection>
-      <main className="min-h-screen relative bg-cream">
+      <main className="relative bg-cream snap-y snap-mandatory overflow-y-scroll h-screen scroll-smooth">
         <Header />
         {/* <PaperBackground /> */}
-        <Hero2 />
-        <Details />
-        <div className="bg-primary w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 mx-auto max-w-7xl py-16 gap-16">
+        <section id="hero" className="snap-start">
+          <Hero2 />
+        </section>
+        <section id="details" className="snap-start">
+          <Details />
+        </section>
+        <section id="transportation-dresscode" className="snap-start h-screen bg-primary w-full flex items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 mx-auto max-w-7xl w-full px-4 gap-16">
             <Transportation className="col-span-1" />
             <DressCode className="col-span-1" />
           </div>
-        </div>
-        <OurStory className="col-span-1" />
-        <CheckeredHeader />
-        <RSVP />
-        <FAQs />
+        </section>
+        <section id="our-story" className="snap-start">
+          <OurStory className="col-span-1" />
+        </section>
+        <section id="checkered" className="snap-start">
+          <CheckeredHeader />
+        </section>
+        <section id="rsvp" className="snap-start">
+          <RSVP />
+        </section>
+        <section id="faqs" className="snap-start">
+          <FAQs />
+        </section>
       </main>
     </PasswordProtection>
   );

@@ -6,9 +6,9 @@ import CheckeredHeader from "./checkered-header";
 
 export default function Details() {
   return (
-    <section className="bg-primary w-full">
+    <section className="bg-primary w-full h-screen flex flex-col">
       <CheckeredHeader />
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-16 md:py-24">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-16 md:py-24 flex-1 flex items-center">
         <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
           {/* Left Column - Image */}
           <motion.div

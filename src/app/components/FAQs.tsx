@@ -36,8 +36,8 @@ const faqs = [
 
 export default function FAQs() {
   return (
-    <section className="py-24 md:py-32 px-4 bg-primary">
-      <div className="max-w-3xl mx-auto">
+    <section className="h-screen flex items-center py-24 md:py-32 px-4 bg-primary overflow-y-auto">
+      <div className="max-w-3xl mx-auto w-full">
         {/* Title */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}

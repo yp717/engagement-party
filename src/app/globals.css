@@ -43,6 +43,19 @@ body {
   font-family: var(--font-geist-sans), sans-serif;
 }
 
+/* Smooth scroll snap for full-height sections */
+main {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+  height: 100vh;
+}
+
+section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
 /* Password shake animation */
 @keyframes password-shake {
   0%,

@@ -8,7 +8,7 @@ interface CheckeredHeaderProps {
 
 export default function CheckeredHeader({ title }: CheckeredHeaderProps) {
   return (
-    <div className="relative py-16 md:py-24 overflow-hidden">
+    <div className="relative h-screen flex items-center justify-center py-16 md:py-24 overflow-hidden">
       {/* Diamond Pattern Background */}
       <div
         className="absolute inset-0 opacity-100"
@@ -49,7 +49,6 @@ export default function CheckeredHeader({ title }: CheckeredHeaderProps) {
                   {title}
                 </h2>
               </div>
-              )
             </div>
           </motion.div>
         </div>

@@ -31,7 +31,7 @@ export default function RSVP() {
   };
 
   return (
-    <section className="py-24 md:py-32 px-4 bg-transparent">
+    <section className="h-screen flex items-center justify-center py-24 md:py-32 px-4 bg-transparent">
       <RibbonSketch className="text-primary w-64" />
     </section>
   );
