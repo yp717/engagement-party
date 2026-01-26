@@ -3,6 +3,7 @@
 import { cn } from "../lib/utils";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import EllipticalButton from "./elliptical-button";
 
 interface PhotoGalleryProps {
   className?: string;
@@ -192,6 +193,13 @@ export default function PhotoGallery({ className }: PhotoGalleryProps) {
             </div>
           </div>
         </motion.div>
+      </div>
+
+      <div className="flex flex-col items-center justify-center gap-4">
+        <h3 className="text-center font-pinyon text-5xl">
+          How well do you know the couple?
+        </h3>
+        <EllipticalButton href="/quiz">Take the quiz</EllipticalButton>
       </div>
     </section>
   );

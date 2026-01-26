@@ -8,6 +8,7 @@ import Heart2 from "./sketches/heart-2";
 import Candlestick from "./sketches/candlestick";
 import Chandelier from "./sketches/chandelier";
 import BubblesTiltLeft from "./sketches/bubbles-tilt-left";
+import Bird from "./sketches/bird";
 
 const faqs = [
   {
@@ -55,6 +56,7 @@ export default function FAQs() {
   const candlestickY = useTransform(scrollYProgress, [0, 1], [0, -40]);
   const chandelierY = useTransform(scrollYProgress, [0, 1], [0, -45]);
   const bubblesY = useTransform(scrollYProgress, [0, 1], [0, -25]);
+  const birdY = useTransform(scrollYProgress, [0, 1], [0, -30]);
 
   return (
     <section
@@ -108,6 +110,14 @@ export default function FAQs() {
         className="absolute top-40 left-8 md:left-20 opacity-50 pointer-events-none hidden md:block"
       >
         <BubblesTiltLeft className="w-14 md:w-18 h-auto" style={{ color: "var(--cream)" }} />
+      </motion.div>
+
+      {/* Bird - Bottom Left */}
+      <motion.div
+        style={{ y: birdY }}
+        className="absolute bottom-32 left-8 md:left-20 opacity-40 pointer-events-none hidden md:block"
+      >
+        <Bird className="w-16 md:w-20 h-auto" style={{ color: "var(--cream)" }} />
       </motion.div>
 
       <div className="max-w-3xl mx-auto w-full my-auto relative z-10">
