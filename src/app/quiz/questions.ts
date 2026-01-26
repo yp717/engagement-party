@@ -12,28 +12,23 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     question: "Where did Yannis propose to Alara?",
-    options: ["London", "Edinburgh's Old Town", "Istanbul", "The Highlands"],
+    options: ["London", "Edinburgh", "Istanbul", "The Scottish Highlands"],
     correctIndex: 1,
   },
   {
-    question: "In what year did they get engaged?",
-    options: ["2023", "2024", "2025", "2026"],
-    correctIndex: 2,
-  },
-  {
-    question: "What was their first trip together?",
-    options: ["Scotland", "Paris", "Istanbul", "London"],
-    correctIndex: 0,
-  },
-  {
-    question: "How did they travel to Edinburgh for the proposal?",
-    options: ["By car", "By sleeper train", "By plane", "By highland cow"],
+    question: "On their engagement trip through the Scottish Highlands, which Scottish totem did they not see?",
+    options: ["A Glenn", "A Nevis", "A Loch", "A Highland Cow", "They saw them all"],
     correctIndex: 1,
   },
   {
-    question: "Where is the engagement party held?",
-    options: ["The Libertine", "Core by Clare Smyth", "Zaika", "Bank"],
+    question: "One of Yannis and Alara's favourite pasttimes is playing backgammon in their appartment. Who says they always win?",
+    options: ["Alara", "Yannis"],
     correctIndex: 0,
+  },
+  {
+    question: "Who actually always wins at backgammon?",
+    options: ["Alara", "Yannis"],
+    correctIndex: 1,
   },
   {
     question: "What's Alara and Yannis's favourite burget spot?",
@@ -44,10 +39,5 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     question: "Which movie character most resembles Alara according to Yannis?",
     options: ["Sleeping Beauty", "Mort from Madagascar", "Dory from Finding Nemo", "The Cheshire Cat"],
     correctIndex: 1,
-  },
-  {
-    question: "What is the dress code?",
-    options: ["Casual", "Smart casual", "Cocktail formal", "Black tie"],
-    correctIndex: 2,
   },
 ];
