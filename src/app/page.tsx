@@ -1,12 +1,12 @@
 import PaperBackground from "./components/paper-background";
-import Navigation from "./components/navigation";
+import Navigation from "./components/Navigation";
 import Details from "./components/details";
 import Transportation from "./components/transportation";
 import DressCode from "./components/dress-code";
 import OurStory from "./components/our-story";
-import FAQs from "./components/faqs";
+import FAQs from "./components/FAQs";
 import CheckeredHeader from "./components/checkered-header";
-import Hero from "./components/hero";
+import Hero from "./components/Hero";
 import Hero2 from "./components/hero-2";
 
 export default function Home() {

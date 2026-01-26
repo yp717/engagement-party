@@ -45,12 +45,12 @@ export default function Details() {
 
             {/* Body Text */}
             <div className="space-y-4 md:space-y-6">
-              <p className="font-serif text-lg md:text-xl text-cream leading-relaxed">
+              <p className="text-lg md:text-xl text-cream leading-relaxed">
                 Join us for an elegant celebration at The Libertine in London.
                 We are thrilled to share this special moment with our loved ones
                 and look forward to celebrating with you.
               </p>
-              <p className="font-serif text-lg md:text-xl text-cream leading-relaxed">
+              <p className="text-lg md:text-xl text-cream leading-relaxed">
                 The evening will feature a dinner, drinks, dancing (optional for
                 the software engineers), and wonderful company. Your presence
                 would make our celebration complete.
@@ -61,7 +61,7 @@ export default function Details() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="mt-8 px-8 py-3 border-2 border-cream text-cream font-serif text-sm md:text-base tracking-wide uppercase rounded-full hover:bg-cream/10 transition-colors"
+              className="mt-8 px-8 py-3 border-2 border-cream text-cream text-sm md:text-base tracking-wide uppercase rounded-full hover:bg-cream/10 transition-colors"
             >
               View
             </motion.button>

@@ -58,12 +58,12 @@ export default function OurStory({ className }: OurStoryProps) {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-center space-y-6 md:space-y-8"
         >
-          <p className="font-serif text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
+          <p className="text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
             Alara and Yannis first met in 2020, at the quiet end of the
             pandemic. When the world was slowly finding its rhythm again they
             found each other.
           </p>
-          <p className="font-serif text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
+          <p className="text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
             Over the years, they shared places, moments, and ordinary days that
             slowly grew into something steady and lasting. They taught each
             other how to love, how to care, and how to be patient. Alara tried
@@ -72,25 +72,25 @@ export default function OurStory({ className }: OurStoryProps) {
             the scenic route, with every possible detour and no particular rush
             to end.
           </p>
-          <p className="font-serif text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
+          <p className="text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
             Their engagement brought them back to where it all began.
           </p>
-          <p className="font-serif text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
+          <p className="text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
             In May 2025, Yannis planned a trip to Scotland — their first trip
             together, years earlier, and a place that had always held a quiet
             significance for them. They travelled by sleeper train to Edinburgh,
             then on through the Highlands, letting the landscape unfold slowly
             around them.
           </p>
-          <p className="font-serif text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
+          <p className="text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
             On the very first day, standing in the rain on the cobbled steps of
             Edinburgh’s Old Town, overlooking the city below, Yannis asked Alara
             to marry him.
           </p>
-          <p className="font-serif text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
+          <p className="text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
             She said yes.
           </p>
-          <p className="font-serif text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
+          <p className="text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
             And so, with full hearts and a story that feels beautifully
             complete, they begin their next chapter. And we would like you to be
             a part of it.
