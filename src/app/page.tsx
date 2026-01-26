@@ -8,23 +8,26 @@ import FAQs from "./components/FAQs";
 import CheckeredHeader from "./components/checkered-header";
 import Hero from "./components/Hero";
 import Hero2 from "./components/hero-2";
+import PasswordProtection from "./components/password-protection";
 
 export default function Home() {
   return (
-    <main className="min-h-screen relative bg-cream">
-      <Navigation />
-      {/* <PaperBackground /> */}
-      <Hero2 />
-      <Details />
-      <div className="bg-primary w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 mx-auto max-w-7xl py-16 gap-16">
-          <Transportation className="col-span-1" />
-          <DressCode className="col-span-1" />
+    <PasswordProtection>
+      <main className="min-h-screen relative bg-cream">
+        <Navigation />
+        {/* <PaperBackground /> */}
+        <Hero2 />
+        <Details />
+        <div className="bg-primary w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 mx-auto max-w-7xl py-16 gap-16">
+            <Transportation className="col-span-1" />
+            <DressCode className="col-span-1" />
+          </div>
         </div>
-      </div>
-      <OurStory className="col-span-1" />
-      <CheckeredHeader />
-      <FAQs />
-    </main>
+        <OurStory className="col-span-1" />
+        <CheckeredHeader />
+        <FAQs />
+      </main>
+    </PasswordProtection>
   );
 }
