@@ -350,12 +350,13 @@ export default function PhotoGallery({ className }: PhotoGalleryProps) {
                 position={positions.pearls}
                 onDragEnd={(x, y) => updatePosition("pearls", x, y)}
               >
-                <div className="relative w-[280px] h-[200px] md:w-[360px] md:h-[260px] pointer-events-none">
+                <div className="relative pointer-events-none" style={{ width: "fit-content", height: "fit-content" }}>
                   <Image
                     src="/pearls.png"
                     alt="Pearls"
-                    fill
-                    className="object-contain pointer-events-none"
+                    width={360}
+                    height={260}
+                    className="pointer-events-none"
                     sizes="(max-width: 768px) 280px, 360px"
                     quality={90}
                   />
@@ -374,13 +375,14 @@ export default function PhotoGallery({ className }: PhotoGalleryProps) {
                 position={positions.seashell}
                 onDragEnd={(x, y) => updatePosition("seashell", x, y)}
               >
-                <div className="relative w-[180px] h-[140px] md:w-[220px] md:h-[100px] pointer-events-none">
+                <div className="relative pointer-events-none" style={{ width: "fit-content", height: "fit-content" }}>
                   <Image
                     src="/photos/seashell.png"
                     alt="Seashell"
-                    fill
-                    className="object-contain pointer-events-none"
-                    sizes="(max-width: 768px) 180px, 220px"
+                    width={120}
+                    height={55}
+                    className="pointer-events-none"
+                    sizes="(max-width: 768px) 100px, 120px"
                     quality={90}
                   />
                 </div>
