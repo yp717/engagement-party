@@ -9,6 +9,7 @@ import Candlestick from "./sketches/candlestick";
 import Chandelier from "./sketches/chandelier";
 import BubblesTiltLeft from "./sketches/bubbles-tilt-left";
 import Bird from "./sketches/bird";
+import Heart3 from "./sketches/heart-3";
 
 const faqs = [
   {
@@ -26,6 +27,11 @@ const faqs = [
       "We have included the names of all invited guests on the invitations. Unfortunately, due to limited capacity at the venue, we are not able to accommodate any additional guests.",
   },
   {
+    question: "Are children allowed at the venue?",
+    answer:
+      "While we love having children around, unfortunately the venue does not permit entry for anyone under the age of 12. For all invited guests names please refer to your invitation.",
+  },
+  {
     question: "What if I have dietary restrictions?",
     answer:
       "Please indicate any dietary restrictions or allergies when you RSVP, and we will inform the venue to accommodate your needs.",
@@ -34,11 +40,6 @@ const faqs = [
     question: "What is the dress code?",
     answer:
       "The dress code Cocktail Formal. Please see the Dress Code section for more information and inspiration. (If in doubt, ask Alara - that's what Yannis always does)",
-  },
-  {
-    question: "Are children allowed at the venue?",
-    answer:
-      "While we love having children around, unfortunately the venue does not permit entry for anyone under the age of 12. For all invited guests names please refer to your invitation.",
   },
 ];
 
@@ -57,6 +58,7 @@ export default function FAQs() {
   const chandelierY = useTransform(scrollYProgress, [0, 1], [0, -45]);
   const bubblesY = useTransform(scrollYProgress, [0, 1], [0, -25]);
   const birdY = useTransform(scrollYProgress, [0, 1], [0, -30]);
+  const heart3Y = useTransform(scrollYProgress, [0, 1], [0, -28]);
 
   return (
     <section
@@ -110,6 +112,14 @@ export default function FAQs() {
         className="absolute top-40 left-8 md:left-20 opacity-50 pointer-events-none hidden md:block"
       >
         <BubblesTiltLeft className="w-14 md:w-18 h-auto" style={{ color: "var(--cream)" }} />
+      </motion.div>
+
+      {/* Heart 3 - Left, between Bubbles and Bird */}
+      <motion.div
+        style={{ y: heart3Y }}
+        className="absolute top-[1160px] left-20 md:left-40 opacity-45 pointer-events-none hidden md:block"
+      >
+        <Heart3 className="w-11 md:w-14 h-auto" style={{ color: "var(--cream)" }} />
       </motion.div>
 
       {/* Bird - Bottom Left */}
