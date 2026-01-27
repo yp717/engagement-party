@@ -381,17 +381,18 @@ export default function PhotoGallery({ className }: PhotoGalleryProps) {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 1 }}
                 className="absolute z-[70] touch-none"
-                initialLeft="35%"
+                initialLeft="80%"
                 initialTop="45%"
                 position={positions.lily1}
                 onDragEnd={(x, y) => updatePosition("lily1", x, y)}
               >
-                <div className="relative w-[576px] h-[288px] md:w-[720px] md:h-[360px] pointer-events-none">
+                <div className="relative w-[576px] h-[288px] md:w-[720px] md:h-[360px] pointer-events-none" style={{ width: "fit-content", height: "fit-content" }}>
                   <Image
                     src="/photos/kalla-lily.png"
                     alt="Kalla Lily"
-                    fill
-                    className="object-contain pointer-events-none"
+                    width={576}
+                    height={288}
+                    className="object-contain pointer-events-none w-auto h-auto"
                     sizes="(max-width: 768px) 576px, 720px"
                     quality={90}
                   />
@@ -405,17 +406,18 @@ export default function PhotoGallery({ className }: PhotoGalleryProps) {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 1.2 }}
                 className="absolute z-[80] touch-none"
-                initialLeft="30%"
-                initialTop="38%"
+                initialLeft="75%"
+                initialTop="42%"
                 position={positions.lily2}
                 onDragEnd={(x, y) => updatePosition("lily2", x, y)}
               >
-                <div className="relative w-[648px] h-[324px] md:w-[792px] md:h-[396px] pointer-events-none">
+                <div className="relative w-[648px] h-[324px] md:w-[792px] md:h-[396px] pointer-events-none" style={{ width: "fit-content", height: "fit-content" }}>
                   <Image
                     src="/photos/kalla-lily.png"
                     alt="Kalla Lily"
-                    fill
-                    className="object-contain pointer-events-none"
+                    width={648}
+                    height={324}
+                    className="object-contain pointer-events-none w-auto h-auto"
                     sizes="(max-width: 768px) 648px, 792px"
                     quality={90}
                   />
