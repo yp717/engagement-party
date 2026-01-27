@@ -64,7 +64,10 @@ function DraggableItem({
       whileInView={whileInView}
       viewport={viewport}
       transition={transition}
-      className={cn(className, "cursor-grab active:cursor-grabbing")}
+      className={cn(
+        className,
+        "cursor-grab active:cursor-grabbing inline-block"
+      )}
       style={{
         ...style,
         x,
@@ -161,8 +164,8 @@ export default function PhotoGallery({ className }: PhotoGalleryProps) {
                 />
 
                 {/* Engraved Text - Green Park 2021 - Lowest z-index so it's behind everything */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-0">
-                  <div className="text-center relative">
+                <div className="absolute inset-0 flex flex-col items-center justify-center z-0">
+                  <div className="text-center relative pointer-events-none">
                     {/* Engraved text effect using multiple shadows */}
                     <p
                       className="font-serif text-2xl md:text-3xl lg:text-4xl font-light tracking-wider relative"
@@ -187,7 +190,7 @@ export default function PhotoGallery({ className }: PhotoGalleryProps) {
                   {/* Reset Button */}
                   <motion.button
                     onClick={handleReset}
-                    className="mt-6 px-6 py-2.5 text-xs md:text-sm text-[#4a4a4a] font-light uppercase tracking-wider border border-[#4a4a4a]/20 hover:border-[#4a4a4a]/40 hover:bg-[#4a4a4a]/8 transition-all pointer-events-auto bg-white/10 backdrop-blur-sm"
+                    className="mt-6 px-6 py-2.5 text-xs md:text-sm text-[#4a4a4a] font-light uppercase tracking-wider border border-[#4a4a4a]/20 hover:border-[#4a4a4a]/40 hover:bg-[#4a4a4a]/8 transition-all bg-white/10 backdrop-blur-sm z-[200] relative"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
