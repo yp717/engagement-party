@@ -2,7 +2,7 @@
 
 import { cn } from "../lib/utils";
 import Image from "next/image";
-import { motion, useMotionValue } from "framer-motion";
+import { motion, useMotionValue, AnimatePresence } from "framer-motion";
 import EllipticalButton from "./elliptical-button";
 import { useState, useRef, useEffect } from "react";
 
@@ -120,6 +120,11 @@ export default function PhotoGallery({ className }: PhotoGalleryProps) {
   const [positions, setPositions] = useState<ItemPositions>(INITIAL_POSITIONS);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Check if any items have been moved from their initial position
+  const hasItemsMoved = Object.values(positions).some(
+    (pos) => pos.x !== 0 || pos.y !== 0
+  );
+
   const handleReset = () => {
     setPositions(INITIAL_POSITIONS);
   };
@@ -164,8 +169,8 @@ export default function PhotoGallery({ className }: PhotoGalleryProps) {
                 />
 
                 {/* Engraved Text - Green Park 2021 - Lowest z-index so it's behind everything */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center z-0">
-                  <div className="text-center relative pointer-events-none">
+                <div className="absolute inset-0 flex flex-col items-center justify-center z-0 pointer-events-none">
+                  <div className="text-center relative">
                     {/* Engraved text effect using multiple shadows */}
                     <p
                       className="font-serif text-2xl md:text-3xl lg:text-4xl font-light tracking-wider relative"
@@ -185,17 +190,25 @@ export default function PhotoGallery({ className }: PhotoGalleryProps) {
                     >
                       Green Park 2021
                     </p>
+                    <p
+                      className="font-serif text-xl md:text-2xl lg:text-3xl font-light tracking-wider relative mt-2 md:mt-3"
+                      style={{
+                        color: "#2a2a2a",
+                        textShadow: `
+                          0 1px 0 rgba(255, 255, 255, 0.1),
+                          0 -1px 0 rgba(0, 0, 0, 0.3),
+                          0 2px 2px rgba(0, 0, 0, 0.4),
+                          inset 0 1px 1px rgba(255, 255, 255, 0.15),
+                          inset 0 -1px 1px rgba(0, 0, 0, 0.5)
+                        `,
+                        letterSpacing: "0.15em",
+                        filter: "drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2))",
+                        WebkitTextStroke: "0.3px rgba(0, 0, 0, 0.1)",
+                      }}
+                    >
+                      Yannis & Alara Forever
+                    </p>
                   </div>
-
-                  {/* Reset Button */}
-                  <motion.button
-                    onClick={handleReset}
-                    className="mt-6 px-6 py-2.5 text-xs md:text-sm text-[#4a4a4a] font-light uppercase tracking-wider border border-[#4a4a4a]/20 hover:border-[#4a4a4a]/40 hover:bg-[#4a4a4a]/8 transition-all bg-white/10 backdrop-blur-sm z-[200] relative"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    Reset
-                  </motion.button>
                 </div>
               </div>
             </div>
@@ -426,9 +439,31 @@ export default function PhotoGallery({ className }: PhotoGalleryProps) {
             </div>
           </div>
         </motion.div>
+
+        {/* Reset Button - Show below metal plate only when items have been moved */}
+        <AnimatePresence>
+          {hasItemsMoved && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="flex justify-center -mt-8"
+            >
+              <motion.button
+                onClick={handleReset}
+                className="px-6 py-2.5 text-xs md:text-sm text-[#4a4a4a] font-light uppercase tracking-wider border border-[#4a4a4a]/20 hover:border-[#4a4a4a]/40 hover:bg-[#4a4a4a]/8 transition-all bg-white/10 backdrop-blur-sm"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Reset
+              </motion.button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
-      <div className="flex flex-col items-center justify-center gap-4">
+      <div className="mt-8 flex flex-col items-center justify-center gap-4">
         <h3 className="text-center font-pinyon text-5xl">
           How well do you know the couple?
         </h3>
