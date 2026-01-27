@@ -88,3 +88,36 @@ section {
 .frame-responsive {
   background-size: 90%;
 }
+
+/* Bubbling hearts on hover (footer Alara) – next to name, varied angles */
+@keyframes heart-bubble {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.5);
+  }
+  15% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy)) scale(0.7);
+  }
+}
+
+.heart-static {
+  opacity: 1;
+}
+
+.group-heart-bubble:hover .heart-static {
+  opacity: 0;
+}
+
+.heart-bubble {
+  opacity: 0;
+  animation: none;
+}
+
+.group-heart-bubble:hover .heart-bubble {
+  animation: heart-bubble 1.4s ease-out infinite;
+}
