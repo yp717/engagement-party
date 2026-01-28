@@ -10,7 +10,12 @@ interface OurStoryProps {
 
 export default function OurStory({ className }: OurStoryProps) {
   return (
-    <section className={cn("bg-cream w-full min-h-screen overflow-y-auto py-16 md:py-24", className)}>
+    <section
+      className={cn(
+        "bg-cream w-full min-h-screen overflow-y-auto py-16 md:py-24",
+        className
+      )}
+    >
       <div className="max-w-4xl mx-auto px-4 md:px-8 w-full">
         {/* Section Title */}
         <motion.div
@@ -47,7 +52,7 @@ export default function OurStory({ className }: OurStoryProps) {
                 quality={90}
                 priority
               />
-              
+
               {/* Analog Film Grain Layers - Multiple layers for depth */}
               {/* Coarse grain layer */}
               <div className="absolute inset-0 z-[5] pointer-events-none opacity-25 mix-blend-overlay">
@@ -63,10 +68,7 @@ export default function OurStory({ className }: OurStoryProps) {
                         numOctaves="3"
                         stitchTiles="stitch"
                       />
-                      <feColorMatrix
-                        type="saturate"
-                        values="0"
-                      />
+                      <feColorMatrix type="saturate" values="0" />
                     </filter>
                   </defs>
                   <rect
@@ -92,10 +94,7 @@ export default function OurStory({ className }: OurStoryProps) {
                         numOctaves="5"
                         stitchTiles="stitch"
                       />
-                      <feColorMatrix
-                        type="saturate"
-                        values="0"
-                      />
+                      <feColorMatrix type="saturate" values="0" />
                     </filter>
                   </defs>
                   <rect
@@ -121,10 +120,7 @@ export default function OurStory({ className }: OurStoryProps) {
                         numOctaves="4"
                         stitchTiles="stitch"
                       />
-                      <feColorMatrix
-                        type="saturate"
-                        values="0"
-                      />
+                      <feColorMatrix type="saturate" values="0" />
                     </filter>
                   </defs>
                   <rect

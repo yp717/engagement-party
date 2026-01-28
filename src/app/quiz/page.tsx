@@ -40,7 +40,9 @@ function Sticker({
     <motion.div
       className={cn(
         "fixed z-50 flex items-end gap-3",
-        fromRight ? "right-0 bottom-24 md:bottom-32 flex-row-reverse" : "left-0 bottom-24 md:bottom-32 flex-row"
+        fromRight
+          ? "right-0 bottom-24 md:bottom-32 flex-row-reverse"
+          : "left-0 bottom-24 md:bottom-32 flex-row"
       )}
       initial={{
         x: fromRight ? 200 : -200,
@@ -68,7 +70,8 @@ function Sticker({
       <div
         className="relative w-32 h-32 md:w-44 md:h-44"
         style={{
-          filter: "drop-shadow(0 0 0 white) drop-shadow(0 0 1px white) drop-shadow(0 0 2px white) drop-shadow(0 4px 8px rgba(0,0,0,0.15))",
+          filter:
+            "drop-shadow(0 0 0 white) drop-shadow(0 0 1px white) drop-shadow(0 0 2px white) drop-shadow(0 4px 8px rgba(0,0,0,0.15))",
         }}
       >
         <Image
@@ -152,7 +155,11 @@ export default function QuizPage() {
       {/* Animated stickers */}
       <AnimatePresence>
         {showingSuccess && (
-          <Sticker key="success-sticker" type="success" onComplete={advanceToNext} />
+          <Sticker
+            key="success-sticker"
+            type="success"
+            onComplete={advanceToNext}
+          />
         )}
         {wrong && <Sticker key="failure-sticker" type="failure" />}
       </AnimatePresence>

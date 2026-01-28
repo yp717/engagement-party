@@ -33,7 +33,6 @@ export default function Footer() {
 
         {/* Message */}
         <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-4 overflow-visible">
-
           <p className="font-serif text-sm text-cream/50 italic overflow-visible">
             Website built by Yannis / Supervised by{" "}
             <span className="group-heart-bubble relative inline-flex items-baseline">
@@ -49,11 +48,13 @@ export default function Footer() {
                   <span
                     key={i}
                     className="heart-bubble absolute left-0 bottom-0 pointer-events-none text-cream/80 whitespace-nowrap"
-                    style={{
-                      animationDelay: `${delay}s`,
-                      ["--dx"]: `${dx}px`,
-                      ["--dy"]: `${dy}px`,
-                    } as React.CSSProperties}
+                    style={
+                      {
+                        animationDelay: `${delay}s`,
+                        ["--dx"]: `${dx}px`,
+                        ["--dy"]: `${dy}px`,
+                      } as React.CSSProperties
+                    }
                   >
                     <HeartIcon className="w-3 h-3" />
                   </span>

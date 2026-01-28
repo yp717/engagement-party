@@ -13,6 +13,11 @@ import Heart3 from "./sketches/heart-3";
 
 const faqs = [
   {
+    question: "By what date should I RSVP?",
+    answer:
+      "Please RSVP by the 28th February 2026. If you we don't receive your RSVP by this date, we will assume you are unable to attend.",
+  },
+  {
     question: "What time should I arrive?",
     answer: "The final time of the event will be announced closer to the date.",
   },
@@ -71,7 +76,10 @@ export default function FAQs() {
         style={{ y: wineGlassY }}
         className="absolute top-20 right-8 md:right-20 opacity-40 pointer-events-none hidden md:block"
       >
-        <WineGlass className="w-24 md:w-32 h-auto" style={{ color: "var(--cream)" }} />
+        <WineGlass
+          className="w-24 md:w-32 h-auto"
+          style={{ color: "var(--cream)" }}
+        />
       </motion.div>
 
       {/* Heart - Middle Left */}
@@ -79,7 +87,10 @@ export default function FAQs() {
         style={{ y: heartY }}
         className="absolute top-[650px] left-16 md:left-52 opacity-50 pointer-events-none"
       >
-        <Heart1 className="w-12 md:w-16 h-auto" style={{ color: "var(--cream)" }} />
+        <Heart1
+          className="w-12 md:w-16 h-auto"
+          style={{ color: "var(--cream)" }}
+        />
       </motion.div>
 
       {/* Heart 2 - Middle Right */}
@@ -87,7 +98,10 @@ export default function FAQs() {
         style={{ y: heart2Y }}
         className="absolute top-[800px] right-8 md:right-20 opacity-40 pointer-events-none hidden md:block"
       >
-        <Heart2 className="w-14 md:w-18 h-auto" style={{ color: "var(--cream)" }} />
+        <Heart2
+          className="w-14 md:w-18 h-auto"
+          style={{ color: "var(--cream)" }}
+        />
       </motion.div>
 
       {/* Candlestick - Bottom Right */}
@@ -95,7 +109,10 @@ export default function FAQs() {
         style={{ y: candlestickY }}
         className="absolute bottom-32 right-12 md:right-24 opacity-30 pointer-events-none hidden lg:block"
       >
-        <Candlestick className="w-12 md:w-16 h-auto" style={{ color: "var(--cream)" }} />
+        <Candlestick
+          className="w-12 md:w-16 h-auto"
+          style={{ color: "var(--cream)" }}
+        />
       </motion.div>
 
       {/* Chandelier - Top Right */}
@@ -103,7 +120,10 @@ export default function FAQs() {
         style={{ y: chandelierY }}
         className="absolute top-96 right-6 md:right-64 opacity-40 pointer-events-none hidden lg:block"
       >
-        <Chandelier className="w-16 md:w-20 h-auto" style={{ color: "var(--cream)" }} />
+        <Chandelier
+          className="w-16 md:w-20 h-auto"
+          style={{ color: "var(--cream)" }}
+        />
       </motion.div>
 
       {/* Bubbles - Top Left */}
@@ -111,7 +131,10 @@ export default function FAQs() {
         style={{ y: bubblesY }}
         className="absolute top-40 left-8 md:left-20 opacity-50 pointer-events-none hidden md:block"
       >
-        <BubblesTiltLeft className="w-14 md:w-18 h-auto" style={{ color: "var(--cream)" }} />
+        <BubblesTiltLeft
+          className="w-14 md:w-18 h-auto"
+          style={{ color: "var(--cream)" }}
+        />
       </motion.div>
 
       {/* Heart 3 - Left, between Bubbles and Bird */}
@@ -119,7 +142,10 @@ export default function FAQs() {
         style={{ y: heart3Y }}
         className="absolute top-[1160px] left-20 md:left-40 opacity-45 pointer-events-none hidden md:block"
       >
-        <Heart3 className="w-11 md:w-14 h-auto" style={{ color: "var(--cream)" }} />
+        <Heart3
+          className="w-11 md:w-14 h-auto"
+          style={{ color: "var(--cream)" }}
+        />
       </motion.div>
 
       {/* Bird - Bottom Left */}
@@ -127,7 +153,10 @@ export default function FAQs() {
         style={{ y: birdY }}
         className="absolute bottom-32 left-8 md:left-20 opacity-40 pointer-events-none hidden md:block"
       >
-        <Bird className="w-16 md:w-20 h-auto" style={{ color: "var(--cream)" }} />
+        <Bird
+          className="w-16 md:w-20 h-auto"
+          style={{ color: "var(--cream)" }}
+        />
       </motion.div>
 
       <div className="max-w-3xl mx-auto w-full my-auto relative z-10">

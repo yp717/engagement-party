@@ -350,7 +350,10 @@ export default function PhotoGallery({ className }: PhotoGalleryProps) {
                 position={positions.pearls}
                 onDragEnd={(x, y) => updatePosition("pearls", x, y)}
               >
-                <div className="relative pointer-events-none" style={{ width: "fit-content", height: "fit-content" }}>
+                <div
+                  className="relative pointer-events-none"
+                  style={{ width: "fit-content", height: "fit-content" }}
+                >
                   <Image
                     src="/pearls.png"
                     alt="Pearls"
@@ -375,7 +378,10 @@ export default function PhotoGallery({ className }: PhotoGalleryProps) {
                 position={positions.seashell}
                 onDragEnd={(x, y) => updatePosition("seashell", x, y)}
               >
-                <div className="relative pointer-events-none" style={{ width: "fit-content", height: "fit-content" }}>
+                <div
+                  className="relative pointer-events-none"
+                  style={{ width: "fit-content", height: "fit-content" }}
+                >
                   <Image
                     src="/photos/seashell.png"
                     alt="Seashell"
@@ -401,7 +407,10 @@ export default function PhotoGallery({ className }: PhotoGalleryProps) {
                 position={positions.lily1}
                 onDragEnd={(x, y) => updatePosition("lily1", x, y)}
               >
-                <div className="relative w-[576px] h-[288px] md:w-[720px] md:h-[360px] pointer-events-none" style={{ width: "fit-content", height: "fit-content" }}>
+                <div
+                  className="relative w-[576px] h-[288px] md:w-[720px] md:h-[360px] pointer-events-none"
+                  style={{ width: "fit-content", height: "fit-content" }}
+                >
                   <Image
                     src="/photos/kalla-lily.png"
                     alt="Kalla Lily"
@@ -426,7 +435,10 @@ export default function PhotoGallery({ className }: PhotoGalleryProps) {
                 position={positions.lily2}
                 onDragEnd={(x, y) => updatePosition("lily2", x, y)}
               >
-                <div className="relative w-[648px] h-[324px] md:w-[792px] md:h-[396px] pointer-events-none" style={{ width: "fit-content", height: "fit-content" }}>
+                <div
+                  className="relative w-[648px] h-[324px] md:w-[792px] md:h-[396px] pointer-events-none"
+                  style={{ width: "fit-content", height: "fit-content" }}
+                >
                   <Image
                     src="/photos/kalla-lily.png"
                     alt="Kalla Lily"

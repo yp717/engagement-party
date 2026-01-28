@@ -58,7 +58,6 @@ section {
 
 /* Password shake animation */
 @keyframes password-shake {
-
   0%,
   100% {
     transform: translateX(0);

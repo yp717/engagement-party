@@ -44,10 +44,7 @@ export default function Hero2() {
         {/* Analog Film Grain Layers - Multiple layers for depth */}
         {/* Coarse grain layer */}
         <div className="absolute inset-0 z-[5] pointer-events-none opacity-25 mix-blend-mode-overlay">
-          <svg
-            className="w-full h-full"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <filter id="grainCoarse">
                 <feTurbulence
@@ -56,10 +53,7 @@ export default function Hero2() {
                   numOctaves="3"
                   stitchTiles="stitch"
                 />
-                <feColorMatrix
-                  type="saturate"
-                  values="0"
-                />
+                <feColorMatrix type="saturate" values="0" />
               </filter>
             </defs>
             <rect
@@ -73,10 +67,7 @@ export default function Hero2() {
 
         {/* Fine grain layer */}
         <div className="absolute inset-0 z-[5] pointer-events-none opacity-20 mix-blend-mode-overlay">
-          <svg
-            className="w-full h-full"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <filter id="grainFine">
                 <feTurbulence
@@ -85,10 +76,7 @@ export default function Hero2() {
                   numOctaves="5"
                   stitchTiles="stitch"
                 />
-                <feColorMatrix
-                  type="saturate"
-                  values="0"
-                />
+                <feColorMatrix type="saturate" values="0" />
               </filter>
             </defs>
             <rect
@@ -102,10 +90,7 @@ export default function Hero2() {
 
         {/* Medium grain layer */}
         <div className="absolute inset-0 z-[5] pointer-events-none opacity-15 mix-blend-mode-soft-light">
-          <svg
-            className="w-full h-full"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <filter id="grainMedium">
                 <feTurbulence
@@ -114,10 +99,7 @@ export default function Hero2() {
                   numOctaves="4"
                   stitchTiles="stitch"
                 />
-                <feColorMatrix
-                  type="saturate"
-                  values="0"
-                />
+                <feColorMatrix type="saturate" values="0" />
               </filter>
             </defs>
             <rect
@@ -148,11 +130,7 @@ export default function Hero2() {
           >
             <defs>
               {/* Arc path for the curved text */}
-              <path
-                id="textArc"
-                d="M 30 120 Q 250 20, 470 120"
-                fill="none"
-              />
+              <path id="textArc" d="M 30 120 Q 250 20, 470 120" fill="none" />
             </defs>
             <text
               className="fill-cream"
@@ -163,11 +141,7 @@ export default function Hero2() {
                 letterSpacing: "0.15em",
               }}
             >
-              <textPath
-                href="#textArc"
-                startOffset="50%"
-                textAnchor="middle"
-              >
+              <textPath href="#textArc" startOffset="50%" textAnchor="middle">
                 WE&apos;RE ENGAGED
               </textPath>
             </text>
