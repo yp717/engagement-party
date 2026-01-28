@@ -103,7 +103,7 @@ export default function SaveTheDate() {
               transition={{ duration: 0.5, delay: 0.55, ease: easeOutExpo }}
               className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12 md:gap-16"
             >
-              <div className="text-center sm:text-left sm:border-r border-primary/15 sm:pr-8 md:pr-12">
+              <div className="text-center sm:text-left sm:pr-8 md:pr-12">
                 <p className="font-serif text-primary/50 text-[11px] sm:text-xs tracking-[0.2em] uppercase mb-1.5">
                   When
                 </p>

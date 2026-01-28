@@ -22,30 +22,34 @@ export default function EllipticalButton({
   className = "",
 }: EllipticalButtonProps) {
   if (href) {
-    const MotionLink = motion(Link);
+    const MotionLink = motion.create(Link);
     return (
-      <MotionLink
-        href={href}
-        className={`${buttonClass} ${className}`}
-        style={buttonStyle}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        {children}
-      </MotionLink>
+      <span className="relative inline-block">
+        <MotionLink
+          href={href}
+          className={`relative ${buttonClass} ${className}`}
+          style={buttonStyle}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          {children}
+        </MotionLink>
+      </span>
     );
   }
 
   return (
-    <motion.button
-      type="button"
-      onClick={onClick}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      className={`${buttonClass} ${className}`}
-      style={buttonStyle}
-    >
-      {children}
-    </motion.button>
+    <span className="relative inline-block">
+      <motion.button
+        type="button"
+        onClick={onClick}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className={`relative ${buttonClass} ${className}`}
+        style={buttonStyle}
+      >
+        {children}
+      </motion.button>
+    </span>
   );
 }
