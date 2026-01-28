@@ -4,6 +4,8 @@ export interface QuizQuestion {
   correctIndex: number;
   /** Optional image path (e.g. /photos/...) to show with the question */
   image?: string;
+  /** Optional image path to show immediately after answering this question correctly */
+  successImage?: string;
 }
 
 /** Image shown when the user completes all questions correctly */
@@ -27,20 +29,50 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     question:
-      "On their engagement trip through the Scottish Highlands, which Scottish totem did they not see?",
-    options: [
-      "A Glenn",
-      "A Nevis",
-      "A Loch",
-      "A Highland Cow",
-      "They saw them all",
-    ],
+      "What central London park was the couple's first date in?",
+    options: ["Regent's Park", "Green Park", "St James's Park", "Hyde Park"],
     correctIndex: 1,
-    image: "/photos/scotland-analog.jpeg",
   },
   {
     question:
-      "One of Yannis and Alara's favourite pasttimes is playing backgammon in their appartment. Who says they always win?",
+      "When they finally went on their first dinner date (after 3 months - thanks COVID), what kind of cuisine did they eat?",
+    options: ["British", "Italian", "Japanese", "French", "Indian"],
+    correctIndex: 1,
+  },
+  {
+    question: "What's the groom's middle name?",
+    options: [
+      "Nicholas",
+      "Jacob",
+      "Aris",
+      "Konstantinos",
+      "He doesn't have one",
+    ],
+    correctIndex: 2,
+  },
+  {
+    question:
+      "Which country has the couple not visited together?",
+    options: ["Italy", "Spain", "Barbados", "Croatia"],
+    correctIndex: 0,
+  },
+  {
+    question:
+      "Which of the following names does not occur in either couple's immediate family?",
+    options: [
+      "Panagiotis",
+      "Doris",
+      "Gürkan",
+      "Caroline",
+      "Eren",
+      "Alexander",
+    ],
+    correctIndex: 5,
+    successImage: "/photos/alex-success.png",
+  },
+  {
+    question:
+      "One of Yannis and Alara's favourite pastimes is playing backgammon in their apartment. Who says they always win?",
     options: ["Alara", "Yannis"],
     correctIndex: 0,
   },
@@ -50,7 +82,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     correctIndex: 1,
   },
   {
-    question: "What's Alara and Yannis's favourite burget spot?",
+    question: "What's Alara and Yannis's favourite burger spot?",
     options: ["Black Bear Burger", "Bleeker Burger", "Five Guys", "McDonald's"],
     correctIndex: 0,
   },
@@ -63,6 +95,6 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       "The Cheshire Cat",
     ],
     correctIndex: 1,
-    image: "/photos/yannis-and-alara-lals-birthday.jpeg",
+    successImage: "/photos/alara-mort-same-picture.png",
   },
 ];

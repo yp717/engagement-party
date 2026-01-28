@@ -152,9 +152,9 @@ export default function QuizPage() {
 
   return (
     <main className="min-h-screen bg-cream text-primary overflow-x-hidden">
-      {/* Animated stickers */}
+      {/* Animated stickers - only show if no success image */}
       <AnimatePresence>
-        {showingSuccess && (
+        {showingSuccess && !question?.successImage && (
           <Sticker
             key="success-sticker"
             type="success"
@@ -183,7 +183,7 @@ export default function QuizPage() {
         </p>
 
         {/* Progress */}
-        {!isComplete && !wrong && (
+        {!isComplete && !wrong && !showingSuccess && (
           <div className="flex justify-center mb-10">
             <span className="font-serif text-sm tracking-widest uppercase text-primary/60">
               {questionsLeft === 0
@@ -194,7 +194,7 @@ export default function QuizPage() {
         )}
 
         {/* Progress bar */}
-        {!isComplete && !wrong && (
+        {!isComplete && !wrong && !showingSuccess && (
           <div className="h-1 bg-primary/10 rounded-full mb-12 overflow-hidden">
             <motion.div
               className="h-full bg-primary rounded-full"
@@ -208,7 +208,39 @@ export default function QuizPage() {
         )}
 
         <AnimatePresence mode="wait">
-          {wrong ? (
+          {showingSuccess && question?.successImage ? (
+            <motion.div
+              key="success-image"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.4 }}
+              className="text-center py-12"
+            >
+              <div className="relative w-full max-w-2xl mx-auto mb-8 flex items-center justify-center">
+                <Image
+                  src={question.successImage}
+                  alt=""
+                  width={1200}
+                  height={1600}
+                  className="w-full h-auto object-contain"
+                  sizes="(max-width: 768px) 100vw, 1200px"
+                  priority
+                />
+              </div>
+              <p className="font-pinyon text-3xl md:text-4xl text-primary mb-4">
+                Correct!
+              </p>
+              <button
+                type="button"
+                onClick={advanceToNext}
+                className="px-10 py-4 md:px-12 md:py-4 bg-primary text-white font-serif text-sm tracking-wide uppercase hover:bg-primary/90 transition-colors"
+                style={{ clipPath: "ellipse(50% 40% at 50% 50%)" }}
+              >
+                Continue
+              </button>
+            </motion.div>
+          ) : wrong ? (
             <motion.div
               key="wrong"
               initial={{ opacity: 0, scale: 0.95 }}
@@ -318,7 +350,8 @@ export default function QuizPage() {
                 ))}
               </ul>
             </motion.div>
-          )}
+          )
+          }
         </AnimatePresence>
       </div>
     </main>
