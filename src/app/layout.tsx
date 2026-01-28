@@ -40,6 +40,9 @@ const pinyonScript = Pinyon_Script({
 export const metadata: Metadata = {
   title: "Yannis & Alara | Engagement Party",
   description: "Join us in celebrating our engagement at The Libertine, London",
+  icons: {
+    icon: "/giblet.ico",
+  },
 };
 
 export default function RootLayout({

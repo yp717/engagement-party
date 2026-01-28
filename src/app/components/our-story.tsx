@@ -153,41 +153,40 @@ export default function OurStory({ className }: OurStoryProps) {
           className="text-center space-y-6 md:space-y-8"
         >
           <p className="text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
-            Alara and Yannis first met in 2020, at the quiet end of the
-            pandemic. When the world was slowly finding its rhythm again they
+            Alara and Yannis first met in 2021, at the quiet end of the
+            pandemic. When the world was slowly finding its rhythm again, they
             found each other.
           </p>
           <p className="text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
-            Over the years, they shared places, moments, and ordinary days that
-            slowly grew into something steady and lasting. They taught each
-            other how to love, how to care, and how to be patient. Alara tried
+            Through lots of memories, special moments, and laughter, they
+            slowly grew into a life they love sharing and building together.
+            They taught each other how to love, how to laugh, and how to
+            embrace the moments in between. Throughout the years, Alara tried
             to keep up with Yannis&apos; ever-growing list of restaurants and
-            recipes, and Yannis learned that Alara&apos;s stories always take
-            the scenic route, with every possible detour and no particular rush
-            to end.
+            recipes, knowing full well they would likely never reach the end.
+            And Yannis came to love that Alara&apos;s stories always take the
+            scenic route — filled with every possible detour and absolutely no
+            hurry to reach the end.
           </p>
           <p className="text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
-            Their engagement brought them back to where it all began.
+            In May 2025 Yannis planned a trip that brought them back to their
+            first holiday together - Edinburgh.
           </p>
           <p className="text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
-            In May 2025, Yannis planned a trip to Scotland — their first trip
-            together, years earlier, and a place that had always held a quiet
-            significance for them. They travelled by sleeper train to Edinburgh,
-            then on through the Highlands, letting the landscape unfold slowly
-            around them.
+            As they embarked on a trip around the Scottish Highlands by train,
+            Yannis had planned to make an already sentimental place even more
+            special. On the very first day of their trip (because he
+            couldn&apos;t wait), standing in the rain on the cobbled steps of
+            Edinburgh&apos;s Old Town, overlooking the city below, Yannis asked
+            Alara to marry him…
           </p>
           <p className="text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
-            On the very first day, standing in the rain on the cobbled steps of
-            Edinburgh’s Old Town, overlooking the city below, Yannis asked Alara
-            to marry him.
+            … and she said yes!
           </p>
           <p className="text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
-            She said yes.
-          </p>
-          <p className="text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
-            And so, with full hearts and a story that feels beautifully
-            complete, they begin their next chapter. And we would like you to be
-            a part of it.
+            And so, with full hearts and a story that feels like it&apos;s only
+            just beginning, we move onto the next chapter of our lives. And we
+            would love for you all to be a part of it!
           </p>
         </motion.div>
       </div>

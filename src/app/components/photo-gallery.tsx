@@ -345,8 +345,8 @@ export default function PhotoGallery({ className }: PhotoGalleryProps) {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.9 }}
                 className="absolute z-[50] touch-none"
-                initialLeft="5%"
-                initialTop="53%"
+                initialLeft="15%"
+                initialTop="57%"
                 position={positions.pearls}
                 onDragEnd={(x, y) => updatePosition("pearls", x, y)}
               >
@@ -357,10 +357,10 @@ export default function PhotoGallery({ className }: PhotoGalleryProps) {
                   <Image
                     src="/pearls.png"
                     alt="Pearls"
-                    width={360}
-                    height={260}
+                    width={140}
+                    height={100}
                     className="pointer-events-none"
-                    sizes="(max-width: 768px) 280px, 360px"
+                    sizes="(max-width: 768px) 100px, 120px"
                     quality={90}
                   />
                 </div>
