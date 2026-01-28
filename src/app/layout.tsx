@@ -7,6 +7,7 @@ import {
   Pinyon_Script,
 } from "next/font/google";
 import "./globals.css";
+import { ConsoleEasterEgg } from "./components/console-easter-egg";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,6 +52,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${playfairDisplay.variable} ${dancingScript.variable} ${pinyonScript.variable} antialiased`}
       >
+        <ConsoleEasterEgg />
         {children}
       </body>
     </html>
