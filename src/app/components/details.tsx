@@ -24,7 +24,8 @@ const detailBlocks = [
         <p className="text-cream/85 leading-relaxed mb-4">
           There are a number of wonderful hotels close to the venue. Below are a
           few we recommend — or stay anywhere in London; the venue is easily
-          accessible by public transport. Need area or activity recommendations? Just ask.
+          accessible by public transport. Need area or activity recommendations?
+          Just ask.
         </p>
         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-cream/75 text-sm md:text-base">
           {hotels.map((h) => (
@@ -54,8 +55,11 @@ const detailBlocks = [
     title: "Dress Code",
     children: (
       <p className="text-cream/85 leading-relaxed">
-        <em className="font-medium text-cream/95">Cocktail formal</em> — we
-        kindly request suits for men and dresses for women.
+        <em className="font-medium text-cream/95">Cocktail formal</em> — we We
+        would love to see our family and friends dressed up with us! The dress
+        code is Cocktail Formal. Think suits for men, tie optional, and
+        cocktail/floor length dresses for women. The venue will be inside so no
+        need to worry about a rainy London summer.
       </p>
     ),
   },
@@ -65,10 +69,7 @@ export default function Details() {
   return (
     <section className="relative bg-primary w-full min-h-screen flex items-center overflow-hidden">
       {/* Subtle atmosphere: gradient + grain */}
-      <div
-        className="absolute inset-0 pointer-events-none z-0"
-        aria-hidden
-      >
+      <div className="absolute inset-0 pointer-events-none z-0" aria-hidden>
         <div
           className="absolute inset-0 opacity-[0.07]"
           style={{

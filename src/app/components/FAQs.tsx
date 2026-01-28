@@ -34,7 +34,7 @@ const faqs = [
   {
     question: "Are children allowed at the venue?",
     answer:
-      "While we love having children around, unfortunately the venue does not permit entry for anyone under the age of 12. For all invited guests names please refer to your invitation.",
+      "While we love having children around, unfortunately the venue does not permit entry for anyone under the age of 12. If are any children are invited they will be listed on your invitation. Thank you for your understanding.",
   },
   {
     question: "What if I have dietary restrictions?",
@@ -44,7 +44,7 @@ const faqs = [
   {
     question: "What is the dress code?",
     answer:
-      "The dress code Cocktail Formal. Please see the Dress Code section for more information and inspiration. (If in doubt, ask Alara - that's what Yannis always does)",
+      "Please see the Details section for more information and inspiration. (If in doubt, ask Alara - that's what Yannis always does)",
   },
 ];
 

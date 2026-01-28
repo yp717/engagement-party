@@ -206,7 +206,7 @@ export default function PhotoGallery({ className }: PhotoGalleryProps) {
                         WebkitTextStroke: "0.3px rgba(0, 0, 0, 0.1)",
                       }}
                     >
-                      Yannis & Alara Forever
+                      Y&A
                     </p>
                   </div>
                 </div>
