@@ -77,7 +77,8 @@ export default function SaveTheDate() {
               transition={{ duration: 0.5, delay: 0.35, ease: easeOutExpo }}
               className="font-serif text-sm sm:text-base md:text-lg text-primary/75 tracking-[0.2em] uppercase mb-8 sm:mb-10 md:mb-12"
             >
-              To Celebrate the Engagement of <br />Alara &amp; Yannis
+              To Celebrate the Engagement of <br />
+              Alara &amp; Yannis
             </motion.p>
 
             {/* Divider */}
