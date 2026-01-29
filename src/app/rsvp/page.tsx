@@ -18,13 +18,7 @@ interface Guest {
 const DIETARY_OPTIONS = [
   "Vegetarian",
   "Vegan",
-  "Gluten-free",
-  "Halal",
-  "Kosher",
-  "Dairy-free",
-  "Nut allergy",
-  "Shellfish allergy",
-  "Allergens (please specify)",
+  "Allergens / Other (please specify)",
 ] as const;
 
 const ALLERGENS_SPECIFY_OPTION = "Allergens (please specify)";
@@ -382,7 +376,14 @@ function RSVPContent() {
                   </p>
                 )}
 
-                <div className="space-y-8">
+                <div
+                  className={cn(
+                    "flex gap-8",
+                    guests.length === 2
+                      ? "flex-col md:flex-row"
+                      : "flex-col"
+                  )}
+                >
                   {guests.map((guest, index) => {
                     const response = responses.get(guest.id);
                     if (!response) return null;
@@ -393,7 +394,10 @@ function RSVPContent() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.1 }}
-                        className="p-6 bg-white/30 border-2 border-primary/10"
+                        className={cn(
+                          "p-6 bg-white/30 border-2 border-primary/10",
+                          guests.length === 2 && "md:flex-1 md:min-w-0"
+                        )}
                       >
                         <h3 className="font-pinyon text-2xl md:text-3xl text-primary mb-6">
                           {guest.firstName} {guest.lastName}
@@ -474,33 +478,33 @@ function RSVPContent() {
                             {response.dietarySelections.includes(
                               ALLERGENS_SPECIFY_OPTION
                             ) && (
-                              <motion.div
-                                initial={{ opacity: 0, height: 0 }}
-                                animate={{ opacity: 1, height: "auto" }}
-                                className="mt-3"
-                              >
-                                <label
-                                  htmlFor={`allergen-${guest.id}`}
-                                  className="block font-serif text-sm tracking-wide text-primary/60 mb-2"
+                                <motion.div
+                                  initial={{ opacity: 0, height: 0 }}
+                                  animate={{ opacity: 1, height: "auto" }}
+                                  className="mt-3"
                                 >
-                                  Please specify your allergy
-                                </label>
-                                <input
-                                  type="text"
-                                  id={`allergen-${guest.id}`}
-                                  value={response.allergenSpecification}
-                                  onChange={(e) =>
-                                    updateResponse(
-                                      guest.id,
-                                      "allergenSpecification",
-                                      e.target.value
-                                    )
-                                  }
-                                  className="w-full px-4 py-3 bg-white/50 border-2 border-primary/20 font-serif text-primary focus:outline-none focus:border-primary/40 transition-colors"
-                                  placeholder="e.g., peanuts, shellfish, dairy"
-                                />
-                              </motion.div>
-                            )}
+                                  <label
+                                    htmlFor={`allergen-${guest.id}`}
+                                    className="block font-serif text-sm tracking-wide text-primary/60 mb-2"
+                                  >
+                                    Please specify your allergy
+                                  </label>
+                                  <input
+                                    type="text"
+                                    id={`allergen-${guest.id}`}
+                                    value={response.allergenSpecification}
+                                    onChange={(e) =>
+                                      updateResponse(
+                                        guest.id,
+                                        "allergenSpecification",
+                                        e.target.value
+                                      )
+                                    }
+                                    className="w-full px-4 py-3 bg-white/50 border-2 border-primary/20 font-serif text-primary focus:outline-none focus:border-primary/40 transition-colors"
+                                    placeholder="e.g., peanuts, shellfish, dairy"
+                                  />
+                                </motion.div>
+                              )}
                           </motion.div>
                         )}
 
