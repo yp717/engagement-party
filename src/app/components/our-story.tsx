@@ -161,12 +161,11 @@ export default function OurStory({ className }: OurStoryProps) {
             Through lots of memories, special moments, and laughter, they slowly
             grew into a life they love sharing and building together. They
             taught each other how to love, how to laugh, and how to embrace the
-            moments in between. Throughout the years, Alara tried to keep up
-            with Yannis&apos; ever-growing list of restaurants and recipes,
-            knowing full well they would likely never reach the end. And Yannis
-            came to love that Alara&apos;s stories always take the scenic route
-            — filled with every possible detour and absolutely no hurry to reach
-            the end.
+            moments in between. Alara tries to keep up with Yannis&apos;
+            ever-growing list of restaurants and recipes, knowing full well they
+            will likely never reach the end. And Yannis has come to love that
+            Alara&apos;s stories always take the scenic route — filled with
+            every possible detour and absolutely no hurry to reach the end.
           </p>
           <p className="text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
             In May 2025 Yannis planned a trip that brought them back to their
