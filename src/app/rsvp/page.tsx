@@ -152,7 +152,9 @@ function RSVPContent() {
     } catch (err) {
       console.error(err);
       setError(
-        err instanceof Error ? err.message : "Something went wrong. Please try again."
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again."
       );
     } finally {
       setIsSubmitting(false);
@@ -388,7 +390,9 @@ function RSVPContent() {
                         {guest.rsvpCompletedAt && (
                           <p className="font-serif text-xs text-primary/50 mt-4">
                             Previously responded on{" "}
-                            {new Date(guest.rsvpCompletedAt).toLocaleDateString()}
+                            {new Date(
+                              guest.rsvpCompletedAt
+                            ).toLocaleDateString()}
                           </p>
                         )}
                       </motion.div>

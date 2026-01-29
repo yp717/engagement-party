@@ -1,10 +1,4 @@
-import {
-  pgTable,
-  uuid,
-  text,
-  boolean,
-  timestamp,
-} from "drizzle-orm/pg-core";
+import { pgTable, uuid, text, boolean, timestamp } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
 export const households = pgTable("households", {

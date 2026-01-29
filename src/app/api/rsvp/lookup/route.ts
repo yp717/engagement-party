@@ -29,7 +29,10 @@ export async function GET(request: NextRequest) {
 
     if (!guest) {
       return NextResponse.json(
-        { error: "We couldn't find your name on the guest list. Please check the spelling or contact the couple." },
+        {
+          error:
+            "We couldn't find your name on the guest list. Please check the spelling or contact the couple.",
+        },
         { status: 404 }
       );
     }

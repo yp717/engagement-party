@@ -89,8 +89,7 @@ export default function UpdateEmail({
 
 const main = {
   backgroundColor: "#f5f3ed",
-  fontFamily:
-    '"Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif',
+  fontFamily: '"Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif',
 };
 
 const container = {

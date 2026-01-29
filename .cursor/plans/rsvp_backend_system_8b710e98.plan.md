@@ -39,7 +39,7 @@ flowchart TD
         RSVPPage["/rsvp page"]
         RSVPForm["RSVP Form Component"]
     end
-    
+
     subgraph api [API Routes]
         ValidateToken["GET /api/rsvp/[token]"]
         SubmitRSVP["POST /api/rsvp/[token]"]
@@ -47,12 +47,12 @@ flowchart TD
         SendInvites["POST /api/email/send-invites"]
         SendUpdate["POST /api/email/send-update"]
     end
-    
+
     subgraph external [External Services]
         Neon["Neon PostgreSQL"]
         Resend["Resend Email"]
     end
-    
+
     RSVPPage -->|"?token=xxx"| ValidateToken
     RSVPPage -->|"fallback"| NameLookup
     RSVPForm --> SubmitRSVP
@@ -64,8 +64,6 @@ flowchart TD
     SendUpdate --> Neon
     SendUpdate --> Resend
 ```
-
-
 
 ## Database Schema
 
@@ -128,8 +126,10 @@ Two tables in Neon PostgreSQL:
 1. Guest receives email with unique link: `yoursite.com/rsvp?token=abc123`
 2. Page validates token, fetches household + all guests
 3. Form displays all guest names with:
-  - Attendance toggle (Yes/No) per guest
-  - Dietary requirements text field per guest
+
+- Attendance toggle (Yes/No) per guest
+- Dietary requirements text field per guest
+
 4. Submit saves responses for all household members
 5. **Fallback**: If no token or invalid, show name lookup form (searches by first + last name, returns household token if found)
 
@@ -137,9 +137,11 @@ Two tables in Neon PostgreSQL:
 
 1. Admin calls `POST /api/email/send-invites` with API key and optional `invite_status` filter
 2. System fetches households where:
-  - `email` is not null (can't send to guests without email)
-  - `invite_sent_at` is null (haven't sent yet)
-  - `invite_status` matches filter (e.g., "Yes" for first batch, "Maybe" for second batch)
+
+- `email` is not null (can't send to guests without email)
+- `invite_sent_at` is null (haven't sent yet)
+- `invite_status` matches filter (e.g., "Yes" for first batch, "Maybe" for second batch)
+
 3. For each household: send email via Resend, update `invite_sent_at`
 4. Updates work similarly via `POST /api/email/send-update`
 
@@ -178,4 +180,3 @@ Please note: I have already pulled all the environment variables for NEON locall
 npm install @neondatabase/serverless drizzle-orm resend react-email @react-email/components
 npm install -D drizzle-kit
 ```
-

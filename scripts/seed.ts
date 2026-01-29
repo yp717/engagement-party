@@ -131,9 +131,7 @@ async function seed() {
     const guestNames = household.guests
       .map((g) => `${g.firstName} ${g.lastName}`)
       .join(", ");
-    console.log(
-      `  ✓ ${household.email || "(no email)"}: ${guestNames}`
-    );
+    console.log(`  ✓ ${household.email || "(no email)"}: ${guestNames}`);
   }
 
   console.log(`\n✅ Seed complete!`);
