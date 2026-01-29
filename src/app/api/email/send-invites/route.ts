@@ -64,13 +64,14 @@ export async function POST(request: NextRequest) {
     for (const household of householdsWithEmail) {
       const guestNames = household.guests.map((g) => g.firstName);
       const rsvpUrl = `${BASE_URL}/rsvp?token=${household.uniqueToken}`;
+      const coupleImageUrl = `${BASE_URL}/photos/black-and-white-post-engagement.jpeg`;
 
       try {
         await resend.emails.send({
           from: "Alara & Yannis <noreply@updates.yannisandalara.com>",
           to: household.email!,
           subject: "You're Invited to Alara & Yannis' Engagement Party",
-          react: InvitationEmail({ guestNames, rsvpUrl }),
+          react: InvitationEmail({ guestNames, rsvpUrl, coupleImageUrl }),
         });
 
         // Update invite_sent_at

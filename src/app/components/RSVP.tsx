@@ -3,12 +3,22 @@
 import { motion } from "framer-motion";
 import RibbonSketch from "./ribbon-sketch";
 import Footer from "./footer";
+import { useEffect, useState } from "react";
 
 export default function RSVP() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mq.matches);
+    const handler = () => setIsMobile(mq.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
   const scrollToTop = () => {
     const element = document.getElementById("hero");
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      element.scrollIntoView({ behavior: isMobile ? "auto" : "smooth" });
     }
   };
 
@@ -62,7 +72,7 @@ export default function RSVP() {
               transition={{ duration: 0.6, delay: 0.2 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="font-serif text-lg md:text-xl text-cream tracking-[0.3em] uppercase mb-4 md:mb-6 hover:text-cream/80 transition-colors cursor-pointer"
+              className="font-serif text-lg md:text-xl text-cream tracking-[0.3em] uppercase mb-4 md:mb-6 hover:text-cream/80 transition-colors cursor-pointer underline"
             >
               RSVP HERE
             </motion.a>
@@ -76,7 +86,7 @@ export default function RSVP() {
               transition={{ duration: 0.6, delay: 0.3 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="font-serif text-sm md:text-base text-cream tracking-[0.3em] uppercase underline hover:text-cream/80 transition-colors"
+              className="font-serif text-sm md:text-base text-cream tracking-[0.3em] uppercase hover:text-cream/80 transition-colors"
             >
               BACK TO TOP
             </motion.button>

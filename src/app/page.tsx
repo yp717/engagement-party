@@ -14,7 +14,7 @@ import CheckeredDividerNarrow from "./components/checkered-divider-narrow";
 export default function Home() {
   return (
     <PasswordProtection>
-      <main className="relative bg-cream snap-y snap-mandatory overflow-y-scroll h-screen scroll-smooth">
+      <main className="relative bg-cream snap-y snap-mandatory overflow-x-hidden overflow-y-scroll h-screen md:scroll-smooth">
         {/* Hero Section with Header overlay */}
         <section id="hero" className="snap-start relative">
           <Header />

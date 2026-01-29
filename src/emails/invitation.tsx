@@ -4,6 +4,7 @@ import {
   Head,
   Heading,
   Html,
+  Img,
   Link,
   Preview,
   Section,
@@ -13,12 +14,20 @@ import {
 interface InvitationEmailProps {
   guestNames: string[];
   rsvpUrl: string;
+  /** Full URL to the couple image (e.g. https://yannisandalara.com/photos/black-and-white-post-engagement.jpeg) */
+  coupleImageUrl?: string;
 }
 
 export default function InvitationEmail({
   guestNames = ["Guest"],
   rsvpUrl = "https://example.com/rsvp",
+  coupleImageUrl,
 }: InvitationEmailProps) {
+  // Default image for preview (use full URL in production)
+  const imageUrl =
+    coupleImageUrl ||
+    "https://yannisandalara.com/photos/black-and-white-post-engagement.jpeg";
+
   const namesFormatted =
     guestNames.length === 1
       ? guestNames[0]
@@ -35,6 +44,15 @@ export default function InvitationEmail({
       <Body style={main}>
         <Container style={container}>
           <Section style={content}>
+            <Section style={imageWrapper}>
+              <Img
+                src={imageUrl}
+                alt="Alara & Yannis"
+                style={coupleImage}
+                width={520}
+                height={347}
+              />
+            </Section>
             <Heading style={heading}>You&apos;re Invited</Heading>
 
             <Text style={greeting}>Dear {namesFormatted},</Text>
@@ -67,7 +85,7 @@ export default function InvitationEmail({
             </Text>
 
             <Text style={paragraph}>
-              You can find more details about the event on our website: {" "}
+              You can find more details about the event on our website:{" "}
               <Link href="https://www.yannisandalara.com" style={link}>
                 yannisandalara.com
               </Link>
@@ -101,11 +119,24 @@ export default function InvitationEmail({
               {rsvpUrl}
             </Link>
           </Section>
+
+          <Section style={footer}>
+            <Text style={footerText}>
+              Website built with love by Yannis and supervised by Alara ❤️
+            </Text>
+          </Section>
         </Container>
       </Body>
     </Html>
   );
 }
+
+InvitationEmail.PreviewProps = {
+  guestNames: ["Alara"],
+  rsvpUrl: "https://yannisandalara.com/rsvp",
+  coupleImageUrl:
+    "https://yannisandalara.com/photos/black-and-white-post-engagement.jpeg",
+} as InvitationEmailProps;
 
 const main = {
   backgroundColor: "#f5f3ed",
@@ -123,6 +154,20 @@ const content = {
   padding: "40px",
   borderRadius: "4px",
   border: "1px solid #e8e5de",
+};
+
+const imageWrapper = {
+  margin: "0 0 24px",
+  width: "100%" as const,
+};
+
+const coupleImage = {
+  width: "100%" as const,
+  maxWidth: "100%" as const,
+  height: "auto" as const,
+  display: "block" as const,
+  objectFit: "cover" as const,
+  borderRadius: "4px",
 };
 
 const heading = {

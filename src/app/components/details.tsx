@@ -55,7 +55,7 @@ const detailBlocks = [
     title: "Dress Code",
     children: (
       <p className="text-cream/85 leading-relaxed">
-        <em className="font-medium text-cream/95">Cocktail formal</em> — we We
+        <em className="font-medium text-cream/95">Cocktail formal</em> — We
         would love to see our family and friends dressed up with us! The dress
         code is Cocktail Formal. Think suits for men, tie optional, and
         cocktail/floor length dresses for women. The venue will be inside so no

@@ -34,21 +34,37 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  overflow-x: hidden;
+  /* Smooth scroll only on larger screens to avoid jank on mobile */
+  scroll-behavior: auto;
+}
+
+@media (min-width: 768px) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), sans-serif;
+  overflow-x: hidden;
 }
 
 /* Smooth scroll snap for full-height sections */
 main {
   scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
+  overflow-x: hidden;
   overflow-y: scroll;
   height: 100vh;
+}
+
+@media (min-width: 768px) {
+  main {
+    scroll-behavior: smooth;
+  }
 }
 
 section {
@@ -94,10 +110,12 @@ section {
     opacity: 0;
     transform: translate(0, 0) scale(0.5);
   }
+
   15% {
     opacity: 1;
     transform: translate(0, 0) scale(1);
   }
+
   100% {
     opacity: 0;
     transform: translate(var(--dx), var(--dy)) scale(0.7);

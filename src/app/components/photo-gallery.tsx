@@ -6,6 +6,18 @@ import { motion, useMotionValue, AnimatePresence } from "framer-motion";
 import EllipticalButton from "./elliptical-button";
 import { useState, useRef, useEffect } from "react";
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mq.matches);
+    const handler = () => setIsMobile(mq.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+  return isMobile;
+}
+
 interface PhotoGalleryProps {
   className?: string;
 }
@@ -116,7 +128,238 @@ const INITIAL_POSITIONS: ItemPositions = {
   lily2: { x: 0, y: 0, rotate: 75 },
 };
 
+const engravedTextStyle = {
+  color: "#2a2a2a",
+  textShadow: `
+    0 1px 0 rgba(255, 255, 255, 0.1),
+    0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 2px 2px rgba(0, 0, 0, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.5)
+  `,
+  letterSpacing: "0.15em",
+  filter: "drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2))",
+  WebkitTextStroke: "0.3px rgba(0, 0, 0, 0.1)",
+} as const;
+
+const filmGrainStyle = {
+  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+};
+
+/** Non-interactive trinket dish for mobile: same look, no drag, no touch issues */
+function StaticTrinketDish() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, delay: 0.2 }}
+      className="flex justify-center"
+    >
+      <div className="relative w-full max-w-5xl aspect-[4/3] overflow-hidden">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="relative w-full h-full max-w-[1000px] max-h-[750px]">
+            <Image
+              src="/photos/metal-plate.png"
+              alt=""
+              fill
+              className="object-contain"
+              sizes="(max-width: 768px) 600px, 1000px"
+              quality={90}
+            />
+            <div className="absolute inset-0 flex flex-col items-center justify-center z-0 pointer-events-none">
+              <div className="text-center relative">
+                <p
+                  className="font-serif text-2xl font-light tracking-wider relative"
+                  style={engravedTextStyle}
+                >
+                  Green Park 2021
+                </p>
+                <p
+                  className="font-serif text-xl font-light tracking-wider relative mt-2"
+                  style={engravedTextStyle}
+                >
+                  Y&A
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="absolute inset-0 pointer-events-none">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="absolute z-10 left-[12%] top-[18%]"
+            style={{ transform: "rotate(-12deg)" }}
+          >
+            <div className="relative bg-white p-2 shadow-2xl">
+              <div className="relative w-[120px] h-[160px] overflow-hidden">
+                <Image
+                  src="/photos/scotland-analog.jpeg"
+                  alt="Scotland"
+                  fill
+                  className="object-cover"
+                  sizes="120px"
+                  quality={90}
+                />
+                <div
+                  className="absolute inset-0 opacity-[0.15] mix-blend-overlay"
+                  style={filmGrainStyle}
+                />
+              </div>
+            </div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="absolute z-20 left-[32%] top-[12%]"
+            style={{ transform: "rotate(10deg)" }}
+          >
+            <div className="relative bg-white p-2 shadow-2xl">
+              <div className="relative w-[130px] h-[173px] overflow-hidden">
+                <Image
+                  src="/photos/core-clare-smyth.jpeg"
+                  alt="Core Clare Smyth"
+                  fill
+                  className="object-cover"
+                  sizes="130px"
+                  quality={90}
+                />
+                <div
+                  className="absolute inset-0 opacity-[0.15] mix-blend-overlay"
+                  style={filmGrainStyle}
+                />
+              </div>
+            </div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            className="absolute z-30 left-[55%] top-[22%]"
+            style={{ transform: "rotate(-6deg)" }}
+          >
+            <div className="relative bg-white p-2 shadow-2xl">
+              <div className="relative w-[125px] h-[167px] overflow-hidden">
+                <Image
+                  src="/photos/yannis-and-alara-lals-birthday.jpeg"
+                  alt="Yannis and Alara"
+                  fill
+                  className="object-cover"
+                  sizes="125px"
+                  quality={90}
+                />
+                <div
+                  className="absolute inset-0 opacity-[0.15] mix-blend-overlay"
+                  style={filmGrainStyle}
+                />
+              </div>
+            </div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.55 }}
+            className="absolute z-40 right-[48%] top-[48%]"
+            style={{ transform: "rotate(-8deg)" }}
+          >
+            <div className="relative w-[80px] h-[110px]">
+              <Image
+                src="/photos/matchbox.png"
+                alt="Matchbox"
+                fill
+                className="object-contain"
+                sizes="80px"
+                quality={90}
+              />
+            </div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            className="absolute z-[50] left-[12%] top-[55%]"
+            style={{ transform: "rotate(-15deg)" }}
+          >
+            <Image
+              src="/pearls.png"
+              alt="Pearls"
+              width={90}
+              height={64}
+              className="object-contain"
+              sizes="90px"
+              quality={90}
+            />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.65 }}
+            className="absolute z-[60] right-[28%] top-[66%]"
+            style={{ transform: "rotate(12deg)" }}
+          >
+            <Image
+              src="/photos/seashell.png"
+              alt="Seashell"
+              width={80}
+              height={37}
+              className="object-contain"
+              sizes="80px"
+              quality={90}
+            />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.7 }}
+            className="absolute z-[70] left-[72%] top-[42%]"
+            style={{ transform: "rotate(100deg)" }}
+          >
+            <Image
+              src="/photos/kalla-lily.png"
+              alt="Kalla Lily"
+              width={180}
+              height={90}
+              className="object-contain"
+              sizes="180px"
+              quality={90}
+            />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.75 }}
+            className="absolute z-[80] left-[68%] top-[40%]"
+            style={{ transform: "rotate(75deg)" }}
+          >
+            <Image
+              src="/photos/kalla-lily.png"
+              alt="Kalla Lily"
+              width={200}
+              height={100}
+              className="object-contain"
+              sizes="200px"
+              quality={90}
+            />
+          </motion.div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function PhotoGallery({ className }: PhotoGalleryProps) {
+  const isMobile = useIsMobile();
   const [positions, setPositions] = useState<ItemPositions>(INITIAL_POSITIONS);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -143,341 +386,353 @@ export default function PhotoGallery({ className }: PhotoGalleryProps) {
         className
       )}
     >
-      <div className="max-w-4xl mx-auto px-4 md:px-8 w-full">
-        {/* Photo Gallery on Metal Plate */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex justify-center"
-        >
-          <div
-            ref={containerRef}
-            className="relative w-full max-w-5xl aspect-[4/3]"
-          >
-            {/* Metal Plate Background */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="relative w-full h-full max-w-[1000px] max-h-[750px] md:max-w-[1200px] md:max-h-[900px]">
-                <Image
-                  src="/photos/metal-plate.png"
-                  alt=""
-                  fill
-                  className="object-contain"
-                  sizes="(max-width: 768px) 600px, (max-width: 1024px) 1000px, 1200px"
-                  quality={90}
-                />
+      <div
+        className={cn(
+          "max-w-4xl mx-auto px-4 md:px-8 w-full",
+          isMobile && "overflow-x-hidden"
+        )}
+      >
+        {/* Mobile: non-interactive trinket dish to avoid touch/drag issues */}
+        {isMobile ? (
+          <StaticTrinketDish />
+        ) : (
+          <>
+            {/* Photo Gallery on Metal Plate (desktop: interactive) */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="flex justify-center"
+            >
+              <div
+                ref={containerRef}
+                className="relative w-full max-w-5xl aspect-[4/3]"
+              >
+                {/* Metal Plate Background */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="relative w-full h-full max-w-[1000px] max-h-[750px] md:max-w-[1200px] md:max-h-[900px]">
+                    <Image
+                      src="/photos/metal-plate.png"
+                      alt=""
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 600px, (max-width: 1024px) 1000px, 1200px"
+                      quality={90}
+                    />
 
-                {/* Engraved Text - Green Park 2021 - Lowest z-index so it's behind everything */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center z-0 pointer-events-none">
-                  <div className="text-center relative">
-                    {/* Engraved text effect using multiple shadows */}
-                    <p
-                      className="font-serif text-2xl md:text-3xl lg:text-4xl font-light tracking-wider relative"
-                      style={{
-                        color: "#2a2a2a",
-                        textShadow: `
+                    {/* Engraved Text - Green Park 2021 - Lowest z-index so it's behind everything */}
+                    <div className="absolute inset-0 flex flex-col items-center justify-center z-0 pointer-events-none">
+                      <div className="text-center relative">
+                        {/* Engraved text effect using multiple shadows */}
+                        <p
+                          className="font-serif text-2xl md:text-3xl lg:text-4xl font-light tracking-wider relative"
+                          style={{
+                            color: "#2a2a2a",
+                            textShadow: `
                           0 1px 0 rgba(255, 255, 255, 0.1),
                           0 -1px 0 rgba(0, 0, 0, 0.3),
                           0 2px 2px rgba(0, 0, 0, 0.4),
                           inset 0 1px 1px rgba(255, 255, 255, 0.15),
                           inset 0 -1px 1px rgba(0, 0, 0, 0.5)
                         `,
-                        letterSpacing: "0.15em",
-                        filter: "drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2))",
-                        WebkitTextStroke: "0.3px rgba(0, 0, 0, 0.1)",
-                      }}
-                    >
-                      Green Park 2021
-                    </p>
-                    <p
-                      className="font-serif text-xl md:text-2xl lg:text-3xl font-light tracking-wider relative mt-2 md:mt-3"
-                      style={{
-                        color: "#2a2a2a",
-                        textShadow: `
+                            letterSpacing: "0.15em",
+                            filter: "drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2))",
+                            WebkitTextStroke: "0.3px rgba(0, 0, 0, 0.1)",
+                          }}
+                        >
+                          Green Park 2021
+                        </p>
+                        <p
+                          className="font-serif text-xl md:text-2xl lg:text-3xl font-light tracking-wider relative mt-2 md:mt-3"
+                          style={{
+                            color: "#2a2a2a",
+                            textShadow: `
                           0 1px 0 rgba(255, 255, 255, 0.1),
                           0 -1px 0 rgba(0, 0, 0, 0.3),
                           0 2px 2px rgba(0, 0, 0, 0.4),
                           inset 0 1px 1px rgba(255, 255, 255, 0.15),
                           inset 0 -1px 1px rgba(0, 0, 0, 0.5)
                         `,
-                        letterSpacing: "0.15em",
-                        filter: "drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2))",
-                        WebkitTextStroke: "0.3px rgba(0, 0, 0, 0.1)",
-                      }}
-                    >
-                      Y&A
-                    </p>
+                            letterSpacing: "0.15em",
+                            filter: "drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2))",
+                            WebkitTextStroke: "0.3px rgba(0, 0, 0, 0.1)",
+                          }}
+                        >
+                          Y&A
+                        </p>
+                      </div>
+                    </div>
                   </div>
+                </div>
+
+                {/* Polaroid Photos */}
+                <div className="relative w-full h-full flex items-center justify-center">
+                  {/* Photo 1 - Scotland Analog (back layer, rotated left) */}
+                  <DraggableItem
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.4 }}
+                    className="absolute z-10 touch-none"
+                    initialLeft="15%"
+                    initialTop="20%"
+                    position={positions.photo1}
+                    onDragEnd={(x, y) => updatePosition("photo1", x, y)}
+                  >
+                    <div className="relative bg-white p-2 md:p-3 shadow-2xl pointer-events-none">
+                      <div className="relative w-[180px] h-[240px] md:w-[220px] md:h-[293px] overflow-hidden pointer-events-none">
+                        <Image
+                          src="/photos/scotland-analog.jpeg"
+                          alt="Scotland"
+                          fill
+                          className="object-cover pointer-events-none"
+                          sizes="(max-width: 768px) 180px, 220px"
+                          quality={90}
+                        />
+                        {/* Film grain overlay */}
+                        <div
+                          className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none"
+                          style={{
+                            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </DraggableItem>
+
+                  {/* Photo 2 - Core Clare Smyth (middle layer, rotated right) */}
+                  <DraggableItem
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.6 }}
+                    className="absolute z-20 touch-none"
+                    initialLeft="35%"
+                    initialTop="15%"
+                    position={positions.photo2}
+                    onDragEnd={(x, y) => updatePosition("photo2", x, y)}
+                  >
+                    <div className="relative bg-white p-2 md:p-3 shadow-2xl pointer-events-none">
+                      <div className="relative w-[200px] h-[267px] md:w-[240px] md:h-[320px] overflow-hidden pointer-events-none">
+                        <Image
+                          src="/photos/core-clare-smyth.jpeg"
+                          alt="Core Clare Smyth"
+                          fill
+                          className="object-cover pointer-events-none"
+                          sizes="(max-width: 768px) 200px, 240px"
+                          quality={90}
+                        />
+                        {/* Film grain overlay */}
+                        <div
+                          className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none"
+                          style={{
+                            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </DraggableItem>
+
+                  {/* Photo 3 - Yannis and Alara at LAL's Birthday (front layer, rotated left) */}
+                  <DraggableItem
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.8 }}
+                    className="absolute z-30 touch-none"
+                    initialLeft="65%"
+                    initialTop="25%"
+                    position={positions.photo3}
+                    onDragEnd={(x, y) => updatePosition("photo3", x, y)}
+                  >
+                    <div className="relative bg-white p-2 md:p-3 shadow-2xl pointer-events-none">
+                      <div className="relative w-[190px] h-[253px] md:w-[230px] md:h-[307px] overflow-hidden pointer-events-none">
+                        <Image
+                          src="/photos/yannis-and-alara-lals-birthday.jpeg"
+                          alt="Yannis and Alara"
+                          fill
+                          className="object-cover pointer-events-none"
+                          sizes="(max-width: 768px) 190px, 230px"
+                          quality={90}
+                        />
+                        {/* Film grain overlay */}
+                        <div
+                          className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none"
+                          style={{
+                            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </DraggableItem>
+
+                  {/* Matchbox - Top of the tray */}
+                  <DraggableItem
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.85 }}
+                    className="absolute z-40 touch-none"
+                    initialRight="50%"
+                    initialTop="50%"
+                    position={positions.matchbox}
+                    onDragEnd={(x, y) => updatePosition("matchbox", x, y)}
+                  >
+                    <div className="relative w-[120px] h-[160px] md:w-[180px] md:h-[248px] pointer-events-none">
+                      <Image
+                        src="/photos/matchbox.png"
+                        alt="Matchbox"
+                        fill
+                        className="object-contain pointer-events-none"
+                        sizes="(max-width: 768px) 100px, 120px"
+                        quality={90}
+                      />
+                    </div>
+                  </DraggableItem>
+
+                  {/* Pearls - Bottom left of the tray */}
+                  <DraggableItem
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.9 }}
+                    className="absolute z-[50] touch-none"
+                    initialLeft="15%"
+                    initialTop="57%"
+                    position={positions.pearls}
+                    onDragEnd={(x, y) => updatePosition("pearls", x, y)}
+                  >
+                    <div
+                      className="relative pointer-events-none"
+                      style={{ width: "fit-content", height: "fit-content" }}
+                    >
+                      <Image
+                        src="/pearls.png"
+                        alt="Pearls"
+                        width={140}
+                        height={100}
+                        className="pointer-events-none"
+                        sizes="(max-width: 768px) 100px, 120px"
+                        quality={90}
+                      />
+                    </div>
+                  </DraggableItem>
+
+                  {/* Seashell - Bottom right of the tray */}
+                  <DraggableItem
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.95 }}
+                    className="absolute z-[60] touch-none"
+                    initialRight="30%"
+                    initialTop="68%"
+                    position={positions.seashell}
+                    onDragEnd={(x, y) => updatePosition("seashell", x, y)}
+                  >
+                    <div
+                      className="relative pointer-events-none"
+                      style={{ width: "fit-content", height: "fit-content" }}
+                    >
+                      <Image
+                        src="/photos/seashell.png"
+                        alt="Seashell"
+                        width={120}
+                        height={55}
+                        className="pointer-events-none"
+                        sizes="(max-width: 768px) 100px, 120px"
+                        quality={90}
+                      />
+                    </div>
+                  </DraggableItem>
+
+                  {/* Kalla Lilies - Decorative trinkets on the tray */}
+                  {/* First Lily (back layer) */}
+                  <DraggableItem
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 1 }}
+                    className="absolute z-[70] touch-none"
+                    initialLeft="80%"
+                    initialTop="45%"
+                    position={positions.lily1}
+                    onDragEnd={(x, y) => updatePosition("lily1", x, y)}
+                  >
+                    <div
+                      className="relative w-[576px] h-[288px] md:w-[720px] md:h-[360px] pointer-events-none"
+                      style={{ width: "fit-content", height: "fit-content" }}
+                    >
+                      <Image
+                        src="/photos/kalla-lily.png"
+                        alt="Kalla Lily"
+                        width={576}
+                        height={288}
+                        className="object-contain pointer-events-none w-auto h-auto"
+                        sizes="(max-width: 768px) 576px, 720px"
+                        quality={90}
+                      />
+                    </div>
+                  </DraggableItem>
+
+                  {/* Second Lily (front layer, stacked on top) */}
+                  <DraggableItem
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 1.2 }}
+                    className="absolute z-[80] touch-none"
+                    initialLeft="75%"
+                    initialTop="42%"
+                    position={positions.lily2}
+                    onDragEnd={(x, y) => updatePosition("lily2", x, y)}
+                  >
+                    <div
+                      className="relative w-[648px] h-[324px] md:w-[792px] md:h-[396px] pointer-events-none"
+                      style={{ width: "fit-content", height: "fit-content" }}
+                    >
+                      <Image
+                        src="/photos/kalla-lily.png"
+                        alt="Kalla Lily"
+                        width={648}
+                        height={324}
+                        className="object-contain pointer-events-none w-auto h-auto"
+                        sizes="(max-width: 768px) 648px, 792px"
+                        quality={90}
+                      />
+                    </div>
+                  </DraggableItem>
                 </div>
               </div>
-            </div>
-
-            {/* Polaroid Photos */}
-            <div className="relative w-full h-full flex items-center justify-center">
-              {/* Photo 1 - Scotland Analog (back layer, rotated left) */}
-              <DraggableItem
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="absolute z-10 touch-none"
-                initialLeft="15%"
-                initialTop="20%"
-                position={positions.photo1}
-                onDragEnd={(x, y) => updatePosition("photo1", x, y)}
-              >
-                <div className="relative bg-white p-2 md:p-3 shadow-2xl pointer-events-none">
-                  <div className="relative w-[180px] h-[240px] md:w-[220px] md:h-[293px] overflow-hidden pointer-events-none">
-                    <Image
-                      src="/photos/scotland-analog.jpeg"
-                      alt="Scotland"
-                      fill
-                      className="object-cover pointer-events-none"
-                      sizes="(max-width: 768px) 180px, 220px"
-                      quality={90}
-                    />
-                    {/* Film grain overlay */}
-                    <div
-                      className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none"
-                      style={{
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-                      }}
-                    />
-                  </div>
-                </div>
-              </DraggableItem>
-
-              {/* Photo 2 - Core Clare Smyth (middle layer, rotated right) */}
-              <DraggableItem
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                className="absolute z-20 touch-none"
-                initialLeft="35%"
-                initialTop="15%"
-                position={positions.photo2}
-                onDragEnd={(x, y) => updatePosition("photo2", x, y)}
-              >
-                <div className="relative bg-white p-2 md:p-3 shadow-2xl pointer-events-none">
-                  <div className="relative w-[200px] h-[267px] md:w-[240px] md:h-[320px] overflow-hidden pointer-events-none">
-                    <Image
-                      src="/photos/core-clare-smyth.jpeg"
-                      alt="Core Clare Smyth"
-                      fill
-                      className="object-cover pointer-events-none"
-                      sizes="(max-width: 768px) 200px, 240px"
-                      quality={90}
-                    />
-                    {/* Film grain overlay */}
-                    <div
-                      className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none"
-                      style={{
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-                      }}
-                    />
-                  </div>
-                </div>
-              </DraggableItem>
-
-              {/* Photo 3 - Yannis and Alara at LAL's Birthday (front layer, rotated left) */}
-              <DraggableItem
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.8 }}
-                className="absolute z-30 touch-none"
-                initialLeft="65%"
-                initialTop="25%"
-                position={positions.photo3}
-                onDragEnd={(x, y) => updatePosition("photo3", x, y)}
-              >
-                <div className="relative bg-white p-2 md:p-3 shadow-2xl pointer-events-none">
-                  <div className="relative w-[190px] h-[253px] md:w-[230px] md:h-[307px] overflow-hidden pointer-events-none">
-                    <Image
-                      src="/photos/yannis-and-alara-lals-birthday.jpeg"
-                      alt="Yannis and Alara"
-                      fill
-                      className="object-cover pointer-events-none"
-                      sizes="(max-width: 768px) 190px, 230px"
-                      quality={90}
-                    />
-                    {/* Film grain overlay */}
-                    <div
-                      className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none"
-                      style={{
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-                      }}
-                    />
-                  </div>
-                </div>
-              </DraggableItem>
-
-              {/* Matchbox - Top of the tray */}
-              <DraggableItem
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.85 }}
-                className="absolute z-40 touch-none"
-                initialRight="50%"
-                initialTop="50%"
-                position={positions.matchbox}
-                onDragEnd={(x, y) => updatePosition("matchbox", x, y)}
-              >
-                <div className="relative w-[120px] h-[160px] md:w-[180px] md:h-[248px] pointer-events-none">
-                  <Image
-                    src="/photos/matchbox.png"
-                    alt="Matchbox"
-                    fill
-                    className="object-contain pointer-events-none"
-                    sizes="(max-width: 768px) 100px, 120px"
-                    quality={90}
-                  />
-                </div>
-              </DraggableItem>
-
-              {/* Pearls - Bottom left of the tray */}
-              <DraggableItem
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.9 }}
-                className="absolute z-[50] touch-none"
-                initialLeft="15%"
-                initialTop="57%"
-                position={positions.pearls}
-                onDragEnd={(x, y) => updatePosition("pearls", x, y)}
-              >
-                <div
-                  className="relative pointer-events-none"
-                  style={{ width: "fit-content", height: "fit-content" }}
-                >
-                  <Image
-                    src="/pearls.png"
-                    alt="Pearls"
-                    width={140}
-                    height={100}
-                    className="pointer-events-none"
-                    sizes="(max-width: 768px) 100px, 120px"
-                    quality={90}
-                  />
-                </div>
-              </DraggableItem>
-
-              {/* Seashell - Bottom right of the tray */}
-              <DraggableItem
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.95 }}
-                className="absolute z-[60] touch-none"
-                initialRight="30%"
-                initialTop="68%"
-                position={positions.seashell}
-                onDragEnd={(x, y) => updatePosition("seashell", x, y)}
-              >
-                <div
-                  className="relative pointer-events-none"
-                  style={{ width: "fit-content", height: "fit-content" }}
-                >
-                  <Image
-                    src="/photos/seashell.png"
-                    alt="Seashell"
-                    width={120}
-                    height={55}
-                    className="pointer-events-none"
-                    sizes="(max-width: 768px) 100px, 120px"
-                    quality={90}
-                  />
-                </div>
-              </DraggableItem>
-
-              {/* Kalla Lilies - Decorative trinkets on the tray */}
-              {/* First Lily (back layer) */}
-              <DraggableItem
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 1 }}
-                className="absolute z-[70] touch-none"
-                initialLeft="80%"
-                initialTop="45%"
-                position={positions.lily1}
-                onDragEnd={(x, y) => updatePosition("lily1", x, y)}
-              >
-                <div
-                  className="relative w-[576px] h-[288px] md:w-[720px] md:h-[360px] pointer-events-none"
-                  style={{ width: "fit-content", height: "fit-content" }}
-                >
-                  <Image
-                    src="/photos/kalla-lily.png"
-                    alt="Kalla Lily"
-                    width={576}
-                    height={288}
-                    className="object-contain pointer-events-none w-auto h-auto"
-                    sizes="(max-width: 768px) 576px, 720px"
-                    quality={90}
-                  />
-                </div>
-              </DraggableItem>
-
-              {/* Second Lily (front layer, stacked on top) */}
-              <DraggableItem
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 1.2 }}
-                className="absolute z-[80] touch-none"
-                initialLeft="75%"
-                initialTop="42%"
-                position={positions.lily2}
-                onDragEnd={(x, y) => updatePosition("lily2", x, y)}
-              >
-                <div
-                  className="relative w-[648px] h-[324px] md:w-[792px] md:h-[396px] pointer-events-none"
-                  style={{ width: "fit-content", height: "fit-content" }}
-                >
-                  <Image
-                    src="/photos/kalla-lily.png"
-                    alt="Kalla Lily"
-                    width={648}
-                    height={324}
-                    className="object-contain pointer-events-none w-auto h-auto"
-                    sizes="(max-width: 768px) 648px, 792px"
-                    quality={90}
-                  />
-                </div>
-              </DraggableItem>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Reset Button - Show below metal plate only when items have been moved */}
-        <AnimatePresence>
-          {hasItemsMoved && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-              className="flex justify-center -mt-8"
-            >
-              <motion.button
-                onClick={handleReset}
-                className="px-6 py-2.5 text-xs md:text-sm text-[#4a4a4a] font-light uppercase tracking-wider border border-[#4a4a4a]/20 hover:border-[#4a4a4a]/40 hover:bg-[#4a4a4a]/8 transition-all bg-white/10 backdrop-blur-sm"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Reset
-              </motion.button>
             </motion.div>
-          )}
-        </AnimatePresence>
+
+            {/* Reset Button - desktop only, when items have been moved */}
+            <AnimatePresence>
+              {hasItemsMoved && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="flex justify-center -mt-8"
+                >
+                  <motion.button
+                    onClick={handleReset}
+                    className="px-6 py-2.5 text-xs md:text-sm text-[#4a4a4a] font-light uppercase tracking-wider border border-[#4a4a4a]/20 hover:border-[#4a4a4a]/40 hover:bg-[#4a4a4a]/8 transition-all bg-white/10 backdrop-blur-sm"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Reset
+                  </motion.button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </>
+        )}
       </div>
 
-      <div className="mt-8 flex flex-col items-center justify-center gap-4">
+      <div className="mt-8 flex flex-col items-center justify-center gap-4 px-6">
         <h3 className="text-center font-pinyon text-5xl">
           How well do you know the couple?
         </h3>
