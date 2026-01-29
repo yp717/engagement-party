@@ -64,8 +64,11 @@ export default function AdminPage() {
   const [updateDryRunResult, setUpdateDryRunResult] = useState<any>(null);
   const [updateSendResult, setUpdateSendResult] = useState<any>(null);
 
-  // Search/filter
+  // Search/filter (Guests tab)
   const [searchTerm, setSearchTerm] = useState("");
+  const [guestsInviteFilter, setGuestsInviteFilter] = useState<string | null>(
+    null
+  );
 
   // Edit modal state
   const [editingGuest, setEditingGuest] = useState<Guest | null>(null);
@@ -565,8 +568,10 @@ export default function AdminPage() {
     }
   };
 
-  // Filter households based on search
+  // Filter households based on search and invite-status (Guests tab)
   const filteredHouseholds = households.filter((h) => {
+    if (guestsInviteFilter != null && h.inviteStatus !== guestsInviteFilter)
+      return false;
     if (!searchTerm) return true;
     const term = searchTerm.toLowerCase();
     return (
@@ -785,7 +790,34 @@ export default function AdminPage() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
               >
-                <div className="mb-4">
+                <div className="mb-4 space-y-3">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="font-serif text-xs text-primary/60 mr-1">
+                      Invite status:
+                    </span>
+                    {(
+                      [
+                        [null, "All"],
+                        ["Yes", "Yes"],
+                        ["Maybe", "Maybe"],
+                        ["Yes - Unlikely to Come", "Unlikely"],
+                      ] as const
+                    ).map(([value, label]) => (
+                      <button
+                        key={label}
+                        type="button"
+                        onClick={() => setGuestsInviteFilter(value)}
+                        className={cn(
+                          "px-3 py-1.5 font-serif text-xs border transition-colors",
+                          guestsInviteFilter === value
+                            ? "bg-primary text-white border-primary"
+                            : "bg-white/50 border-primary/20 hover:border-primary/40 text-primary"
+                        )}
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
                   <input
                     type="text"
                     value={searchTerm}
