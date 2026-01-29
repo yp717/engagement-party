@@ -59,7 +59,7 @@ export default function Header() {
 
           {/* Mobile: Radix dropdown (portaled, no scroll/container issues) */}
           <div className="flex flex-1 md:flex-none md:hidden items-center min-w-0 gap-2">
-            <DropdownMenu>
+            <DropdownMenu modal={false}>
               <DropdownMenuTrigger asChild>
                 <button
                   type="button"
@@ -90,9 +90,12 @@ export default function Header() {
                 {navLinks.map(({ id, label }) => (
                   <DropdownMenuItem
                     key={id}
-                    onSelect={(e) => {
-                      e.preventDefault();
-                      scrollToSection(id);
+                    onSelect={() => {
+                      // Let the menu close (no preventDefault). Scroll after a short delay
+                      // so the dropdown has fully unmounted and the main scroll container
+                      // can receive the scroll (avoids frozen scroll on mobile).
+                      const targetId = id;
+                      setTimeout(() => scrollToSection(targetId), 150);
                     }}
                   >
                     {label}
