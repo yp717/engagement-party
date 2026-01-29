@@ -4,28 +4,28 @@ overview: Set up a Neon PostgreSQL database with Resend email integration to han
 todos:
   - id: setup-neon
     content: Set up Neon database via Vercel integration and configure env vars
-    status: pending
+    status: completed
   - id: setup-drizzle
     content: Install dependencies and create Drizzle schema + connection
-    status: pending
+    status: completed
   - id: create-api-routes
     content: "Create API routes: /api/rsvp/[token], /api/rsvp/lookup"
-    status: pending
+    status: completed
   - id: create-rsvp-page
     content: Build /rsvp page with form for household members
-    status: pending
+    status: completed
   - id: setup-resend
     content: Set up Resend and create email templates
-    status: pending
+    status: completed
   - id: create-email-routes
     content: Create API routes for sending invites and updates
-    status: pending
+    status: completed
   - id: create-seed-script
     content: Create seed script to import src/data/raw_guest_list.csv, grouping guests by email into households
-    status: pending
+    status: completed
   - id: update-rsvp-component
     content: Update RSVP component to link to new /rsvp page
-    status: pending
+    status: completed
 isProject: false
 ---
 

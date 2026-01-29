@@ -55,9 +55,7 @@ export default function RSVP() {
 
             {/* RSVP Button */}
             <motion.a
-              href="https://example.com/rsvp"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/rsvp"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
