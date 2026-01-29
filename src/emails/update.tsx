@@ -129,6 +129,12 @@ const paragraph = {
   whiteSpace: "pre-wrap" as const,
 };
 
+const link = {
+  color: "#2c0214",
+  textDecoration: "underline",
+  fontWeight: "500",
+};
+
 const buttonContainer = {
   textAlign: "center" as const,
   margin: "30px 0",
@@ -170,5 +176,6 @@ const footerText = {
 const footerLink = {
   color: "#2c0214",
   fontSize: "12px",
+  textDecoration: "underline",
   wordBreak: "break-all" as const,
 };

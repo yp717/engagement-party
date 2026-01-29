@@ -50,19 +50,28 @@ export default function InvitationEmail({
 
             <Section style={details}>
               <Text style={detailItem}>
-                <strong>Date:</strong> Saturday, 28th March 2026
+                <strong>Date:</strong> Saturday, 11th July 2026
               </Text>
               <Text style={detailItem}>
-                <strong>Time:</strong> 6:00 PM onwards
+                <strong>Time:</strong> Details to follow
               </Text>
               <Text style={detailItem}>
-                <strong>Venue:</strong> Details on our website
+                <strong>Venue:</strong> The Libertine, 1 Royal Exchange,
+                Cornhill, London, EC3V 3LL
               </Text>
             </Section>
 
             <Text style={paragraph}>
               We would be honoured to have you celebrate with us. Please let us
               know if you can attend by clicking the button below.
+            </Text>
+
+            <Text style={paragraph}>
+              You can find more details about the event on our website: {" "}
+              <Link href="https://www.yannisandalara.com" style={link}>
+                yannisandalara.com
+              </Link>
+              .
             </Text>
 
             <Section style={buttonContainer}>
@@ -158,6 +167,12 @@ const buttonContainer = {
   margin: "30px 0",
 };
 
+const link = {
+  color: "#2c0214",
+  textDecoration: "underline",
+  fontWeight: "500",
+};
+
 const button = {
   backgroundColor: "#2c0214",
   color: "#ffffff",
@@ -194,5 +209,6 @@ const footerText = {
 const footerLink = {
   color: "#2c0214",
   fontSize: "12px",
+  textDecoration: "underline",
   wordBreak: "break-all" as const,
 };
