@@ -376,14 +376,7 @@ function RSVPContent() {
                   </p>
                 )}
 
-                <div
-                  className={cn(
-                    "flex gap-8",
-                    guests.length === 2
-                      ? "flex-col md:flex-row"
-                      : "flex-col"
-                  )}
-                >
+                <div className="space-y-8">
                   {guests.map((guest, index) => {
                     const response = responses.get(guest.id);
                     if (!response) return null;
@@ -394,10 +387,7 @@ function RSVPContent() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.1 }}
-                        className={cn(
-                          "p-6 bg-white/30 border-2 border-primary/10",
-                          guests.length === 2 && "md:flex-1 md:min-w-0"
-                        )}
+                        className="p-6 bg-white/30 border-2 border-primary/10"
                       >
                         <h3 className="font-pinyon text-2xl md:text-3xl text-primary mb-6">
                           {guest.firstName} {guest.lastName}
