@@ -15,10 +15,56 @@ interface Guest {
   rsvpCompletedAt: string | null;
 }
 
+const DIETARY_OPTIONS = [
+  "Vegetarian",
+  "Vegan",
+  "Gluten-free",
+  "Halal",
+  "Kosher",
+  "Dairy-free",
+  "Nut allergy",
+  "Shellfish allergy",
+  "Allergens (please specify)",
+] as const;
+
+const ALLERGENS_SPECIFY_OPTION = "Allergens (please specify)";
+
+function parseDietaryRequirements(value: string | null): {
+  dietarySelections: string[];
+  allergenSpecification: string;
+} {
+  if (!value?.trim()) return { dietarySelections: [], allergenSpecification: "" };
+  const parts = value.split(",").map((p) => p.trim());
+  const dietarySelections: string[] = [];
+  let allergenSpecification = "";
+  for (const part of parts) {
+    if (part.startsWith("Allergens:")) {
+      allergenSpecification = part.replace(/^Allergens:\s*/i, "").trim();
+      dietarySelections.push(ALLERGENS_SPECIFY_OPTION);
+    } else if (DIETARY_OPTIONS.includes(part as (typeof DIETARY_OPTIONS)[number])) {
+      dietarySelections.push(part);
+    }
+  }
+  return { dietarySelections, allergenSpecification };
+}
+
+function buildDietaryRequirements(
+  dietarySelections: string[],
+  allergenSpecification: string
+): string {
+  const parts = dietarySelections.filter((o) => o !== ALLERGENS_SPECIFY_OPTION);
+  if (allergenSpecification.trim()) {
+    parts.push(`Allergens: ${allergenSpecification.trim()}`);
+  }
+  return parts.join(", ");
+}
+
 interface GuestResponse {
   guestId: string;
   isAttending: boolean;
   dietaryRequirements: string;
+  dietarySelections: string[];
+  allergenSpecification: string;
 }
 
 type ViewState = "loading" | "lookup" | "form" | "success" | "error";
@@ -60,10 +106,15 @@ function RSVPContent() {
       // Initialize responses with existing data or defaults
       const initialResponses = new Map<string, GuestResponse>();
       data.guests.forEach((guest: Guest) => {
+        const { dietarySelections, allergenSpecification } = parseDietaryRequirements(
+          guest.dietaryRequirements
+        );
         initialResponses.set(guest.id, {
           guestId: guest.id,
           isAttending: guest.isAttending ?? true,
           dietaryRequirements: guest.dietaryRequirements || "",
+          dietarySelections,
+          allergenSpecification,
         });
       });
       setResponses(initialResponses);
@@ -114,7 +165,7 @@ function RSVPContent() {
   const updateResponse = (
     guestId: string,
     field: keyof GuestResponse,
-    value: boolean | string
+    value: boolean | string | string[]
   ) => {
     setResponses((prev) => {
       const updated = new Map(prev);
@@ -122,6 +173,25 @@ function RSVPContent() {
       if (current) {
         updated.set(guestId, { ...current, [field]: value });
       }
+      return updated;
+    });
+  };
+
+  const toggleDietaryOption = (guestId: string, option: string) => {
+    setResponses((prev) => {
+      const updated = new Map(prev);
+      const current = updated.get(guestId);
+      if (!current) return prev;
+      const selected = current.dietarySelections.includes(option)
+        ? current.dietarySelections.filter((o) => o !== option)
+        : [...current.dietarySelections, option];
+      updated.set(guestId, {
+        ...current,
+        dietarySelections: selected,
+        ...(option === ALLERGENS_SPECIFY_OPTION && !selected.includes(option)
+          ? { allergenSpecification: "" }
+          : {}),
+      });
       return updated;
     });
   };
@@ -135,12 +205,19 @@ function RSVPContent() {
     setError(null);
 
     try {
+      const payload = Array.from(responses.values()).map((r) => ({
+        guestId: r.guestId,
+        isAttending: r.isAttending,
+        dietaryRequirements: buildDietaryRequirements(
+          r.dietarySelections,
+          r.allergenSpecification
+        ),
+      }));
+
       const res = await fetch(`/api/rsvp/${token}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          responses: Array.from(responses.values()),
-        }),
+        body: JSON.stringify({ responses: payload }),
       });
 
       if (!res.ok) {
@@ -364,26 +441,64 @@ function RSVPContent() {
                             animate={{ opacity: 1, height: "auto" }}
                             exit={{ opacity: 0, height: 0 }}
                           >
-                            <label
-                              htmlFor={`dietary-${guest.id}`}
-                              className="block font-serif text-sm tracking-wide text-primary/60 mb-2"
-                            >
+                            <p className="font-serif text-sm tracking-wide text-primary/60 mb-3">
                               Dietary requirements (optional)
-                            </label>
-                            <input
-                              type="text"
-                              id={`dietary-${guest.id}`}
-                              value={response.dietaryRequirements}
-                              onChange={(e) =>
-                                updateResponse(
-                                  guest.id,
-                                  "dietaryRequirements",
-                                  e.target.value
-                                )
-                              }
-                              className="w-full px-4 py-3 bg-white/50 border-2 border-primary/20 font-serif text-primary focus:outline-none focus:border-primary/40 transition-colors"
-                              placeholder="e.g., Vegetarian, Gluten-free, Nut allergy"
-                            />
+                            </p>
+                            <div className="space-y-2 mb-4">
+                              {DIETARY_OPTIONS.map((option) => (
+                                <label
+                                  key={option}
+                                  className={cn(
+                                    "flex items-center gap-3 py-2 cursor-pointer group",
+                                    "font-serif text-primary"
+                                  )}
+                                >
+                                  <input
+                                    type="checkbox"
+                                    checked={response.dietarySelections.includes(
+                                      option
+                                    )}
+                                    onChange={() =>
+                                      toggleDietaryOption(guest.id, option)
+                                    }
+                                    className="h-4 w-4 rounded border-2 border-primary/30 text-primary focus:ring-primary/20"
+                                  />
+                                  <span className="group-hover:text-primary/80">
+                                    {option}
+                                  </span>
+                                </label>
+                              ))}
+                            </div>
+                            {response.dietarySelections.includes(
+                              ALLERGENS_SPECIFY_OPTION
+                            ) && (
+                                <motion.div
+                                  initial={{ opacity: 0, height: 0 }}
+                                  animate={{ opacity: 1, height: "auto" }}
+                                  className="mt-3"
+                                >
+                                  <label
+                                    htmlFor={`allergen-${guest.id}`}
+                                    className="block font-serif text-sm tracking-wide text-primary/60 mb-2"
+                                  >
+                                    Please specify your allergy
+                                  </label>
+                                  <input
+                                    type="text"
+                                    id={`allergen-${guest.id}`}
+                                    value={response.allergenSpecification}
+                                    onChange={(e) =>
+                                      updateResponse(
+                                        guest.id,
+                                        "allergenSpecification",
+                                        e.target.value
+                                      )
+                                    }
+                                    className="w-full px-4 py-3 bg-white/50 border-2 border-primary/20 font-serif text-primary focus:outline-none focus:border-primary/40 transition-colors"
+                                    placeholder="e.g., peanuts, shellfish, dairy"
+                                  />
+                                </motion.div>
+                              )}
                           </motion.div>
                         )}
 
