@@ -14,7 +14,7 @@ import {
 interface InvitationEmailProps {
   guestNames: string[];
   rsvpUrl: string;
-  /** Full URL to the couple image (e.g. https://yannisandalara.com/photos/black-and-white-post-engagement.jpeg) */
+  /** Full URL to the couple image. Use direct static URL (e.g. https://www.yannisandalara.com/photos/black-and-white-post-engagement.jpeg), not _next/image - email clients need a direct image URL. */
   coupleImageUrl?: string;
 }
 
@@ -23,10 +23,10 @@ export default function InvitationEmail({
   rsvpUrl = "https://example.com/rsvp",
   coupleImageUrl,
 }: InvitationEmailProps) {
-  // Default image for preview (use full URL in production)
+  // Default image for preview. Must be direct static URL (not _next/image) so email clients can load it.
   const imageUrl =
     coupleImageUrl ||
-    "https://yannisandalara.com/photos/black-and-white-post-engagement.jpeg";
+    "https://www.yannisandalara.com/photos/black-and-white-post-engagement.jpeg";
 
   const namesFormatted =
     guestNames.length === 1
@@ -133,9 +133,9 @@ export default function InvitationEmail({
 
 InvitationEmail.PreviewProps = {
   guestNames: ["Alara"],
-  rsvpUrl: "https://yannisandalara.com/rsvp",
+  rsvpUrl: "https://www.yannisandalara.com/rsvp",
   coupleImageUrl:
-    "https://yannisandalara.com/photos/black-and-white-post-engagement.jpeg",
+    "https://www.yannisandalara.com/photos/black-and-white-post-engagement.jpeg",
 } as InvitationEmailProps;
 
 const main = {
