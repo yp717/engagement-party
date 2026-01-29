@@ -67,6 +67,19 @@ export default function AdminPage() {
   // Search/filter
   const [searchTerm, setSearchTerm] = useState("");
 
+  // Edit modal state
+  const [editingGuest, setEditingGuest] = useState<Guest | null>(null);
+  const [editingHousehold, setEditingHousehold] = useState<Household | null>(
+    null
+  );
+  const [editForm, setEditForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    inviteStatus: "",
+  });
+  const [isUpdating, setIsUpdating] = useState(false);
+
   const fetchData = useCallback(async () => {
     if (!isAuthenticated) return;
     setIsLoading(true);
@@ -274,6 +287,94 @@ export default function AdminPage() {
     }
   };
 
+  // Edit guest
+  const openEditGuest = (guest: Guest) => {
+    setEditingGuest(guest);
+    setEditForm({
+      firstName: guest.firstName,
+      lastName: guest.lastName,
+      email: "",
+      inviteStatus: "",
+    });
+  };
+
+  const handleUpdateGuest = async (resetRsvp = false) => {
+    if (!editingGuest) return;
+    setIsUpdating(true);
+
+    try {
+      const res = await fetch("/api/admin/update-guest", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          guestId: editingGuest.id,
+          firstName: editForm.firstName || undefined,
+          lastName: editForm.lastName || undefined,
+          resetRsvp,
+        }),
+      });
+
+      if (res.ok) {
+        setEditingGuest(null);
+        fetchData();
+      } else {
+        const data = await res.json();
+        alert(`Failed: ${data.error}`);
+      }
+    } catch (err) {
+      alert("Failed to update guest");
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  // Edit household
+  const openEditHousehold = (household: Household) => {
+    setEditingHousehold(household);
+    setEditForm({
+      firstName: "",
+      lastName: "",
+      email: household.email || "",
+      inviteStatus: household.inviteStatus,
+    });
+  };
+
+  const handleUpdateHousehold = async (resetInvite = false) => {
+    if (!editingHousehold) return;
+    setIsUpdating(true);
+
+    try {
+      const res = await fetch("/api/admin/update-household", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          householdId: editingHousehold.id,
+          email: editForm.email || undefined,
+          inviteStatus: editForm.inviteStatus || undefined,
+          resetInvite,
+        }),
+      });
+
+      if (res.ok) {
+        setEditingHousehold(null);
+        fetchData();
+      } else {
+        const data = await res.json();
+        alert(`Failed: ${data.error}`);
+      }
+    } catch (err) {
+      alert("Failed to update household");
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
   // Filter households based on search
   const filteredHouseholds = households.filter((h) => {
     if (!searchTerm) return true;
@@ -404,7 +505,10 @@ export default function AdminPage() {
                   <StatCard label="Total Guests" value={stats.totalGuests} />
                   <StatCard label="Households" value={stats.totalHouseholds} />
                   <StatCard label="Invites Sent" value={stats.invitesSent} />
-                  <StatCard label="RSVPs Received" value={stats.rsvpCompleted} />
+                  <StatCard
+                    label="RSVPs Received"
+                    value={stats.rsvpCompleted}
+                  />
                   <StatCard
                     label="Attending"
                     value={stats.attending}
@@ -471,7 +575,9 @@ export default function AdminPage() {
                               </span>
                             </td>
                             <td className="px-4 py-2 font-serif text-primary/60">
-                              {new Date(g.rsvpCompletedAt!).toLocaleDateString()}
+                              {new Date(
+                                g.rsvpCompletedAt!
+                              ).toLocaleDateString()}
                             </td>
                           </tr>
                         ))}
@@ -528,16 +634,24 @@ export default function AdminPage() {
                             </span>
                           </div>
                         </div>
-                        {household.email && !household.inviteSentAt && (
+                        <div className="flex gap-2">
                           <button
-                            onClick={() =>
-                              handleSendToOne(household.id, household.email!)
-                            }
+                            onClick={() => openEditHousehold(household)}
                             className="px-3 py-1 text-xs font-serif border border-primary/20 hover:border-primary/40 hover:bg-primary/5 transition-colors"
                           >
-                            Send Invite
+                            Edit
                           </button>
-                        )}
+                          {household.email && !household.inviteSentAt && (
+                            <button
+                              onClick={() =>
+                                handleSendToOne(household.id, household.email!)
+                              }
+                              className="px-3 py-1 text-xs font-serif border border-primary/20 hover:border-primary/40 hover:bg-primary/5 transition-colors"
+                            >
+                              Send Invite
+                            </button>
+                          )}
+                        </div>
                       </div>
 
                       <div className="space-y-2">
@@ -576,6 +690,12 @@ export default function AdminPage() {
                                     ? "Declined"
                                     : "Pending"}
                               </span>
+                              <button
+                                onClick={() => openEditGuest(guest)}
+                                className="px-2 py-0.5 text-xs font-serif text-primary/50 hover:text-primary transition-colors"
+                              >
+                                Edit
+                              </button>
                             </div>
                           </div>
                         ))}
@@ -648,13 +768,11 @@ export default function AdminPage() {
                         receive invitations:
                       </p>
                       <ul className="text-sm font-serif space-y-1 max-h-60 overflow-y-auto">
-                        {dryRunResult.households?.map(
-                          (h: any, i: number) => (
-                            <li key={i} className="text-primary/70">
-                              {h.email}: {h.guests.join(", ")}
-                            </li>
-                          )
-                        )}
+                        {dryRunResult.households?.map((h: any, i: number) => (
+                          <li key={i} className="text-primary/70">
+                            {h.email}: {h.guests.join(", ")}
+                          </li>
+                        ))}
                       </ul>
                     </div>
                   )}
@@ -794,6 +912,173 @@ export default function AdminPage() {
               </motion.div>
             )}
           </AnimatePresence>
+        )}
+
+        {/* Edit Guest Modal */}
+        {editingGuest && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-cream rounded-lg p-6 w-full max-w-md">
+              <h3 className="font-pinyon text-2xl mb-4">Edit Guest</h3>
+
+              <div className="space-y-4 mb-6">
+                <div>
+                  <label className="block font-serif text-sm text-primary/60 mb-1">
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    value={editForm.firstName}
+                    onChange={(e) =>
+                      setEditForm({ ...editForm, firstName: e.target.value })
+                    }
+                    className="w-full px-3 py-2 bg-white/50 border border-primary/20 font-serif text-sm focus:outline-none focus:border-primary/40"
+                  />
+                </div>
+                <div>
+                  <label className="block font-serif text-sm text-primary/60 mb-1">
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    value={editForm.lastName}
+                    onChange={(e) =>
+                      setEditForm({ ...editForm, lastName: e.target.value })
+                    }
+                    className="w-full px-3 py-2 bg-white/50 border border-primary/20 font-serif text-sm focus:outline-none focus:border-primary/40"
+                  />
+                </div>
+
+                <div className="pt-2 border-t border-primary/10">
+                  <p className="font-serif text-sm text-primary/60 mb-2">
+                    Current RSVP:{" "}
+                    <span className="text-primary">
+                      {editingGuest.isAttending === true
+                        ? "Attending"
+                        : editingGuest.isAttending === false
+                          ? "Declined"
+                          : "Pending"}
+                    </span>
+                  </p>
+                  {editingGuest.dietaryRequirements && (
+                    <p className="font-serif text-sm text-primary/60">
+                      Dietary: {editingGuest.dietaryRequirements}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleUpdateGuest(false)}
+                  disabled={isUpdating}
+                  className="flex-1 px-4 py-2 bg-primary text-white font-serif text-sm hover:bg-primary/90 transition-colors disabled:opacity-50"
+                >
+                  {isUpdating ? "Saving..." : "Save Changes"}
+                </button>
+                <button
+                  onClick={() => handleUpdateGuest(true)}
+                  disabled={isUpdating}
+                  className="px-4 py-2 font-serif text-sm border border-amber-500 text-amber-700 hover:bg-amber-50 transition-colors disabled:opacity-50"
+                >
+                  Reset RSVP
+                </button>
+                <button
+                  onClick={() => setEditingGuest(null)}
+                  className="px-4 py-2 font-serif text-sm border border-primary/20 hover:border-primary/40 transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Edit Household Modal */}
+        {editingHousehold && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-cream rounded-lg p-6 w-full max-w-md">
+              <h3 className="font-pinyon text-2xl mb-4">Edit Household</h3>
+
+              <div className="space-y-4 mb-6">
+                <div>
+                  <label className="block font-serif text-sm text-primary/60 mb-1">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    value={editForm.email}
+                    onChange={(e) =>
+                      setEditForm({ ...editForm, email: e.target.value })
+                    }
+                    className="w-full px-3 py-2 bg-white/50 border border-primary/20 font-serif text-sm focus:outline-none focus:border-primary/40"
+                    placeholder="email@example.com"
+                  />
+                </div>
+                <div>
+                  <label className="block font-serif text-sm text-primary/60 mb-1">
+                    Invite Status
+                  </label>
+                  <select
+                    value={editForm.inviteStatus}
+                    onChange={(e) =>
+                      setEditForm({ ...editForm, inviteStatus: e.target.value })
+                    }
+                    className="w-full px-3 py-2 bg-white/50 border border-primary/20 font-serif text-sm focus:outline-none focus:border-primary/40"
+                  >
+                    <option value="Yes">Yes (Priority)</option>
+                    <option value="Maybe">Maybe</option>
+                    <option value="Yes - Unlikely to Come">
+                      Yes - Unlikely to Come
+                    </option>
+                  </select>
+                </div>
+
+                <div className="pt-2 border-t border-primary/10">
+                  <p className="font-serif text-sm text-primary/60">
+                    Invite sent:{" "}
+                    <span className="text-primary">
+                      {editingHousehold.inviteSentAt
+                        ? new Date(
+                            editingHousehold.inviteSentAt
+                          ).toLocaleDateString()
+                        : "Not yet"}
+                    </span>
+                  </p>
+                  <p className="font-serif text-sm text-primary/60 mt-1">
+                    Guests:{" "}
+                    {editingHousehold.guests
+                      .map((g) => `${g.firstName} ${g.lastName}`)
+                      .join(", ")}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleUpdateHousehold(false)}
+                  disabled={isUpdating}
+                  className="flex-1 px-4 py-2 bg-primary text-white font-serif text-sm hover:bg-primary/90 transition-colors disabled:opacity-50"
+                >
+                  {isUpdating ? "Saving..." : "Save Changes"}
+                </button>
+                {editingHousehold.inviteSentAt && (
+                  <button
+                    onClick={() => handleUpdateHousehold(true)}
+                    disabled={isUpdating}
+                    className="px-4 py-2 font-serif text-sm border border-amber-500 text-amber-700 hover:bg-amber-50 transition-colors disabled:opacity-50"
+                  >
+                    Reset Invite
+                  </button>
+                )}
+                <button
+                  onClick={() => setEditingHousehold(null)}
+                  className="px-4 py-2 font-serif text-sm border border-primary/20 hover:border-primary/40 transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </main>

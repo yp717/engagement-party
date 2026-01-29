@@ -65,8 +65,6 @@ flowchart TD
     SendUpdate --> Resend
 ```
 
-
-
 ## Database Schema
 
 Two tables in Neon PostgreSQL:
@@ -182,4 +180,3 @@ Please note: I have already pulled all the environment variables for NEON locall
 npm install @neondatabase/serverless drizzle-orm resend react-email @react-email/components
 npm install -D drizzle-kit
 ```
-

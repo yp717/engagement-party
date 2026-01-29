@@ -33,7 +33,8 @@ function parseDietaryRequirements(value: string | null): {
   dietarySelections: string[];
   allergenSpecification: string;
 } {
-  if (!value?.trim()) return { dietarySelections: [], allergenSpecification: "" };
+  if (!value?.trim())
+    return { dietarySelections: [], allergenSpecification: "" };
   const parts = value.split(",").map((p) => p.trim());
   const dietarySelections: string[] = [];
   let allergenSpecification = "";
@@ -41,7 +42,9 @@ function parseDietaryRequirements(value: string | null): {
     if (part.startsWith("Allergens:")) {
       allergenSpecification = part.replace(/^Allergens:\s*/i, "").trim();
       dietarySelections.push(ALLERGENS_SPECIFY_OPTION);
-    } else if (DIETARY_OPTIONS.includes(part as (typeof DIETARY_OPTIONS)[number])) {
+    } else if (
+      DIETARY_OPTIONS.includes(part as (typeof DIETARY_OPTIONS)[number])
+    ) {
       dietarySelections.push(part);
     }
   }
@@ -106,9 +109,8 @@ function RSVPContent() {
       // Initialize responses with existing data or defaults
       const initialResponses = new Map<string, GuestResponse>();
       data.guests.forEach((guest: Guest) => {
-        const { dietarySelections, allergenSpecification } = parseDietaryRequirements(
-          guest.dietaryRequirements
-        );
+        const { dietarySelections, allergenSpecification } =
+          parseDietaryRequirements(guest.dietaryRequirements);
         initialResponses.set(guest.id, {
           guestId: guest.id,
           isAttending: guest.isAttending ?? true,
@@ -472,33 +474,33 @@ function RSVPContent() {
                             {response.dietarySelections.includes(
                               ALLERGENS_SPECIFY_OPTION
                             ) && (
-                                <motion.div
-                                  initial={{ opacity: 0, height: 0 }}
-                                  animate={{ opacity: 1, height: "auto" }}
-                                  className="mt-3"
+                              <motion.div
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: "auto" }}
+                                className="mt-3"
+                              >
+                                <label
+                                  htmlFor={`allergen-${guest.id}`}
+                                  className="block font-serif text-sm tracking-wide text-primary/60 mb-2"
                                 >
-                                  <label
-                                    htmlFor={`allergen-${guest.id}`}
-                                    className="block font-serif text-sm tracking-wide text-primary/60 mb-2"
-                                  >
-                                    Please specify your allergy
-                                  </label>
-                                  <input
-                                    type="text"
-                                    id={`allergen-${guest.id}`}
-                                    value={response.allergenSpecification}
-                                    onChange={(e) =>
-                                      updateResponse(
-                                        guest.id,
-                                        "allergenSpecification",
-                                        e.target.value
-                                      )
-                                    }
-                                    className="w-full px-4 py-3 bg-white/50 border-2 border-primary/20 font-serif text-primary focus:outline-none focus:border-primary/40 transition-colors"
-                                    placeholder="e.g., peanuts, shellfish, dairy"
-                                  />
-                                </motion.div>
-                              )}
+                                  Please specify your allergy
+                                </label>
+                                <input
+                                  type="text"
+                                  id={`allergen-${guest.id}`}
+                                  value={response.allergenSpecification}
+                                  onChange={(e) =>
+                                    updateResponse(
+                                      guest.id,
+                                      "allergenSpecification",
+                                      e.target.value
+                                    )
+                                  }
+                                  className="w-full px-4 py-3 bg-white/50 border-2 border-primary/20 font-serif text-primary focus:outline-none focus:border-primary/40 transition-colors"
+                                  placeholder="e.g., peanuts, shellfish, dairy"
+                                />
+                              </motion.div>
+                            )}
                           </motion.div>
                         )}
 
