@@ -65,6 +65,8 @@ flowchart TD
     SendUpdate --> Resend
 ```
 
+
+
 ## Database Schema
 
 Two tables in Neon PostgreSQL:
@@ -130,8 +132,8 @@ Two tables in Neon PostgreSQL:
 - Attendance toggle (Yes/No) per guest
 - Dietary requirements text field per guest
 
-4. Submit saves responses for all household members
-5. **Fallback**: If no token or invalid, show name lookup form (searches by first + last name, returns household token if found)
+1. Submit saves responses for all household members
+2. **Fallback**: If no token or invalid, show name lookup form (searches by first + last name, returns household token if found)
 
 ## Email Flow
 
@@ -142,8 +144,8 @@ Two tables in Neon PostgreSQL:
 - `invite_sent_at` is null (haven't sent yet)
 - `invite_status` matches filter (e.g., "Yes" for first batch, "Maybe" for second batch)
 
-3. For each household: send email via Resend, update `invite_sent_at`
-4. Updates work similarly via `POST /api/email/send-update`
+1. For each household: send email via Resend, update `invite_sent_at`
+2. Updates work similarly via `POST /api/email/send-update`
 
 **Batching strategy**: Use `invite_status` to control invitation waves:
 
@@ -180,3 +182,4 @@ Please note: I have already pulled all the environment variables for NEON locall
 npm install @neondatabase/serverless drizzle-orm resend react-email @react-email/components
 npm install -D drizzle-kit
 ```
+

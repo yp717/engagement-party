@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
 
       try {
         await resend.emails.send({
-          from: "Alara & Yannis <noreply@yourdomain.com>", // Update with your verified domain
+          from: "Alara & Yannis <noreply@updates.yannisandalara.com>",
           to: household.email!,
           subject: "You're Invited to Alara & Yannis' Engagement Party",
           react: InvitationEmail({ guestNames, rsvpUrl }),
