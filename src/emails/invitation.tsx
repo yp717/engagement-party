@@ -39,7 +39,7 @@ export default function InvitationEmail({
     <Html>
       <Head />
       <Preview>
-        You&apos;re invited to Alara & Yannis&apos; Engagement Party
+        You&apos;re invited to Yannis & Alara&apos;s Engagement Party
       </Preview>
       <Body style={main}>
         <Container style={container}>
@@ -47,7 +47,7 @@ export default function InvitationEmail({
             <Section style={imageWrapper}>
               <Img
                 src={imageUrl}
-                alt="Alara & Yannis"
+                alt="Yannis & Alara"
                 style={coupleImage}
                 width={520}
                 height={347}
@@ -89,7 +89,7 @@ export default function InvitationEmail({
               <Link href="https://www.yannisandalara.com" style={link}>
                 yannisandalara.com
               </Link>
-              .
+              . The password to access the website is "GREENPARK".
             </Text>
 
             <Section style={buttonContainer}>
@@ -106,7 +106,7 @@ export default function InvitationEmail({
             <Text style={signature}>
               With love,
               <br />
-              Alara & Yannis
+              Yannis & Alara
             </Text>
           </Section>
 

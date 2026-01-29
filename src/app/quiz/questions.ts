@@ -73,7 +73,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     correctIndex: 1,
   },
   {
-    question: "What's Alara and Yannis's favourite burger spot?",
+    question: "What's Yannis & Alara's favourite burger spot?",
     options: ["Black Bear Burger", "Bleeker Burger", "Five Guys", "McDonald's"],
     correctIndex: 0,
   },

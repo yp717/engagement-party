@@ -5,7 +5,12 @@ import { isNotNull, and, eq } from "drizzle-orm";
 import UpdateEmail from "@/emails/update";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+// Prefer server-side SITE_URL/BASE_URL so production emails get correct links (not localhost)
+const BASE_URL =
+  process.env.SITE_URL ||
+  process.env.BASE_URL ||
+  process.env.NEXT_PUBLIC_BASE_URL ||
+  "http://localhost:3000";
 const ADMIN_API_KEY = process.env.ADMIN_API_KEY;
 
 // POST /api/email/send-update - Send update emails
@@ -95,7 +100,7 @@ export async function POST(request: NextRequest) {
 
       try {
         await resend.emails.send({
-          from: "Alara & Yannis <noreply@updates.yannisandalara.com>",
+          from: "Yannis & Alara <noreply@updates.yannisandalara.com>",
           to: household.email!,
           subject,
           react: UpdateEmail({ guestNames, subject, message, rsvpUrl }),

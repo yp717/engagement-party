@@ -38,3 +38,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 While we love having children around, on this occasion all guests have been listed on the invite.
 
 We could leave little sticky notes around the site like I leave them for Alara: https://codepen.io/aitchiss/pen/QWKmPqx
+
+We could potentially use proper auth for the site now that we are adding neon - instead of the hack we have with the browser storage
