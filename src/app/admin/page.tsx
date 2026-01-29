@@ -78,7 +78,22 @@ export default function AdminPage() {
     email: "",
     inviteStatus: "",
   });
+  const [addGuestForm, setAddGuestForm] = useState({
+    firstName: "",
+    lastName: "",
+    invitedBy: "Groom",
+    role: "Family",
+  });
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isAddingGuest, setIsAddingGuest] = useState(false);
+  const [selectedGuestToMove, setSelectedGuestToMove] = useState("");
+  const [isMovingGuest, setIsMovingGuest] = useState(false);
+  const [isDeletingGuestId, setIsDeletingGuestId] = useState<string | null>(
+    null
+  );
+  const [isDeletingHouseholdId, setIsDeletingHouseholdId] = useState<
+    string | null
+  >(null);
 
   const fetchData = useCallback(async () => {
     if (!isAuthenticated) return;
@@ -88,6 +103,7 @@ export default function AdminPage() {
     try {
       const res = await fetch("/api/admin/data", {
         headers: { Authorization: `Bearer ${apiKey}` },
+        cache: "no-store",
       });
       if (!res.ok) throw new Error("Failed to fetch data");
       const data = await res.json();
@@ -114,6 +130,7 @@ export default function AdminPage() {
     try {
       const res = await fetch("/api/admin/data", {
         headers: { Authorization: `Bearer ${apiKey}` },
+        cache: "no-store",
       });
       if (res.ok) {
         setIsAuthenticated(true);
@@ -134,6 +151,7 @@ export default function AdminPage() {
       // Verify it's still valid
       fetch("/api/admin/data", {
         headers: { Authorization: `Bearer ${savedKey}` },
+        cache: "no-store",
       }).then((res) => {
         if (res.ok) {
           setIsAuthenticated(true);
@@ -340,6 +358,178 @@ export default function AdminPage() {
       email: household.email || "",
       inviteStatus: household.inviteStatus,
     });
+    // Default "add guest" fields from first guest in household (e.g. same invitedBy/role as spouse)
+    const first = household.guests[0];
+    setAddGuestForm({
+      firstName: "",
+      lastName: "",
+      invitedBy: first?.invitedBy ?? "Groom",
+      role: first?.role ?? "Family",
+    });
+    setSelectedGuestToMove("");
+  };
+
+  const handleMoveGuestToHousehold = async () => {
+    if (!editingHousehold || !selectedGuestToMove) return;
+    setIsMovingGuest(true);
+    try {
+      const res = await fetch("/api/admin/move-guest", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          guestId: selectedGuestToMove,
+          targetHouseholdId: editingHousehold.id,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setSelectedGuestToMove("");
+        fetchData();
+        const updated = await fetch("/api/admin/data", {
+          headers: { Authorization: `Bearer ${apiKey}` },
+          cache: "no-store",
+        }).then((r) => r.json());
+        const h = updated.households.find(
+          (x: Household) => x.id === editingHousehold.id
+        );
+        if (h) setEditingHousehold(h);
+      } else {
+        alert(data.error ?? "Failed to move guest");
+      }
+    } catch (err) {
+      alert("Failed to move guest");
+    } finally {
+      setIsMovingGuest(false);
+    }
+  };
+
+  const handleAddGuestToHousehold = async () => {
+    if (!editingHousehold) return;
+    const { firstName, lastName, invitedBy, role } = addGuestForm;
+    if (!firstName.trim() || !lastName.trim()) {
+      alert("First name and last name are required.");
+      return;
+    }
+    setIsAddingGuest(true);
+    try {
+      const res = await fetch("/api/admin/add-guest", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          householdId: editingHousehold.id,
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          invitedBy,
+          role,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setAddGuestForm((prev) => ({
+          ...prev,
+          firstName: "",
+          lastName: "",
+        }));
+        fetchData();
+        // Keep modal open and refresh editingHousehold from fresh data
+        const updated = await fetch("/api/admin/data", {
+          headers: { Authorization: `Bearer ${apiKey}` },
+          cache: "no-store",
+        }).then((r) => r.json());
+        const h = updated.households.find(
+          (x: Household) => x.id === editingHousehold.id
+        );
+        if (h) setEditingHousehold(h);
+      } else {
+        alert(data.error ?? "Failed to add guest");
+      }
+    } catch (err) {
+      alert("Failed to add guest");
+    } finally {
+      setIsAddingGuest(false);
+    }
+  };
+
+  const handleDeleteGuest = async (guest: Guest) => {
+    if (
+      !confirm(
+        `Delete ${guest.firstName} ${guest.lastName}? This cannot be undone. If they are the only guest in their household, that household will also be removed.`
+      )
+    )
+      return;
+    setIsDeletingGuestId(guest.id);
+    try {
+      const res = await fetch("/api/admin/delete-guest", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({ guestId: guest.id }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        if (editingGuest?.id === guest.id) setEditingGuest(null);
+        if (editingHousehold) {
+          const h = households.find((x) => x.id === editingHousehold.id);
+          if (h && !h.guests.some((g) => g.id === guest.id)) {
+            setEditingHousehold(null);
+          } else if (h) {
+            setEditingHousehold({
+              ...h,
+              guests: h.guests.filter((g) => g.id !== guest.id),
+            });
+          }
+        }
+        fetchData();
+      } else {
+        alert(data.error ?? "Failed to delete guest");
+      }
+    } catch (err) {
+      alert("Failed to delete guest");
+    } finally {
+      setIsDeletingGuestId(null);
+    }
+  };
+
+  const handleDeleteHousehold = async (household?: Household) => {
+    const target = household ?? editingHousehold;
+    if (!target) return;
+    const guestCount = target.guests.length;
+    if (
+      !confirm(
+        `Delete this household${guestCount > 0 ? ` and all ${guestCount} guest(s)` : ""}? This cannot be undone.`
+      )
+    )
+      return;
+    setIsDeletingHouseholdId(target.id);
+    try {
+      const res = await fetch("/api/admin/delete-household", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({ householdId: target.id }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        if (editingHousehold?.id === target.id) setEditingHousehold(null);
+        fetchData();
+      } else {
+        alert(data.error ?? "Failed to delete household");
+      }
+    } catch (err) {
+      alert("Failed to delete household");
+    } finally {
+      setIsDeletingHouseholdId(null);
+    }
   };
 
   const handleUpdateHousehold = async (resetInvite = false) => {
@@ -641,6 +831,15 @@ export default function AdminPage() {
                           >
                             Edit
                           </button>
+                          <button
+                            onClick={() => handleDeleteHousehold(household)}
+                            disabled={isDeletingHouseholdId === household.id}
+                            className="px-3 py-1 text-xs font-serif text-red-600 hover:text-red-700 disabled:opacity-50 transition-colors"
+                          >
+                            {isDeletingHouseholdId === household.id
+                              ? "Deleting…"
+                              : "Delete"}
+                          </button>
                           {household.email && !household.inviteSentAt && (
                             <button
                               onClick={() =>
@@ -695,6 +894,15 @@ export default function AdminPage() {
                                 className="px-2 py-0.5 text-xs font-serif text-primary/50 hover:text-primary transition-colors"
                               >
                                 Edit
+                              </button>
+                              <button
+                                onClick={() => handleDeleteGuest(guest)}
+                                disabled={isDeletingGuestId === guest.id}
+                                className="px-2 py-0.5 text-xs font-serif text-red-600 hover:text-red-700 disabled:opacity-50 transition-colors"
+                              >
+                                {isDeletingGuestId === guest.id
+                                  ? "Deleting…"
+                                  : "Delete"}
                               </button>
                             </div>
                           </div>
@@ -967,11 +1175,11 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 <button
                   onClick={() => handleUpdateGuest(false)}
                   disabled={isUpdating}
-                  className="flex-1 px-4 py-2 bg-primary text-white font-serif text-sm hover:bg-primary/90 transition-colors disabled:opacity-50"
+                  className="flex-1 min-w-0 px-4 py-2 bg-primary text-white font-serif text-sm hover:bg-primary/90 transition-colors disabled:opacity-50"
                 >
                   {isUpdating ? "Saving..." : "Save Changes"}
                 </button>
@@ -987,6 +1195,17 @@ export default function AdminPage() {
                   className="px-4 py-2 font-serif text-sm border border-primary/20 hover:border-primary/40 transition-colors"
                 >
                   Cancel
+                </button>
+                <button
+                  onClick={() =>
+                    editingGuest && handleDeleteGuest(editingGuest)
+                  }
+                  disabled={isUpdating || isDeletingGuestId === editingGuest?.id}
+                  className="w-full mt-2 px-4 py-2 font-serif text-sm border border-red-300 text-red-700 hover:bg-red-50 transition-colors disabled:opacity-50"
+                >
+                  {isDeletingGuestId === editingGuest?.id
+                    ? "Deleting…"
+                    : "Delete guest"}
                 </button>
               </div>
             </div>
@@ -1039,8 +1258,8 @@ export default function AdminPage() {
                     <span className="text-primary">
                       {editingHousehold.inviteSentAt
                         ? new Date(
-                            editingHousehold.inviteSentAt
-                          ).toLocaleDateString()
+                          editingHousehold.inviteSentAt
+                        ).toLocaleDateString()
                         : "Not yet"}
                     </span>
                   </p>
@@ -1051,13 +1270,154 @@ export default function AdminPage() {
                       .join(", ")}
                   </p>
                 </div>
+
+                <div className="pt-4 mt-4 border-t border-primary/20">
+                  <p className="font-serif text-sm font-medium text-primary mb-3">
+                    Add guest to this household
+                  </p>
+                  <div className="grid grid-cols-2 gap-3 mb-3">
+                    <div>
+                      <label className="block font-serif text-xs text-primary/60 mb-1">
+                        First name
+                      </label>
+                      <input
+                        type="text"
+                        value={addGuestForm.firstName}
+                        onChange={(e) =>
+                          setAddGuestForm({
+                            ...addGuestForm,
+                            firstName: e.target.value,
+                          })
+                        }
+                        className="w-full px-3 py-2 bg-white/50 border border-primary/20 font-serif text-sm focus:outline-none focus:border-primary/40"
+                        placeholder="e.g. Diana"
+                      />
+                    </div>
+                    <div>
+                      <label className="block font-serif text-xs text-primary/60 mb-1">
+                        Last name
+                      </label>
+                      <input
+                        type="text"
+                        value={addGuestForm.lastName}
+                        onChange={(e) =>
+                          setAddGuestForm({
+                            ...addGuestForm,
+                            lastName: e.target.value,
+                          })
+                        }
+                        className="w-full px-3 py-2 bg-white/50 border border-primary/20 font-serif text-sm focus:outline-none focus:border-primary/40"
+                        placeholder="e.g. Nagy"
+                      />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3 mb-3">
+                    <div>
+                      <label className="block font-serif text-xs text-primary/60 mb-1">
+                        Invited by
+                      </label>
+                      <select
+                        value={addGuestForm.invitedBy}
+                        onChange={(e) =>
+                          setAddGuestForm({
+                            ...addGuestForm,
+                            invitedBy: e.target.value,
+                          })
+                        }
+                        className="w-full px-3 py-2 bg-white/50 border border-primary/20 font-serif text-sm focus:outline-none focus:border-primary/40"
+                      >
+                        <option value="Bride">Bride</option>
+                        <option value="Groom">Groom</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block font-serif text-xs text-primary/60 mb-1">
+                        Role
+                      </label>
+                      <select
+                        value={addGuestForm.role}
+                        onChange={(e) =>
+                          setAddGuestForm({
+                            ...addGuestForm,
+                            role: e.target.value,
+                          })
+                        }
+                        className="w-full px-3 py-2 bg-white/50 border border-primary/20 font-serif text-sm focus:outline-none focus:border-primary/40"
+                      >
+                        <option value="B&G">B&G</option>
+                        <option value="Family">Family</option>
+                        <option value="Extended Family">Extended Family</option>
+                        <option value="Family Friend">Family Friend</option>
+                        <option value="Friend">Friend</option>
+                        <option value="Work">Work</option>
+                      </select>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleAddGuestToHousehold}
+                    disabled={
+                      isAddingGuest ||
+                      !addGuestForm.firstName.trim() ||
+                      !addGuestForm.lastName.trim()
+                    }
+                    className="w-full px-4 py-2 font-serif text-sm border border-primary/30 bg-primary/5 hover:bg-primary/10 text-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isAddingGuest ? "Adding..." : "Add guest"}
+                  </button>
+                </div>
+
+                <div className="pt-4 mt-4 border-t border-primary/20">
+                  <p className="font-serif text-sm font-medium text-primary mb-3">
+                    Move existing guest to this household
+                  </p>
+                  <p className="font-serif text-xs text-primary/60 mb-2">
+                    Select a guest who is currently in another household. They
+                    will be moved here and will use this household’s RSVP link.
+                  </p>
+                  <div className="flex gap-2">
+                    <select
+                      value={selectedGuestToMove}
+                      onChange={(e) =>
+                        setSelectedGuestToMove(e.target.value)
+                      }
+                      className="flex-1 px-3 py-2 bg-white/50 border border-primary/20 font-serif text-sm focus:outline-none focus:border-primary/40"
+                    >
+                      <option value="">
+                        Select a guest…
+                      </option>
+                      {households
+                        .filter((h) => h.id !== editingHousehold.id)
+                        .flatMap((h) =>
+                          h.guests.map((g) => (
+                            <option key={g.id} value={g.id}>
+                              {g.firstName} {g.lastName}
+                              {h.email
+                                ? ` (${h.email})`
+                                : " (no email)"}
+                            </option>
+                          ))
+                        )}
+                    </select>
+                    <button
+                      type="button"
+                      onClick={handleMoveGuestToHousehold}
+                      disabled={
+                        isMovingGuest || !selectedGuestToMove
+                      }
+                      className="px-4 py-2 font-serif text-sm border border-primary/30 bg-primary/5 hover:bg-primary/10 text-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                    >
+                      {isMovingGuest ? "Moving…" : "Move here"}
+                    </button>
+                  </div>
+                </div>
               </div>
 
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 <button
                   onClick={() => handleUpdateHousehold(false)}
                   disabled={isUpdating}
-                  className="flex-1 px-4 py-2 bg-primary text-white font-serif text-sm hover:bg-primary/90 transition-colors disabled:opacity-50"
+                  className="flex-1 min-w-0 px-4 py-2 bg-primary text-white font-serif text-sm hover:bg-primary/90 transition-colors disabled:opacity-50"
                 >
                   {isUpdating ? "Saving..." : "Save Changes"}
                 </button>
@@ -1075,6 +1435,18 @@ export default function AdminPage() {
                   className="px-4 py-2 font-serif text-sm border border-primary/20 hover:border-primary/40 transition-colors"
                 >
                   Cancel
+                </button>
+                <button
+                  onClick={() => handleDeleteHousehold()}
+                  disabled={
+                    isUpdating ||
+                    isDeletingHouseholdId === editingHousehold.id
+                  }
+                  className="w-full mt-2 px-4 py-2 font-serif text-sm border border-red-300 text-red-700 hover:bg-red-50 transition-colors disabled:opacity-50"
+                >
+                  {isDeletingHouseholdId === editingHousehold.id
+                    ? "Deleting…"
+                    : "Delete household"}
                 </button>
               </div>
             </div>
