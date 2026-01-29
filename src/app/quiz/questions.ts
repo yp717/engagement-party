@@ -28,8 +28,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     image: "/photos/scotland-analog.jpeg",
   },
   {
-    question:
-      "What central London park was the couple's first date in?",
+    question: "What central London park was the couple's first date in?",
     options: ["Regent's Park", "Green Park", "St James's Park", "Hyde Park"],
     correctIndex: 1,
   },
@@ -51,22 +50,14 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     correctIndex: 2,
   },
   {
-    question:
-      "Which country has the couple not visited together?",
+    question: "Which country has the couple not visited together?",
     options: ["Italy", "Spain", "Barbados", "Croatia"],
     correctIndex: 0,
   },
   {
     question:
       "Which of the following names does not occur in either couple's immediate family?",
-    options: [
-      "Panagiotis",
-      "Doris",
-      "Gürkan",
-      "Caroline",
-      "Eren",
-      "Alexander",
-    ],
+    options: ["Panagiotis", "Doris", "Gürkan", "Caroline", "Eren", "Alexander"],
     correctIndex: 5,
     successImage: "/photos/alex-success.png",
   },

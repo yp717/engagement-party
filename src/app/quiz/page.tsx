@@ -350,8 +350,7 @@ export default function QuizPage() {
                 ))}
               </ul>
             </motion.div>
-          )
-          }
+          )}
         </AnimatePresence>
       </div>
     </main>

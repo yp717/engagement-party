@@ -34,7 +34,7 @@ const faqs = [
   {
     question: "Are children allowed at the venue?",
     answer:
-      "While we love having children around, unfortunately the venue does not permit entry for anyone under the age of 12. If are any children are invited they will be listed on your invitation. Thank you for your understanding.",
+      "While we love having children around, unfortunately the venue does not permit entry for anyone under the age of 12. If any children are invited they will be listed on your invitation. Thank you for your understanding.",
   },
   {
     question: "What if I have dietary restrictions?",
