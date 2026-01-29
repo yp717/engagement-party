@@ -21,7 +21,7 @@ const DIETARY_OPTIONS = [
   "Allergens / Other (please specify)",
 ] as const;
 
-const ALLERGENS_SPECIFY_OPTION = "Allergens (please specify)";
+const ALLERGENS_SPECIFY_OPTION = "Allergens / Other (please specify)";
 
 function parseDietaryRequirements(value: string | null): {
   dietarySelections: string[];
