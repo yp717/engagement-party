@@ -37,7 +37,21 @@ interface Stats {
   noEmail: number;
 }
 
-type Tab = "overview" | "guests" | "send-invites" | "send-update";
+type Tab =
+  | "overview"
+  | "guests"
+  | "send-invites"
+  | "send-update"
+  | "quiz";
+
+interface QuizStats {
+  totalAttempts: number;
+  completed: number;
+  completionRate: number;
+  uniqueVisitors: number;
+  byFurthestQuestionIndex: Record<number, number>;
+  attemptsPerVisitor: Record<number, number>;
+}
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -98,6 +112,10 @@ export default function AdminPage() {
     string | null
   >(null);
 
+  // Quiz stats (fetched when Quiz tab is active)
+  const [quizStats, setQuizStats] = useState<QuizStats | null>(null);
+  const [quizStatsLoading, setQuizStatsLoading] = useState(false);
+
   const fetchData = useCallback(async () => {
     if (!isAuthenticated) return;
     setIsLoading(true);
@@ -124,6 +142,29 @@ export default function AdminPage() {
       fetchData();
     }
   }, [isAuthenticated, fetchData]);
+
+  const fetchQuizStats = useCallback(async () => {
+    if (!apiKey) return;
+    setQuizStatsLoading(true);
+    try {
+      const res = await fetch("/api/admin/quiz-stats", {
+        headers: { Authorization: `Bearer ${apiKey}` },
+        cache: "no-store",
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setQuizStats(data);
+      }
+    } finally {
+      setQuizStatsLoading(false);
+    }
+  }, [apiKey]);
+
+  useEffect(() => {
+    if (activeTab === "quiz" && isAuthenticated) {
+      fetchQuizStats();
+    }
+  }, [activeTab, isAuthenticated, fetchQuizStats]);
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -657,6 +698,7 @@ export default function AdminPage() {
               ["guests", "Guests"],
               ["send-invites", "Send Invites"],
               ["send-update", "Send Update"],
+              ["quiz", "Quiz"],
             ] as const
           ).map(([tab, label]) => (
             <button
@@ -1151,6 +1193,115 @@ export default function AdminPage() {
                 </div>
               </motion.div>
             )}
+
+            {/* Quiz Tab */}
+            {activeTab === "quiz" && (
+              <motion.div
+                key="quiz"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <div className="bg-white/30 border border-primary/10 rounded p-6">
+                  <h2 className="font-serif text-lg mb-4">Quiz Stats</h2>
+                  {quizStatsLoading ? (
+                    <div className="text-center py-12">
+                      <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent" />
+                    </div>
+                  ) : quizStats ? (
+                    <>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                        <StatCard
+                          label="Total Attempts"
+                          value={quizStats.totalAttempts}
+                        />
+                        <StatCard
+                          label="Completed"
+                          value={quizStats.completed}
+                          color="text-green-700"
+                        />
+                        <StatCard
+                          label="Completion Rate"
+                          value={`${quizStats.completionRate}%`}
+                        />
+                        <StatCard
+                          label="Unique Visitors"
+                          value={quizStats.uniqueVisitors}
+                        />
+                      </div>
+
+                      <h3 className="font-serif text-sm font-medium text-primary/70 mb-2">
+                        Where people failed (question index 0 = first question)
+                      </h3>
+                      <div className="bg-white/50 border border-primary/10 rounded p-4 mb-6 overflow-x-auto">
+                        <div className="flex gap-4 items-end min-w-max">
+                          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((q) => {
+                            const count =
+                              quizStats.byFurthestQuestionIndex[q] ?? 0;
+                            const maxCount = Math.max(
+                              ...Object.values(
+                                quizStats.byFurthestQuestionIndex
+                              ),
+                              1
+                            );
+                            const barHeight = Math.max(4, (count / maxCount) * 80);
+                            return (
+                              <div
+                                key={q}
+                                className="flex flex-col items-center gap-1"
+                              >
+                                <span className="font-serif text-xs text-primary/60">
+                                  {count}
+                                </span>
+                                <div
+                                  className="w-8 bg-primary/30 rounded-t min-h-[4px]"
+                                  style={{ height: `${barHeight}px` }}
+                                />
+                                <span className="font-serif text-xs text-primary/60">
+                                  Q{q + 1}
+                                </span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                        <p className="font-serif text-xs text-primary/50 mt-2">
+                          Completed attempts count as Q12.
+                        </p>
+                      </div>
+
+                      {Object.keys(quizStats.attemptsPerVisitor).length > 0 && (
+                        <>
+                          <h3 className="font-serif text-sm font-medium text-primary/70 mb-2">
+                            Attempts per visitor
+                          </h3>
+                          <ul className="font-serif text-sm space-y-1 mb-4">
+                            {Object.entries(quizStats.attemptsPerVisitor)
+                              .sort(([a], [b]) => Number(a) - Number(b))
+                              .map(([attempts, count]) => (
+                                <li key={attempts} className="text-primary/80">
+                                  {count} visitor{count !== 1 ? "s" : ""} tried{" "}
+                                  {attempts} time{Number(attempts) !== 1 ? "s" : ""}
+                                </li>
+                              ))}
+                          </ul>
+                        </>
+                      )}
+
+                      <button
+                        onClick={fetchQuizStats}
+                        className="px-4 py-2 font-serif text-sm border border-primary/20 hover:border-primary/40 transition-colors"
+                      >
+                        Refresh
+                      </button>
+                    </>
+                  ) : (
+                    <p className="font-serif text-primary/60">
+                      No quiz data yet.
+                    </p>
+                  )}
+                </div>
+              </motion.div>
+            )}
           </AnimatePresence>
         )}
 
@@ -1495,7 +1646,7 @@ function StatCard({
   color = "text-primary",
 }: {
   label: string;
-  value: number;
+  value: number | string;
   color?: string;
 }) {
   return (

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -116,14 +116,44 @@ function Sticker({
   );
 }
 
+async function recordQuizAttempt(
+  furthestQuestionIndex: number,
+  completed: boolean
+) {
+  try {
+    await fetch("/api/quiz/attempt", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ furthestQuestionIndex, completed }),
+    });
+  } catch {
+    // ignore
+  }
+}
+
 export default function QuizPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [wrong, setWrong] = useState(false);
   const [showingSuccess, setShowingSuccess] = useState(false);
+  const attemptRecordedRef = useRef(false);
 
   const question = QUIZ_QUESTIONS[currentIndex];
   const questionsLeft = TOTAL - currentIndex - 1;
   const isComplete = currentIndex >= TOTAL;
+
+  // Record attempt when user gets a question wrong
+  useEffect(() => {
+    if (!wrong || attemptRecordedRef.current) return;
+    attemptRecordedRef.current = true;
+    recordQuizAttempt(currentIndex, false);
+  }, [wrong, currentIndex]);
+
+  // Record attempt when user completes the quiz
+  useEffect(() => {
+    if (!isComplete || attemptRecordedRef.current) return;
+    attemptRecordedRef.current = true;
+    recordQuizAttempt(TOTAL - 1, true);
+  }, [isComplete]);
 
   const advanceToNext = useCallback(() => {
     setShowingSuccess(false);
@@ -145,6 +175,7 @@ export default function QuizPage() {
   };
 
   const handleRestart = () => {
+    attemptRecordedRef.current = false;
     setWrong(false);
     setShowingSuccess(false);
     setCurrentIndex(0);

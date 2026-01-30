@@ -1,4 +1,11 @@
-import { pgTable, uuid, text, boolean, timestamp } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  uuid,
+  text,
+  boolean,
+  timestamp,
+  integer,
+} from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
 export const households = pgTable("households", {
@@ -27,6 +34,14 @@ export const guests = pgTable("guests", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const quizAttempts = pgTable("quiz_attempts", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  furthestQuestionIndex: integer("furthest_question_index").notNull(),
+  completed: boolean("completed").notNull(),
+  visitorHash: text("visitor_hash"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 // Relations
 export const householdsRelations = relations(households, ({ many }) => ({
   guests: many(guests),
@@ -44,3 +59,5 @@ export type Household = typeof households.$inferSelect;
 export type NewHousehold = typeof households.$inferInsert;
 export type Guest = typeof guests.$inferSelect;
 export type NewGuest = typeof guests.$inferInsert;
+export type QuizAttempt = typeof quizAttempts.$inferSelect;
+export type NewQuizAttempt = typeof quizAttempts.$inferInsert;

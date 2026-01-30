@@ -86,6 +86,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       "The Cheshire Cat",
     ],
     correctIndex: 1,
+    image: "/photos/alara-character.png",
     successImage: "/photos/alara-mort-same-picture.png",
   },
 ];
