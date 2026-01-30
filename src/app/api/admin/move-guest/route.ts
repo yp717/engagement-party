@@ -52,10 +52,7 @@ export async function POST(request: NextRequest) {
       .limit(1);
 
     if (!guest) {
-      return NextResponse.json(
-        { error: "Guest not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Guest not found" }, { status: 404 });
     }
 
     if (guest.householdId === targetHouseholdId) {
@@ -95,9 +92,7 @@ export async function POST(request: NextRequest) {
       .where(eq(guests.householdId, previousHouseholdId))
       .limit(1);
     if (remainingInPrevious.length === 0) {
-      await db
-        .delete(households)
-        .where(eq(households.id, previousHouseholdId));
+      await db.delete(households).where(eq(households.id, previousHouseholdId));
     }
 
     return NextResponse.json({

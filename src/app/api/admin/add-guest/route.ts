@@ -58,7 +58,11 @@ export async function POST(request: NextRequest) {
         invitedBy: invitedBy.trim(),
         role: role.trim(),
       })
-      .returning({ id: guests.id, firstName: guests.firstName, lastName: guests.lastName });
+      .returning({
+        id: guests.id,
+        firstName: guests.firstName,
+        lastName: guests.lastName,
+      });
 
     return NextResponse.json({
       success: true,
@@ -66,9 +70,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error("Error adding guest:", error);
-    return NextResponse.json(
-      { error: "Failed to add guest" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to add guest" }, { status: 500 });
   }
 }

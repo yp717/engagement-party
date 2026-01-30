@@ -34,10 +34,7 @@ export async function POST(request: NextRequest) {
       .limit(1);
 
     if (!guest) {
-      return NextResponse.json(
-        { error: "Guest not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Guest not found" }, { status: 404 });
     }
 
     const householdId = guest.householdId;

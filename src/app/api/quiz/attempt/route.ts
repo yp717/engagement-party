@@ -14,7 +14,9 @@ function getClientIp(request: NextRequest): string | null {
 }
 
 function hashVisitor(ip: string, salt: string): string {
-  return createHash("sha256").update(ip + salt).digest("hex");
+  return createHash("sha256")
+    .update(ip + salt)
+    .digest("hex");
 }
 
 // POST /api/quiz/attempt - Record a quiz attempt (anonymous, optional hashed IP)
@@ -38,10 +40,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (typeof completed !== "boolean") {
-      return NextResponse.json(
-        { error: "Invalid completed" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Invalid completed" }, { status: 400 });
     }
 
     let visitorHash: string | null = null;

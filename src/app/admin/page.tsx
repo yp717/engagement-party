@@ -37,12 +37,7 @@ interface Stats {
   noEmail: number;
 }
 
-type Tab =
-  | "overview"
-  | "guests"
-  | "send-invites"
-  | "send-update"
-  | "quiz";
+type Tab = "overview" | "guests" | "send-invites" | "send-update" | "quiz";
 
 interface QuizStats {
   totalAttempts: number;
@@ -1244,7 +1239,10 @@ export default function AdminPage() {
                               ),
                               1
                             );
-                            const barHeight = Math.max(4, (count / maxCount) * 80);
+                            const barHeight = Math.max(
+                              4,
+                              (count / maxCount) * 80
+                            );
                             return (
                               <div
                                 key={q}
@@ -1280,7 +1278,8 @@ export default function AdminPage() {
                               .map(([attempts, count]) => (
                                 <li key={attempts} className="text-primary/80">
                                   {count} visitor{count !== 1 ? "s" : ""} tried{" "}
-                                  {attempts} time{Number(attempts) !== 1 ? "s" : ""}
+                                  {attempts} time
+                                  {Number(attempts) !== 1 ? "s" : ""}
                                 </li>
                               ))}
                           </ul>
@@ -1383,7 +1382,9 @@ export default function AdminPage() {
                   onClick={() =>
                     editingGuest && handleDeleteGuest(editingGuest)
                   }
-                  disabled={isUpdating || isDeletingGuestId === editingGuest?.id}
+                  disabled={
+                    isUpdating || isDeletingGuestId === editingGuest?.id
+                  }
                   className="w-full mt-2 px-4 py-2 font-serif text-sm border border-red-300 text-red-700 hover:bg-red-50 transition-colors disabled:opacity-50"
                 >
                   {isDeletingGuestId === editingGuest?.id
@@ -1441,8 +1442,8 @@ export default function AdminPage() {
                     <span className="text-primary">
                       {editingHousehold.inviteSentAt
                         ? new Date(
-                          editingHousehold.inviteSentAt
-                        ).toLocaleDateString()
+                            editingHousehold.inviteSentAt
+                          ).toLocaleDateString()
                         : "Not yet"}
                     </span>
                   </p>
@@ -1561,23 +1562,17 @@ export default function AdminPage() {
                   <div className="flex gap-2">
                     <select
                       value={selectedGuestToMove}
-                      onChange={(e) =>
-                        setSelectedGuestToMove(e.target.value)
-                      }
+                      onChange={(e) => setSelectedGuestToMove(e.target.value)}
                       className="flex-1 px-3 py-2 bg-white/50 border border-primary/20 font-serif text-sm focus:outline-none focus:border-primary/40"
                     >
-                      <option value="">
-                        Select a guest…
-                      </option>
+                      <option value="">Select a guest…</option>
                       {households
                         .filter((h) => h.id !== editingHousehold.id)
                         .flatMap((h) =>
                           h.guests.map((g) => (
                             <option key={g.id} value={g.id}>
                               {g.firstName} {g.lastName}
-                              {h.email
-                                ? ` (${h.email})`
-                                : " (no email)"}
+                              {h.email ? ` (${h.email})` : " (no email)"}
                             </option>
                           ))
                         )}
@@ -1585,9 +1580,7 @@ export default function AdminPage() {
                     <button
                       type="button"
                       onClick={handleMoveGuestToHousehold}
-                      disabled={
-                        isMovingGuest || !selectedGuestToMove
-                      }
+                      disabled={isMovingGuest || !selectedGuestToMove}
                       className="px-4 py-2 font-serif text-sm border border-primary/30 bg-primary/5 hover:bg-primary/10 text-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
                     >
                       {isMovingGuest ? "Moving…" : "Move here"}
@@ -1622,8 +1615,7 @@ export default function AdminPage() {
                 <button
                   onClick={() => handleDeleteHousehold()}
                   disabled={
-                    isUpdating ||
-                    isDeletingHouseholdId === editingHousehold.id
+                    isUpdating || isDeletingHouseholdId === editingHousehold.id
                   }
                   className="w-full mt-2 px-4 py-2 font-serif text-sm border border-red-300 text-red-700 hover:bg-red-50 transition-colors disabled:opacity-50"
                 >
