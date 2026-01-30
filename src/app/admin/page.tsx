@@ -79,6 +79,7 @@ export default function AdminPage() {
     null
   );
   const [guestsNoEmailOnly, setGuestsNoEmailOnly] = useState(false);
+  const [guestsNotSentOnly, setGuestsNotSentOnly] = useState(false);
 
   // Edit modal state
   const [editingGuest, setEditingGuest] = useState<Guest | null>(null);
@@ -605,8 +606,9 @@ export default function AdminPage() {
     }
   };
 
-  // Filter households based on search, invite-status, and no-email (Guests tab)
+  // Filter households based on search, invite-status, no-email, and not-sent (Guests tab)
   const filteredHouseholds = households.filter((h) => {
+    if (guestsNotSentOnly && h.inviteSentAt) return false;
     if (guestsNoEmailOnly && h.email) return false;
     if (guestsInviteFilter != null && h.inviteStatus !== guestsInviteFilter)
       return false;
@@ -868,6 +870,18 @@ export default function AdminPage() {
                       )}
                     >
                       No email
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setGuestsNotSentOnly((v) => !v)}
+                      className={cn(
+                        "px-3 py-1.5 font-serif text-xs border transition-colors",
+                        guestsNotSentOnly
+                          ? "bg-primary text-white border-primary"
+                          : "bg-white/50 border-primary/20 hover:border-primary/40 text-primary"
+                      )}
+                    >
+                      Not sent
                     </button>
                   </div>
                   <input
@@ -1457,8 +1471,8 @@ export default function AdminPage() {
                     <span className="text-primary">
                       {editingHousehold.inviteSentAt
                         ? new Date(
-                            editingHousehold.inviteSentAt
-                          ).toLocaleDateString()
+                          editingHousehold.inviteSentAt
+                        ).toLocaleDateString()
                         : "Not yet"}
                     </span>
                   </p>
