@@ -80,6 +80,7 @@ export default function AdminPage() {
   );
   const [guestsNoEmailOnly, setGuestsNoEmailOnly] = useState(false);
   const [guestsNotSentOnly, setGuestsNotSentOnly] = useState(false);
+  const [guestsAttendingOnly, setGuestsAttendingOnly] = useState(false);
 
   // Edit modal state
   const [editingGuest, setEditingGuest] = useState<Guest | null>(null);
@@ -606,8 +607,10 @@ export default function AdminPage() {
     }
   };
 
-  // Filter households based on search, invite-status, no-email, and not-sent (Guests tab)
+  // Filter households based on search, invite-status, no-email, not-sent, and attending (Guests tab)
   const filteredHouseholds = households.filter((h) => {
+    if (guestsAttendingOnly && !h.guests.some((g) => g.isAttending === true))
+      return false;
     if (guestsNotSentOnly && h.inviteSentAt) return false;
     if (guestsNoEmailOnly && h.email) return false;
     if (guestsInviteFilter != null && h.inviteStatus !== guestsInviteFilter)
@@ -882,6 +885,18 @@ export default function AdminPage() {
                       )}
                     >
                       Not sent
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setGuestsAttendingOnly((v) => !v)}
+                      className={cn(
+                        "px-3 py-1.5 font-serif text-xs border transition-colors",
+                        guestsAttendingOnly
+                          ? "bg-primary text-white border-primary"
+                          : "bg-white/50 border-primary/20 hover:border-primary/40 text-primary"
+                      )}
+                    >
+                      Attending
                     </button>
                   </div>
                   <input
