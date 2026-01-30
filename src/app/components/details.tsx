@@ -17,6 +17,31 @@ const hotels = [
 
 const detailBlocks = [
   {
+    label: "Attire",
+    title: "Dress Code",
+    children: (
+      <p className="text-cream/85 leading-relaxed">
+        <em className="font-medium text-cream/95">Cocktail formal</em> — We
+        would love to see our family and friends dressed up with us! The dress
+        code is Cocktail Formal. Think suits for men, tie optional, and
+        cocktail/floor length dresses for women. The venue will be inside so no
+        need to worry about a rainy London summer.
+      </p>
+    ),
+  },
+  {
+    label: "Getting there",
+    title: "Transportation",
+    children: (
+      <p className="text-cream/85 leading-relaxed">
+        The venue is easily accessible by Tube, Bus, and Taxi. The nearest Tube
+        is <em className="font-medium text-cream/95">Bank Station</em> (1 min),
+        and <em className="font-medium text-cream/95">Liverpool Street</em> is a
+        10 minute walk. There is no parking at the venue.
+      </p>
+    ),
+  },
+  {
     label: "Stay",
     title: "Accommodation",
     children: (
@@ -36,31 +61,6 @@ const detailBlocks = [
           ))}
         </ul>
       </>
-    ),
-  },
-  {
-    label: "Getting there",
-    title: "Transportation",
-    children: (
-      <p className="text-cream/85 leading-relaxed">
-        The venue is easily accessible by Tube, Bus, and Taxi. The nearest Tube
-        is <em className="font-medium text-cream/95">Bank Station</em> (1 min),
-        and <em className="font-medium text-cream/95">Liverpool Street</em> is a
-        10 minute walk. There is no parking at the venue.
-      </p>
-    ),
-  },
-  {
-    label: "Attire",
-    title: "Dress Code",
-    children: (
-      <p className="text-cream/85 leading-relaxed">
-        <em className="font-medium text-cream/95">Cocktail formal</em> — We
-        would love to see our family and friends dressed up with us! The dress
-        code is Cocktail Formal. Think suits for men, tie optional, and
-        cocktail/floor length dresses for women. The venue will be inside so no
-        need to worry about a rainy London summer.
-      </p>
     ),
   },
 ];
