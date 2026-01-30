@@ -47,10 +47,9 @@ const detailBlocks = [
     children: (
       <>
         <p className="text-cream/85 leading-relaxed mb-4">
-          There are a number of wonderful hotels close to the venue. Below are a
-          few we recommend — or stay anywhere in London; the venue is easily
-          accessible by public transport. Need area or activity recommendations?
-          Just ask.
+          Guests are kindly asked to arrange their own accomodation. Below is a
+          curated list of hotels we recommend around the Libertine. If you need
+          area or activity recommendations for your trip to London, just ask!
         </p>
         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-cream/75 text-sm md:text-base">
           {hotels.map((h) => (

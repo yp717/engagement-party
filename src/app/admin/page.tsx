@@ -78,6 +78,7 @@ export default function AdminPage() {
   const [guestsInviteFilter, setGuestsInviteFilter] = useState<string | null>(
     null
   );
+  const [guestsNoEmailOnly, setGuestsNoEmailOnly] = useState(false);
 
   // Edit modal state
   const [editingGuest, setEditingGuest] = useState<Guest | null>(null);
@@ -604,8 +605,9 @@ export default function AdminPage() {
     }
   };
 
-  // Filter households based on search and invite-status (Guests tab)
+  // Filter households based on search, invite-status, and no-email (Guests tab)
   const filteredHouseholds = households.filter((h) => {
+    if (guestsNoEmailOnly && h.email) return false;
     if (guestsInviteFilter != null && h.inviteStatus !== guestsInviteFilter)
       return false;
     if (!searchTerm) return true;
@@ -854,6 +856,19 @@ export default function AdminPage() {
                         {label}
                       </button>
                     ))}
+                    <span className="w-px h-4 bg-primary/20 mx-1" aria-hidden />
+                    <button
+                      type="button"
+                      onClick={() => setGuestsNoEmailOnly((v) => !v)}
+                      className={cn(
+                        "px-3 py-1.5 font-serif text-xs border transition-colors",
+                        guestsNoEmailOnly
+                          ? "bg-primary text-white border-primary"
+                          : "bg-white/50 border-primary/20 hover:border-primary/40 text-primary"
+                      )}
+                    >
+                      No email
+                    </button>
                   </div>
                   <input
                     type="text"

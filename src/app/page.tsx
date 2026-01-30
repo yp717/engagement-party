@@ -6,6 +6,7 @@ import FAQs from "./components/FAQs";
 import Hero2 from "./components/hero-2";
 import PasswordProtection from "./components/password-protection";
 import RSVP from "./components/RSVP";
+import Contact from "./components/Contact";
 import SaveTheDate from "./components/save-the-date";
 import CheckeredDivider from "./components/checkered-divider";
 import StripedDivider from "./components/striped-divider";
@@ -52,9 +53,13 @@ export default function Home() {
           <FAQs />
         </section>
 
-        {/* Checkered Pattern Divider - Narrow */}
-        <CheckeredDividerNarrow />
+        {/* Contact */}
+        <section id="contact" className="snap-start">
+          <Contact />
+        </section>
 
+        {/* Striped Divider - extends into RSVP */}
+        <CheckeredDividerNarrow />
         {/* RSVP */}
         <section id="rsvp" className="snap-start">
           <RSVP />
