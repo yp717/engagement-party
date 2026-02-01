@@ -619,8 +619,7 @@ export default function AdminPage() {
 
   // Count households awaiting response (sent but at least one guest hasn't responded)
   const awaitingResponseCount = households.filter(
-    (h) =>
-      h.inviteSentAt && h.guests.some((g) => g.isAttending === null)
+    (h) => h.inviteSentAt && h.guests.some((g) => g.isAttending === null)
   ).length;
 
   // Filter households based on search, invite-status, no-email, not-sent, attending, and awaiting response (Guests tab)
@@ -1075,7 +1074,9 @@ export default function AdminPage() {
                                 disabled={isDeletingGuestId === guest.id}
                                 className="px-2 py-0.5 text-xs font-serif text-red-600 hover:text-red-700 disabled:opacity-50 transition-colors"
                               >
-                                {isDeletingGuestId === guest.id ? "…" : "Delete"}
+                                {isDeletingGuestId === guest.id
+                                  ? "…"
+                                  : "Delete"}
                               </button>
                             </div>
                           </div>
@@ -1578,8 +1579,8 @@ export default function AdminPage() {
                     <span className="text-primary">
                       {editingHousehold.inviteSentAt
                         ? new Date(
-                          editingHousehold.inviteSentAt
-                        ).toLocaleDateString()
+                            editingHousehold.inviteSentAt
+                          ).toLocaleDateString()
                         : "Not yet"}
                     </span>
                   </p>
