@@ -1526,8 +1526,8 @@ export default function AdminPage() {
                     <span className="text-primary">
                       {editingHousehold.inviteSentAt
                         ? new Date(
-                          editingHousehold.inviteSentAt
-                        ).toLocaleDateString()
+                            editingHousehold.inviteSentAt
+                          ).toLocaleDateString()
                         : "Not yet"}
                     </span>
                   </p>

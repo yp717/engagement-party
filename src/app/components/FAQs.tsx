@@ -19,7 +19,8 @@ const faqs = [
   },
   {
     question: "What time should I arrive?",
-    answer: "The final time of the event will be announced closer to the date. We will start the event in the evening with a cocktail reception, followed by a sit down dinner and finish off with some dancing into the night.",
+    answer:
+      "The final time of the event will be announced closer to the date. We will start the event in the evening with a cocktail reception, followed by a sit down dinner and finish off with some dancing into the night.",
   },
   {
     question: "Is there parking available?",
