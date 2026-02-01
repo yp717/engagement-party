@@ -617,6 +617,12 @@ export default function AdminPage() {
     }
   };
 
+  // Count households awaiting response (sent but at least one guest hasn't responded)
+  const awaitingResponseCount = households.filter(
+    (h) =>
+      h.inviteSentAt && h.guests.some((g) => g.isAttending === null)
+  ).length;
+
   // Filter households based on search, invite-status, no-email, not-sent, attending, and awaiting response (Guests tab)
   const filteredHouseholds = households.filter((h) => {
     if (guestsAttendingOnly && !h.guests.some((g) => g.isAttending === true))
@@ -683,14 +689,14 @@ export default function AdminPage() {
 
   return (
     <main className="min-h-screen bg-cream text-primary">
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="max-w-6xl mx-auto px-3 sm:px-4 py-4 sm:py-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="font-pinyon text-4xl">Admin Dashboard</h1>
-          <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 sm:mb-8">
+          <h1 className="font-pinyon text-3xl sm:text-4xl">Admin Dashboard</h1>
+          <div className="flex gap-2 sm:gap-4">
             <button
               onClick={fetchData}
-              className="px-4 py-2 font-serif text-sm border border-primary/20 hover:border-primary/40 transition-colors"
+              className="px-3 sm:px-4 py-1.5 sm:py-2 font-serif text-xs sm:text-sm border border-primary/20 hover:border-primary/40 transition-colors"
             >
               Refresh
             </button>
@@ -700,15 +706,31 @@ export default function AdminPage() {
                 setIsAuthenticated(false);
                 setApiKey("");
               }}
-              className="px-4 py-2 font-serif text-sm text-primary/60 hover:text-primary"
+              className="px-3 sm:px-4 py-1.5 sm:py-2 font-serif text-xs sm:text-sm text-primary/60 hover:text-primary"
             >
               Logout
             </button>
           </div>
         </div>
 
-        {/* Tabs */}
-        <div className="flex gap-2 mb-8 border-b border-primary/10 pb-2">
+        {/* Tabs - Dropdown on mobile, horizontal tabs on desktop */}
+        {/* Mobile dropdown */}
+        <div className="md:hidden mb-6">
+          <select
+            value={activeTab}
+            onChange={(e) => setActiveTab(e.target.value as Tab)}
+            className="w-full px-4 py-3 bg-white/50 border border-primary/20 font-serif text-sm focus:outline-none focus:border-primary/40 rounded"
+          >
+            <option value="overview">Overview</option>
+            <option value="guests">Guests</option>
+            <option value="send-invites">Send Invites</option>
+            <option value="send-update">Send Update</option>
+            <option value="quiz">Quiz</option>
+          </select>
+        </div>
+
+        {/* Desktop tabs */}
+        <div className="hidden md:flex gap-2 mb-8 border-b border-primary/10 pb-2">
           {(
             [
               ["overview", "Overview"],
@@ -722,7 +744,7 @@ export default function AdminPage() {
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={cn(
-                "px-4 py-2 font-serif text-sm transition-colors",
+                "px-4 py-2 font-serif text-sm transition-colors whitespace-nowrap",
                 activeTab === tab
                   ? "text-primary border-b-2 border-primary -mb-[9px]"
                   : "text-primary/60 hover:text-primary"
@@ -850,8 +872,9 @@ export default function AdminPage() {
                 exit={{ opacity: 0 }}
               >
                 <div className="mb-4 space-y-3">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="font-serif text-xs text-primary/60 mr-1">
+                  {/* Invite status row */}
+                  <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                    <span className="font-serif text-xs text-primary/60 mr-1 w-full sm:w-auto mb-1 sm:mb-0">
                       Invite status:
                     </span>
                     {(
@@ -867,7 +890,7 @@ export default function AdminPage() {
                         type="button"
                         onClick={() => setGuestsInviteFilter(value)}
                         className={cn(
-                          "px-3 py-1.5 font-serif text-xs border transition-colors",
+                          "px-2 sm:px-3 py-1 sm:py-1.5 font-serif text-xs border transition-colors",
                           guestsInviteFilter === value
                             ? "bg-primary text-white border-primary"
                             : "bg-white/50 border-primary/20 hover:border-primary/40 text-primary"
@@ -876,12 +899,18 @@ export default function AdminPage() {
                         {label}
                       </button>
                     ))}
-                    <span className="w-px h-4 bg-primary/20 mx-1" aria-hidden />
+                  </div>
+
+                  {/* Quick filters row */}
+                  <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                    <span className="font-serif text-xs text-primary/60 mr-1 w-full sm:w-auto mb-1 sm:mb-0">
+                      Quick filters:
+                    </span>
                     <button
                       type="button"
                       onClick={() => setGuestsNoEmailOnly((v) => !v)}
                       className={cn(
-                        "px-3 py-1.5 font-serif text-xs border transition-colors",
+                        "px-2 sm:px-3 py-1 sm:py-1.5 font-serif text-xs border transition-colors",
                         guestsNoEmailOnly
                           ? "bg-primary text-white border-primary"
                           : "bg-white/50 border-primary/20 hover:border-primary/40 text-primary"
@@ -893,7 +922,7 @@ export default function AdminPage() {
                       type="button"
                       onClick={() => setGuestsNotSentOnly((v) => !v)}
                       className={cn(
-                        "px-3 py-1.5 font-serif text-xs border transition-colors",
+                        "px-2 sm:px-3 py-1 sm:py-1.5 font-serif text-xs border transition-colors",
                         guestsNotSentOnly
                           ? "bg-primary text-white border-primary"
                           : "bg-white/50 border-primary/20 hover:border-primary/40 text-primary"
@@ -905,7 +934,7 @@ export default function AdminPage() {
                       type="button"
                       onClick={() => setGuestsAttendingOnly((v) => !v)}
                       className={cn(
-                        "px-3 py-1.5 font-serif text-xs border transition-colors",
+                        "px-2 sm:px-3 py-1 sm:py-1.5 font-serif text-xs border transition-colors",
                         guestsAttendingOnly
                           ? "bg-primary text-white border-primary"
                           : "bg-white/50 border-primary/20 hover:border-primary/40 text-primary"
@@ -917,15 +946,21 @@ export default function AdminPage() {
                       type="button"
                       onClick={() => setGuestsAwaitingResponseOnly((v) => !v)}
                       className={cn(
-                        "px-3 py-1.5 font-serif text-xs border transition-colors",
+                        "px-2 sm:px-3 py-1.5 font-serif text-xs border transition-colors flex items-center",
                         guestsAwaitingResponseOnly
                           ? "bg-primary text-white border-primary"
                           : "bg-white/50 border-primary/20 hover:border-primary/40 text-primary"
                       )}
                     >
                       Awaiting response
+                      {awaitingResponseCount > 0 && (
+                        <span className="ml-1 px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-700 text-[10px] font-medium">
+                          {awaitingResponseCount}
+                        </span>
+                      )}
                     </button>
                   </div>
+
                   <input
                     type="text"
                     value={searchTerm}
@@ -939,14 +974,14 @@ export default function AdminPage() {
                   {filteredHouseholds.map((household) => (
                     <div
                       key={household.id}
-                      className="bg-white/30 border border-primary/10 rounded p-4"
+                      className="bg-white/30 border border-primary/10 rounded p-3 sm:p-4"
                     >
-                      <div className="flex items-start justify-between mb-3">
+                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-0 mb-3">
                         <div>
-                          <p className="font-serif text-sm text-primary/60">
+                          <p className="font-serif text-sm text-primary/60 break-all">
                             {household.email || "(no email)"}
                           </p>
-                          <div className="flex gap-2 mt-1">
+                          <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-1">
                             <span
                               className={cn(
                                 "px-2 py-0.5 rounded text-xs font-serif",
@@ -964,20 +999,20 @@ export default function AdminPage() {
                             </span>
                           </div>
                         </div>
-                        <div className="flex gap-2">
+                        <div className="flex flex-wrap gap-1.5 sm:gap-2">
                           <button
                             onClick={() => openEditHousehold(household)}
-                            className="px-3 py-1 text-xs font-serif border border-primary/20 hover:border-primary/40 hover:bg-primary/5 transition-colors"
+                            className="px-2 sm:px-3 py-1 text-xs font-serif border border-primary/20 hover:border-primary/40 hover:bg-primary/5 transition-colors"
                           >
                             Edit
                           </button>
                           <button
                             onClick={() => handleDeleteHousehold(household)}
                             disabled={isDeletingHouseholdId === household.id}
-                            className="px-3 py-1 text-xs font-serif text-red-600 hover:text-red-700 disabled:opacity-50 transition-colors"
+                            className="px-2 sm:px-3 py-1 text-xs font-serif text-red-600 hover:text-red-700 disabled:opacity-50 transition-colors"
                           >
                             {isDeletingHouseholdId === household.id
-                              ? "Deleting…"
+                              ? "…"
                               : "Delete"}
                           </button>
                           {household.email && !household.inviteSentAt && (
@@ -985,9 +1020,9 @@ export default function AdminPage() {
                               onClick={() =>
                                 handleSendToOne(household.id, household.email!)
                               }
-                              className="px-3 py-1 text-xs font-serif border border-primary/20 hover:border-primary/40 hover:bg-primary/5 transition-colors"
+                              className="px-2 sm:px-3 py-1 text-xs font-serif border border-primary/20 hover:border-primary/40 hover:bg-primary/5 transition-colors"
                             >
-                              Send Invite
+                              Send
                             </button>
                           )}
                         </div>
@@ -997,22 +1032,22 @@ export default function AdminPage() {
                         {household.guests.map((guest) => (
                           <div
                             key={guest.id}
-                            className="flex items-center justify-between py-2 border-t border-primary/5"
+                            className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 sm:gap-2 py-2 border-t border-primary/5"
                           >
-                            <div>
-                              <span className="font-serif">
+                            <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                              <span className="font-serif text-sm sm:text-base">
                                 {guest.firstName} {guest.lastName}
                               </span>
-                              <span className="ml-2 text-xs text-primary/50">
+                              <span className="text-xs text-primary/50">
                                 {guest.role} • {guest.invitedBy}
                               </span>
-                            </div>
-                            <div className="flex items-center gap-2">
                               {guest.dietaryRequirements && (
-                                <span className="text-xs text-primary/60 max-w-[200px] truncate">
-                                  {guest.dietaryRequirements}
+                                <span className="text-xs text-primary/60 max-w-[150px] sm:max-w-[200px] truncate hidden sm:inline">
+                                  ({guest.dietaryRequirements})
                                 </span>
                               )}
+                            </div>
+                            <div className="flex items-center gap-1.5 sm:gap-2">
                               <span
                                 className={cn(
                                   "px-2 py-0.5 rounded text-xs font-serif",
@@ -1040,9 +1075,7 @@ export default function AdminPage() {
                                 disabled={isDeletingGuestId === guest.id}
                                 className="px-2 py-0.5 text-xs font-serif text-red-600 hover:text-red-700 disabled:opacity-50 transition-colors"
                               >
-                                {isDeletingGuestId === guest.id
-                                  ? "Deleting…"
-                                  : "Delete"}
+                                {isDeletingGuestId === guest.id ? "…" : "Delete"}
                               </button>
                             </div>
                           </div>
@@ -1050,8 +1083,8 @@ export default function AdminPage() {
                       </div>
 
                       <div className="mt-2 pt-2 border-t border-primary/5">
-                        <p className="text-xs text-primary/40 font-mono">
-                          RSVP link: /rsvp?token={household.uniqueToken}
+                        <p className="text-xs text-primary/40 font-mono break-all">
+                          /rsvp?token={household.uniqueToken}
                         </p>
                       </div>
                     </div>
@@ -1545,8 +1578,8 @@ export default function AdminPage() {
                     <span className="text-primary">
                       {editingHousehold.inviteSentAt
                         ? new Date(
-                            editingHousehold.inviteSentAt
-                          ).toLocaleDateString()
+                          editingHousehold.inviteSentAt
+                        ).toLocaleDateString()
                         : "Not yet"}
                     </span>
                   </p>
