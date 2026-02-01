@@ -92,6 +92,8 @@ export default function AdminPage() {
     lastName: "",
     email: "",
     inviteStatus: "",
+    isAttending: null as boolean | null,
+    dietaryRequirements: "",
   });
   const [addGuestForm, setAddGuestForm] = useState({
     firstName: "",
@@ -355,6 +357,8 @@ export default function AdminPage() {
       lastName: guest.lastName,
       email: "",
       inviteStatus: "",
+      isAttending: guest.isAttending,
+      dietaryRequirements: guest.dietaryRequirements || "",
     });
   };
 
@@ -373,6 +377,8 @@ export default function AdminPage() {
           guestId: editingGuest.id,
           firstName: editForm.firstName || undefined,
           lastName: editForm.lastName || undefined,
+          isAttending: editForm.isAttending,
+          dietaryRequirements: editForm.dietaryRequirements || null,
           resetRsvp,
         }),
       });
@@ -399,6 +405,8 @@ export default function AdminPage() {
       lastName: "",
       email: household.email || "",
       inviteStatus: household.inviteStatus,
+      isAttending: null,
+      dietaryRequirements: "",
     });
     // Default "add guest" fields from first guest in household (e.g. same invitedBy/role as spouse)
     const first = household.guests[0];
@@ -1383,21 +1391,53 @@ export default function AdminPage() {
                 </div>
 
                 <div className="pt-2 border-t border-primary/10">
-                  <p className="font-serif text-sm text-primary/60 mb-2">
-                    Current RSVP:{" "}
-                    <span className="text-primary">
-                      {editingGuest.isAttending === true
-                        ? "Attending"
-                        : editingGuest.isAttending === false
-                          ? "Declined"
-                          : "Pending"}
-                    </span>
-                  </p>
-                  {editingGuest.dietaryRequirements && (
-                    <p className="font-serif text-sm text-primary/60">
-                      Dietary: {editingGuest.dietaryRequirements}
-                    </p>
-                  )}
+                  <label className="block font-serif text-sm text-primary/60 mb-1">
+                    RSVP Status
+                  </label>
+                  <select
+                    value={
+                      editForm.isAttending === null
+                        ? "pending"
+                        : editForm.isAttending
+                          ? "attending"
+                          : "declined"
+                    }
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setEditForm({
+                        ...editForm,
+                        isAttending:
+                          val === "pending"
+                            ? null
+                            : val === "attending"
+                              ? true
+                              : false,
+                      });
+                    }}
+                    className="w-full px-3 py-2 bg-white/50 border border-primary/20 font-serif text-sm focus:outline-none focus:border-primary/40"
+                  >
+                    <option value="pending">Pending</option>
+                    <option value="attending">Attending</option>
+                    <option value="declined">Declined</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block font-serif text-sm text-primary/60 mb-1">
+                    Dietary Requirements
+                  </label>
+                  <input
+                    type="text"
+                    value={editForm.dietaryRequirements}
+                    onChange={(e) =>
+                      setEditForm({
+                        ...editForm,
+                        dietaryRequirements: e.target.value,
+                      })
+                    }
+                    className="w-full px-3 py-2 bg-white/50 border border-primary/20 font-serif text-sm focus:outline-none focus:border-primary/40"
+                    placeholder="e.g. Vegetarian, gluten-free"
+                  />
                 </div>
               </div>
 

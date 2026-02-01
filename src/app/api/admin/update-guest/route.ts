@@ -42,7 +42,19 @@ export async function POST(request: NextRequest) {
 
     if (firstName !== undefined) updateData.firstName = firstName;
     if (lastName !== undefined) updateData.lastName = lastName;
-    if (isAttending !== undefined) updateData.isAttending = isAttending;
+    if (isAttending !== undefined) {
+      updateData.isAttending = isAttending;
+      // If manually setting isAttending to a non-null value, set rsvpCompletedAt if not already set
+      if (isAttending !== null) {
+        const [existingGuest] = await db
+          .select({ rsvpCompletedAt: guests.rsvpCompletedAt })
+          .from(guests)
+          .where(eq(guests.id, guestId));
+        if (existingGuest && !existingGuest.rsvpCompletedAt) {
+          updateData.rsvpCompletedAt = new Date();
+        }
+      }
+    }
     if (dietaryRequirements !== undefined)
       updateData.dietaryRequirements = dietaryRequirements;
 
