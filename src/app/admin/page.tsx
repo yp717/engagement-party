@@ -81,6 +81,8 @@ export default function AdminPage() {
   const [guestsNoEmailOnly, setGuestsNoEmailOnly] = useState(false);
   const [guestsNotSentOnly, setGuestsNotSentOnly] = useState(false);
   const [guestsAttendingOnly, setGuestsAttendingOnly] = useState(false);
+  const [guestsAwaitingResponseOnly, setGuestsAwaitingResponseOnly] =
+    useState(false);
 
   // Edit modal state
   const [editingGuest, setEditingGuest] = useState<Guest | null>(null);
@@ -615,12 +617,17 @@ export default function AdminPage() {
     }
   };
 
-  // Filter households based on search, invite-status, no-email, not-sent, and attending (Guests tab)
+  // Filter households based on search, invite-status, no-email, not-sent, attending, and awaiting response (Guests tab)
   const filteredHouseholds = households.filter((h) => {
     if (guestsAttendingOnly && !h.guests.some((g) => g.isAttending === true))
       return false;
     if (guestsNotSentOnly && h.inviteSentAt) return false;
     if (guestsNoEmailOnly && h.email) return false;
+    if (
+      guestsAwaitingResponseOnly &&
+      (!h.inviteSentAt || h.guests.every((g) => g.isAttending !== null))
+    )
+      return false;
     if (guestsInviteFilter != null && h.inviteStatus !== guestsInviteFilter)
       return false;
     if (!searchTerm) return true;
@@ -905,6 +912,18 @@ export default function AdminPage() {
                       )}
                     >
                       Attending
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setGuestsAwaitingResponseOnly((v) => !v)}
+                      className={cn(
+                        "px-3 py-1.5 font-serif text-xs border transition-colors",
+                        guestsAwaitingResponseOnly
+                          ? "bg-primary text-white border-primary"
+                          : "bg-white/50 border-primary/20 hover:border-primary/40 text-primary"
+                      )}
+                    >
+                      Awaiting response
                     </button>
                   </div>
                   <input
