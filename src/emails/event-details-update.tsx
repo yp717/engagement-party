@@ -57,6 +57,12 @@ export default function EventDetailsUpdateEmail({
             </Text>
 
             <Text style={paragraph}>
+              Please note that the evening starts promptly at 6:00pm and will
+              carry on until late. We&apos;d love to see you there for the full
+              celebration.
+            </Text>
+
+            <Text style={paragraph}>
               As a reminder, the password to access the site is
               &quot;GREENPARK&quot;.
             </Text>
@@ -73,8 +79,7 @@ export default function EventDetailsUpdateEmail({
                 quiz
               </Link>{" "}
               on our website if you haven&apos;t given up yet. For what
-              it&apos;s worth, the max is 17 attempts and so far, 16 have made
-              it to the end.
+              it&apos;s worth, only 16 people have made it to the end so far.
             </Text>
 
             <Text style={paragraph}>
