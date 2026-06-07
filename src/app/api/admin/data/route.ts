@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db, households, guests } from "@/db";
-import { isNull, isNotNull } from "drizzle-orm";
+import { db } from "@/db";
 
 const ADMIN_API_KEY = process.env.ADMIN_API_KEY;
 

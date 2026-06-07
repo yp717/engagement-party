@@ -20,7 +20,7 @@ const faqs = [
   {
     question: "What time should I arrive?",
     answer:
-      "The final time of the event will be announced closer to the date. We will start the event in the evening with a cocktail reception, followed by a sit down dinner and finish off with some dancing into the night.",
+      "Please arrive at 6:00pm for the cocktail hour. Dinner runs until approximately 10:00pm, followed by dancing until late. See the Details section for the full evening timeline.",
   },
   {
     question: "Is there parking available?",
@@ -45,7 +45,7 @@ const faqs = [
   {
     question: "What is the dress code?",
     answer:
-      "Please see the Details section for more information and inspiration. (If in doubt, ask Alara - that's what Yannis always does)",
+      "Please see the Details section for more information and inspiration, including our Pinterest boards. (If in doubt, ask Alara - that's what Yannis always does)",
   },
 ];
 

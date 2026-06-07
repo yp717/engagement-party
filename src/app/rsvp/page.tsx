@@ -71,7 +71,9 @@ function RSVPContent() {
   const router = useRouter();
   const token = searchParams.get("token");
 
-  const [viewState, setViewState] = useState<ViewState>("loading");
+  const [viewState, setViewState] = useState<ViewState>(() =>
+    token ? "loading" : "lookup"
+  );
   const [guests, setGuests] = useState<Guest[]>([]);
   const [responses, setResponses] = useState<Map<string, GuestResponse>>(
     new Map()
@@ -123,11 +125,10 @@ function RSVPContent() {
   }, []);
 
   useEffect(() => {
-    if (token) {
-      fetchHousehold(token);
-    } else {
-      setViewState("lookup");
-    }
+    if (!token) return;
+    queueMicrotask(() => {
+      void fetchHousehold(token);
+    });
   }, [token, fetchHousehold]);
 
   // Handle name lookup

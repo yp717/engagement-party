@@ -10,19 +10,18 @@ import {
   Text,
 } from "react-email";
 
-interface UpdateEmailProps {
+interface EventDetailsUpdateEmailProps {
   guestNames: string[];
-  subject: string;
-  message: string;
-  rsvpUrl?: string;
+  detailsUrl?: string;
 }
 
-export default function UpdateEmail({
+const DEFAULT_DETAILS_URL = "https://www.yannisandalara.com/#details";
+const DEFAULT_QUIZ_URL = "https://www.yannisandalara.com/quiz";
+
+export default function EventDetailsUpdateEmail({
   guestNames = ["Guest"],
-  subject = "Update from Alara & Yannis",
-  message = "We have an update to share with you about our engagement party.",
-  rsvpUrl,
-}: UpdateEmailProps) {
+  detailsUrl = DEFAULT_DETAILS_URL,
+}: EventDetailsUpdateEmailProps) {
   const namesFormatted =
     guestNames.length === 1
       ? guestNames[0]
@@ -33,30 +32,50 @@ export default function UpdateEmail({
   return (
     <Html>
       <Head />
-      <Preview>{subject}</Preview>
+      <Preview>
+        Just over a month until Yannis & Alara&apos;s Engagement Party — new
+        details inside
+      </Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={content}>
-            <Heading style={heading}>An Update</Heading>
+            <Heading style={heading}>Just Over a Month to Go</Heading>
 
             <Text style={greeting}>Dear {namesFormatted},</Text>
 
-            <Text style={paragraph}>{message}</Text>
+            <Text style={paragraph}>
+              We hope you&apos;ve been keeping well since our last email.
+              There&apos;s just over a month left until our engagement party,
+              and we wanted to share some more details so you have everything
+              you need in one place.
+            </Text>
 
-            {rsvpUrl && (
-              <>
-                <Text style={paragraph}>
-                  If you need to update your RSVP, you can do so using the link
-                  below.
-                </Text>
+            <Text style={paragraph}>
+              We&apos;ve added to our website the evening schedule, dress code
+              with Pinterest inspiration, transport, and accommodation
+              recommendations.
+            </Text>
 
-                <Section style={buttonContainer}>
-                  <Link href={rsvpUrl} style={button}>
-                    Update RSVP
-                  </Link>
-                </Section>
-              </>
-            )}
+            <Text style={paragraph}>
+              As a reminder, the password to access the site is
+              &quot;GREENPARK&quot;.
+            </Text>
+
+            <Section style={buttonContainer}>
+              <Link href={detailsUrl} style={button}>
+                View Event Details
+              </Link>
+            </Section>
+
+            <Text style={paragraph}>
+              P.S. There&apos;s still time to complete the{" "}
+              <Link href={DEFAULT_QUIZ_URL} style={link}>
+                quiz
+              </Link>{" "}
+              on our website if you haven&apos;t given up yet. For what
+              it&apos;s worth, the max is 17 attempts and so far, 16 have made
+              it to the end.
+            </Text>
 
             <Text style={paragraph}>
               If you have any questions, please don&apos;t hesitate to reach
@@ -70,22 +89,29 @@ export default function UpdateEmail({
             </Text>
           </Section>
 
-          {rsvpUrl && (
-            <Section style={footer}>
-              <Text style={footerText}>
-                If you&apos;re having trouble with the button above, copy and
-                paste this link into your browser:
-              </Text>
-              <Link href={rsvpUrl} style={footerLink}>
-                {rsvpUrl}
-              </Link>
-            </Section>
-          )}
+          <Section style={footer}>
+            <Text style={footerText}>
+              If you&apos;re having trouble with the button above, copy and
+              paste this link into your browser:
+            </Text>
+            <Link href={detailsUrl} style={footerLink}>
+              {detailsUrl}
+            </Link>
+          </Section>
         </Container>
       </Body>
     </Html>
   );
 }
+
+export const EVENT_DETAILS_UPDATE_SUBJECT =
+  "Event details update: Yannis & Alara's Engagement Party";
+
+EventDetailsUpdateEmail.PreviewProps = {
+  guestNames: ["Alara", "Yannis"],
+  detailsUrl: DEFAULT_DETAILS_URL,
+  rsvpUrl: "https://www.yannisandalara.com/rsvp?token=example",
+} as EventDetailsUpdateEmailProps;
 
 const main = {
   backgroundColor: "#f5f3ed",
@@ -126,7 +152,11 @@ const paragraph = {
   fontSize: "16px",
   lineHeight: "1.8",
   margin: "0 0 20px",
-  whiteSpace: "pre-wrap" as const,
+};
+
+const link = {
+  color: "#2c0214",
+  textDecoration: "underline",
 };
 
 const buttonContainer = {

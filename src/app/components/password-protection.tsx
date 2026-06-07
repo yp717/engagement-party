@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, ReactNode } from "react";
+import { useState, ReactNode } from "react";
 
 const CORRECT_PASSWORD = "GREENPARK";
 const STORAGE_KEY = "engagement-party-auth";
@@ -12,20 +12,14 @@ interface PasswordProtectionProps {
 export default function PasswordProtection({
   children,
 }: PasswordProtectionProps) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return localStorage.getItem(STORAGE_KEY) === "true";
+  });
+  const [isLoading] = useState(() => typeof window === "undefined");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [shake, setShake] = useState(false);
-
-  useEffect(() => {
-    // Check if user is already authenticated
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored === "true") {
-      setIsAuthenticated(true);
-    }
-    setIsLoading(false);
-  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

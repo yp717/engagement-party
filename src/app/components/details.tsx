@@ -3,6 +3,11 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 
+const schedule = [
+  { time: "6:00pm", label: "Guest Arrival" },
+  { time: "6:00pm - Late", label: "Drinks, Dinner, Dancing" },
+];
+
 const hotels = [
   { name: "The Ned", time: "3 min walk" },
   { name: "NoMad", time: "15 min drive" },
@@ -17,16 +22,53 @@ const hotels = [
 
 const detailBlocks = [
   {
+    label: "Schedule",
+    title: "Evening Timeline",
+    children: (
+      <ul className="grid grid-cols-1 gap-y-2 text-cream/75 text-sm md:text-base">
+        {schedule.map((item) => (
+          <li key={item.time} className="flex justify-between gap-4">
+            <span className="font-serif text-cream/85">{item.label}</span>
+            <span className="text-cream/50 shrink-0">{item.time}</span>
+          </li>
+        ))}
+      </ul>
+    ),
+  },
+  {
     label: "Attire",
     title: "Dress Code",
     children: (
-      <p className="text-cream/85 leading-relaxed">
-        <em className="font-medium text-cream/95">Cocktail formal</em> — We
-        would love to see our family and friends dressed up with us! The dress
-        code is Cocktail Formal. Think suits for men, tie optional, and
-        cocktail/floor length dresses for women. The venue will be inside so no
-        need to worry about a rainy London summer.
-      </p>
+      <>
+        <p className="text-cream/85 leading-relaxed">
+          <em className="font-medium text-cream/95">Cocktail formal</em>. We
+          would love to see our family and friends dressed up with us! The dress
+          code is Cocktail Formal. Think suits for men, tie optional, and
+          cocktail/floor length dresses for women. The venue will be inside so
+          no need to worry about a rainy London summer.
+        </p>
+        <p className="text-cream/85 leading-relaxed mt-3">
+          For inspiration, browse our Pinterest boards for{" "}
+          <a
+            href="https://pin.it/62TkOLq05"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline hover:text-cream transition-colors"
+          >
+            ladies
+          </a>{" "}
+          and{" "}
+          <a
+            href="https://pin.it/2uBPPgfgq"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline hover:text-cream transition-colors"
+          >
+            gentlemen
+          </a>
+          .
+        </p>
+      </>
     ),
   },
   {
@@ -173,19 +215,6 @@ export default function Details() {
                 <div className="space-y-1">{block.children}</div>
               </motion.article>
             ))}
-
-            {/* Footer note */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.45 }}
-              className="pt-6 mt-6 border-t border-cream/10"
-            >
-              <p className="font-serif text-sm text-cream/50 italic">
-                More information will be shared closer to the date.
-              </p>
-            </motion.div>
           </div>
         </div>
       </div>

@@ -25,7 +25,6 @@ function generateToken(): string {
 
 function parseCsv(content: string): CsvRow[] {
   const lines = content.trim().split("\n");
-  const headers = lines[0].split(",").map((h) => h.trim());
 
   return lines.slice(1).map((line) => {
     // Handle quoted fields with commas
@@ -97,7 +96,7 @@ async function seed() {
   let householdCount = 0;
   let guestCount = 0;
 
-  for (const [key, household] of householdMap) {
+  for (const [, household] of householdMap) {
     const token = generateToken();
 
     // Insert household

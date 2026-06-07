@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db, households, guests } from "@/db";
-import { eq, and, ilike } from "drizzle-orm";
+import { db, guests } from "@/db";
+import { and, ilike } from "drizzle-orm";
 
 // GET /api/rsvp/lookup?firstName=X&lastName=Y - Look up guest by name
 export async function GET(request: NextRequest) {

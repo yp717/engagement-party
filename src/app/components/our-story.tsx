@@ -164,8 +164,8 @@ export default function OurStory({ className }: OurStoryProps) {
             moments in between. Alara tries to keep up with Yannis&apos;
             ever-growing list of restaurants and recipes, knowing full well they
             will likely never reach the end. And Yannis has come to love that
-            Alara&apos;s stories always take the scenic route — filled with
-            every possible detour and absolutely no hurry to reach the end.
+            Alara&apos;s stories always take the scenic route, filled with every
+            possible detour and absolutely no hurry to reach the end.
           </p>
           <p className="text-lg md:text-xl lg:text-2xl text-primary leading-relaxed">
             In May 2025 Yannis planned a trip that brought them back to their

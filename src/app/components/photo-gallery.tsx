@@ -3,20 +3,14 @@
 import { cn } from "../lib/utils";
 import Image from "next/image";
 import { motion, useMotionValue, AnimatePresence } from "framer-motion";
+import type {
+  TargetAndTransition,
+  Transition,
+  ViewportOptions,
+} from "framer-motion";
 import EllipticalButton from "./elliptical-button";
 import { useState, useRef, useEffect } from "react";
-
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 767px)");
-    setIsMobile(mq.matches);
-    const handler = () => setIsMobile(mq.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
-  return isMobile;
-}
+import { useIsMobile } from "../hooks/use-is-mobile";
 
 interface PhotoGalleryProps {
   className?: string;
@@ -24,10 +18,10 @@ interface PhotoGalleryProps {
 
 interface DraggableItemProps {
   children: React.ReactNode;
-  initial?: any;
-  whileInView?: any;
-  viewport?: any;
-  transition?: any;
+  initial?: TargetAndTransition;
+  whileInView?: TargetAndTransition;
+  viewport?: ViewportOptions;
+  transition?: Transition;
   className?: string;
   initialLeft?: string;
   initialRight?: string;
@@ -737,7 +731,8 @@ export default function PhotoGallery({ className }: PhotoGalleryProps) {
           How well do you know the couple?
         </h3>
         <p>
-          Can't get enough? Take the quiz to test just how well you know us!
+          Can&apos;t get enough? Take the quiz to test just how well you know
+          us!
         </p>
         <EllipticalButton href="/quiz">Take the quiz</EllipticalButton>
       </div>

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-interface WineGlassProps extends React.SVGProps<SVGSVGElement> {}
+type WineGlassProps = React.SVGProps<SVGSVGElement>;
 
 export default function WineGlass({ className, ...props }: WineGlassProps) {
   return (

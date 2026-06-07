@@ -28,8 +28,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Build update object
-    const updateData: Record<string, any> = {};
+    type HouseholdUpdate = Partial<
+      Pick<
+        typeof households.$inferInsert,
+        "email" | "inviteStatus" | "inviteSentAt"
+      >
+    >;
+    const updateData: HouseholdUpdate = {};
 
     if (email !== undefined) updateData.email = email;
     if (inviteStatus !== undefined) updateData.inviteStatus = inviteStatus;

@@ -7,6 +7,7 @@ import { ReactNode } from "react";
 const buttonClass =
   "inline-flex items-center justify-center px-10 py-4 md:px-12 md:py-4 bg-primary text-white font-light text-sm md:text-base tracking-wide uppercase hover:bg-primary/90 transition-colors";
 const buttonStyle = { clipPath: "ellipse(50% 40% at 50% 50%)" as const };
+const MotionLink = motion.create(Link);
 
 interface EllipticalButtonProps {
   children: ReactNode;
@@ -22,7 +23,6 @@ export default function EllipticalButton({
   className = "",
 }: EllipticalButtonProps) {
   if (href) {
-    const MotionLink = motion.create(Link);
     return (
       <span className="relative inline-block">
         <MotionLink

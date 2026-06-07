@@ -1,6 +1,6 @@
 import * as React from "react";
 
-interface ChandelierProps extends React.SVGProps<SVGSVGElement> {}
+type ChandelierProps = React.SVGProps<SVGSVGElement>;
 
 export default function Chandelier({ className, ...props }: ChandelierProps) {
   return (

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
-import { db, households, guests } from "@/db";
+import { db, households } from "@/db";
 import { eq, isNull, and } from "drizzle-orm";
 import InvitationEmail from "@/emails/invitation";
 

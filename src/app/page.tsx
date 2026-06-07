@@ -15,15 +15,15 @@ import CheckeredDividerNarrow from "./components/checkered-divider-narrow";
 export default function Home() {
   return (
     <PasswordProtection>
-      <main className="relative bg-cream snap-y snap-mandatory overflow-x-hidden overflow-y-scroll h-screen md:scroll-smooth">
+      <main className="relative bg-cream overflow-x-hidden">
         {/* Hero Section with Header overlay */}
-        <section id="hero" className="snap-start relative">
+        <section id="hero" className="relative">
           <Header />
           <Hero2 />
         </section>
 
         {/* Save the Date */}
-        <section id="save-the-date" className="snap-start">
+        <section id="save-the-date">
           <SaveTheDate />
         </section>
 
@@ -31,7 +31,7 @@ export default function Home() {
         <CheckeredDivider />
 
         {/* Details - Transportation & Dress Code */}
-        <section id="details" className="snap-start">
+        <section id="details">
           <Details />
         </section>
 
@@ -39,29 +39,29 @@ export default function Home() {
         <StripedDivider />
 
         {/* Our Story */}
-        <section id="our-story" className="snap-start">
+        <section id="our-story">
           <OurStory />
         </section>
 
         {/* Photo Gallery */}
-        <section id="photo-gallery" className="snap-start">
+        <section id="photo-gallery">
           <PhotoGallery />
         </section>
 
         {/* FAQs */}
-        <section id="faqs" className="snap-start">
+        <section id="faqs">
           <FAQs />
         </section>
 
         {/* Contact */}
-        <section id="contact" className="snap-start">
+        <section id="contact">
           <Contact />
         </section>
 
         {/* Striped Divider - extends into RSVP */}
         <CheckeredDividerNarrow />
         {/* RSVP */}
-        <section id="rsvp" className="snap-start">
+        <section id="rsvp">
           <RSVP />
         </section>
       </main>

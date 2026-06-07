@@ -48,9 +48,23 @@ interface QuizStats {
   attemptsPerVisitor: Record<number, number>;
 }
 
+interface EmailDryRunResult {
+  count: number;
+  households?: Array<{ email: string; guests: string[] }>;
+}
+
+interface EmailSendResult {
+  sent: number;
+  failed: number;
+}
+
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [apiKey, setApiKey] = useState("");
+  const [apiKey, setApiKey] = useState(() =>
+    typeof window !== "undefined"
+      ? localStorage.getItem("adminApiKey") || ""
+      : ""
+  );
   const [authError, setAuthError] = useState<string | null>(null);
 
   const [activeTab, setActiveTab] = useState<Tab>("overview");
@@ -61,17 +75,21 @@ export default function AdminPage() {
 
   // Send invites state
   const [inviteStatusFilter, setInviteStatusFilter] = useState<string>("Yes");
-  const [dryRunResult, setDryRunResult] = useState<any>(null);
+  const [dryRunResult, setDryRunResult] = useState<EmailDryRunResult | null>(
+    null
+  );
   const [isSending, setIsSending] = useState(false);
-  const [sendResult, setSendResult] = useState<any>(null);
+  const [sendResult, setSendResult] = useState<EmailSendResult | null>(null);
 
   // Send update state
   const [updateSubject, setUpdateSubject] = useState("");
   const [updateMessage, setUpdateMessage] = useState("");
   const [includeRsvpLink, setIncludeRsvpLink] = useState(true);
   const [onlyConfirmed, setOnlyConfirmed] = useState(false);
-  const [updateDryRunResult, setUpdateDryRunResult] = useState<any>(null);
-  const [updateSendResult, setUpdateSendResult] = useState<any>(null);
+  const [updateDryRunResult, setUpdateDryRunResult] =
+    useState<EmailDryRunResult | null>(null);
+  const [updateSendResult, setUpdateSendResult] =
+    useState<EmailSendResult | null>(null);
 
   // Search/filter (Guests tab)
   const [searchTerm, setSearchTerm] = useState("");
@@ -140,9 +158,10 @@ export default function AdminPage() {
   }, [isAuthenticated, apiKey]);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      fetchData();
-    }
+    if (!isAuthenticated) return;
+    queueMicrotask(() => {
+      void fetchData();
+    });
   }, [isAuthenticated, fetchData]);
 
   const fetchQuizStats = useCallback(async () => {
@@ -163,9 +182,10 @@ export default function AdminPage() {
   }, [apiKey]);
 
   useEffect(() => {
-    if (activeTab === "quiz" && isAuthenticated) {
-      fetchQuizStats();
-    }
+    if (activeTab !== "quiz" || !isAuthenticated) return;
+    queueMicrotask(() => {
+      void fetchQuizStats();
+    });
   }, [activeTab, isAuthenticated, fetchQuizStats]);
 
   const handleAuth = async (e: React.FormEvent) => {
@@ -192,20 +212,18 @@ export default function AdminPage() {
   // Check for saved API key on mount
   useEffect(() => {
     const savedKey = localStorage.getItem("adminApiKey");
-    if (savedKey) {
-      setApiKey(savedKey);
-      // Verify it's still valid
-      fetch("/api/admin/data", {
-        headers: { Authorization: `Bearer ${savedKey}` },
-        cache: "no-store",
-      }).then((res) => {
-        if (res.ok) {
-          setIsAuthenticated(true);
-        } else {
-          localStorage.removeItem("adminApiKey");
-        }
-      });
-    }
+    if (!savedKey) return;
+
+    fetch("/api/admin/data", {
+      headers: { Authorization: `Bearer ${savedKey}` },
+      cache: "no-store",
+    }).then((res) => {
+      if (res.ok) {
+        setIsAuthenticated(true);
+      } else {
+        localStorage.removeItem("adminApiKey");
+      }
+    });
   }, []);
 
   const handleDryRun = async () => {
@@ -227,7 +245,7 @@ export default function AdminPage() {
       });
       const data = await res.json();
       setDryRunResult(data);
-    } catch (err) {
+    } catch {
       setError("Failed to run dry run");
     } finally {
       setIsSending(false);
@@ -255,7 +273,7 @@ export default function AdminPage() {
       const data = await res.json();
       setSendResult(data);
       fetchData(); // Refresh data
-    } catch (err) {
+    } catch {
       setError("Failed to send invites");
     } finally {
       setIsSending(false);
@@ -281,7 +299,7 @@ export default function AdminPage() {
       } else {
         alert(`Failed: ${data.error}`);
       }
-    } catch (err) {
+    } catch {
       alert("Failed to send invitation");
     }
   };
@@ -313,7 +331,7 @@ export default function AdminPage() {
       });
       const data = await res.json();
       setUpdateDryRunResult(data);
-    } catch (err) {
+    } catch {
       setError("Failed to run dry run");
     } finally {
       setIsSending(false);
@@ -344,7 +362,7 @@ export default function AdminPage() {
       const data = await res.json();
       setUpdateSendResult(data);
       fetchData();
-    } catch (err) {
+    } catch {
       setError("Failed to send update");
     } finally {
       setIsSending(false);
@@ -392,7 +410,7 @@ export default function AdminPage() {
         const data = await res.json();
         alert(`Failed: ${data.error}`);
       }
-    } catch (err) {
+    } catch {
       alert("Failed to update guest");
     } finally {
       setIsUpdating(false);
@@ -451,7 +469,7 @@ export default function AdminPage() {
       } else {
         alert(data.error ?? "Failed to move guest");
       }
-    } catch (err) {
+    } catch {
       alert("Failed to move guest");
     } finally {
       setIsMovingGuest(false);
@@ -501,7 +519,7 @@ export default function AdminPage() {
       } else {
         alert(data.error ?? "Failed to add guest");
       }
-    } catch (err) {
+    } catch {
       alert("Failed to add guest");
     } finally {
       setIsAddingGuest(false);
@@ -543,7 +561,7 @@ export default function AdminPage() {
       } else {
         alert(data.error ?? "Failed to delete guest");
       }
-    } catch (err) {
+    } catch {
       alert("Failed to delete guest");
     } finally {
       setIsDeletingGuestId(null);
@@ -577,7 +595,7 @@ export default function AdminPage() {
       } else {
         alert(data.error ?? "Failed to delete household");
       }
-    } catch (err) {
+    } catch {
       alert("Failed to delete household");
     } finally {
       setIsDeletingHouseholdId(null);
@@ -610,7 +628,7 @@ export default function AdminPage() {
         const data = await res.json();
         alert(`Failed: ${data.error}`);
       }
-    } catch (err) {
+    } catch {
       alert("Failed to update household");
     } finally {
       setIsUpdating(false);
@@ -1150,7 +1168,7 @@ export default function AdminPage() {
                         receive invitations:
                       </p>
                       <ul className="text-sm font-serif space-y-1 max-h-60 overflow-y-auto">
-                        {dryRunResult.households?.map((h: any, i: number) => (
+                        {dryRunResult.households?.map((h, i) => (
                           <li key={i} className="text-primary/70">
                             {h.email}: {h.guests.join(", ")}
                           </li>
@@ -1264,13 +1282,11 @@ export default function AdminPage() {
                         will receive this update:
                       </p>
                       <ul className="text-sm font-serif space-y-1 max-h-60 overflow-y-auto">
-                        {updateDryRunResult.households?.map(
-                          (h: any, i: number) => (
-                            <li key={i} className="text-primary/70">
-                              {h.email}: {h.guests.join(", ")}
-                            </li>
-                          )
-                        )}
+                        {updateDryRunResult.households?.map((h, i) => (
+                          <li key={i} className="text-primary/70">
+                            {h.email}: {h.guests.join(", ")}
+                          </li>
+                        ))}
                       </ul>
                     </div>
                   )}

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-interface RibbonSketchProps extends React.SVGProps<SVGSVGElement> {}
+type RibbonSketchProps = React.SVGProps<SVGSVGElement>;
 
 export default function RibbonSketch({ ...props }: RibbonSketchProps) {
   return (

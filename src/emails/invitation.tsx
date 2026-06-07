@@ -71,9 +71,6 @@ export default function InvitationEmail({
                 <strong>Date:</strong> Saturday, 11th July 2026
               </Text>
               <Text style={detailItem}>
-                <strong>Time:</strong> Details to follow
-              </Text>
-              <Text style={detailItem}>
                 <strong>Venue:</strong> The Libertine, 1 Royal Exchange,
                 Cornhill, London, EC3V 3LL
               </Text>
@@ -85,9 +82,10 @@ export default function InvitationEmail({
             </Text>
 
             <Text style={paragraph}>
-              You can find more details about the event on our website:{" "}
-              <Link href="https://www.yannisandalara.com" style={link}>
-                yannisandalara.com
+              For the full evening schedule, dress code, and practical
+              information, visit{" "}
+              <Link href="https://www.yannisandalara.com/#details" style={link}>
+                yannisandalara.com/#details
               </Link>
               . The password to access the website is &quot;GREENPARK&quot;.
             </Text>

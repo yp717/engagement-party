@@ -1,6 +1,6 @@
 import * as React from "react";
 
-interface Heart3Props extends React.SVGProps<SVGSVGElement> {}
+type Heart3Props = React.SVGProps<SVGSVGElement>;
 
 export default function Heart3({ className, ...props }: Heart3Props) {
   return (

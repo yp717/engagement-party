@@ -112,7 +112,7 @@ export default function SaveTheDate() {
                   11th July 2026
                 </p>
                 <p className="font-serif text-primary/60 text-sm sm:text-base mt-1">
-                  Evening
+                  From 6:00pm
                 </p>
               </div>
               <div className="text-center sm:text-right sm:pl-8 md:pl-12">

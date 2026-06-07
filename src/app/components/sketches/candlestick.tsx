@@ -1,6 +1,6 @@
 import * as React from "react";
 
-interface CandlestickProps extends React.SVGProps<SVGSVGElement> {}
+type CandlestickProps = React.SVGProps<SVGSVGElement>;
 
 export default function Candlestick({ className, ...props }: CandlestickProps) {
   return (

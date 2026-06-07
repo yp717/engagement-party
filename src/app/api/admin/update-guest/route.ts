@@ -37,8 +37,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Build update object
-    const updateData: Record<string, any> = {};
+    type GuestUpdate = Partial<
+      Pick<
+        typeof guests.$inferInsert,
+        | "firstName"
+        | "lastName"
+        | "isAttending"
+        | "dietaryRequirements"
+        | "rsvpCompletedAt"
+      >
+    >;
+    const updateData: GuestUpdate = {};
 
     if (firstName !== undefined) updateData.firstName = firstName;
     if (lastName !== undefined) updateData.lastName = lastName;

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-interface BubblesTiltLeftProps extends React.SVGProps<SVGSVGElement> {}
+type BubblesTiltLeftProps = React.SVGProps<SVGSVGElement>;
 
 export default function BubblesTiltLeft({
   className,

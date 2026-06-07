@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import EllipticalButton from "./elliptical-button";
-import { useEffect, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,20 +10,10 @@ import {
 } from "./ui/dropdown-menu";
 
 export default function Header() {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 767px)");
-    setIsMobile(mq.matches);
-    const handler = () => setIsMobile(mq.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
-
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: isMobile ? "auto" : "smooth" });
+      element.scrollIntoView({ behavior: "auto" });
     }
   };
 
@@ -91,9 +80,6 @@ export default function Header() {
                   <DropdownMenuItem
                     key={id}
                     onSelect={() => {
-                      // Let the menu close (no preventDefault). Scroll after a short delay
-                      // so the dropdown has fully unmounted and the main scroll container
-                      // can receive the scroll (avoids frozen scroll on mobile).
                       const targetId = id;
                       setTimeout(() => scrollToSection(targetId), 150);
                     }}

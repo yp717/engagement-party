@@ -1,6 +1,6 @@
 import * as React from "react";
 
-interface BirdProps extends React.SVGProps<SVGSVGElement> {}
+type BirdProps = React.SVGProps<SVGSVGElement>;
 
 export default function Bird({ className, ...props }: BirdProps) {
   return (
