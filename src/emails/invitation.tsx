@@ -9,7 +9,7 @@ import {
   Preview,
   Section,
   Text,
-} from "@react-email/components";
+} from "react-email";
 
 interface InvitationEmailProps {
   guestNames: string[];
@@ -89,7 +89,7 @@ export default function InvitationEmail({
               <Link href="https://www.yannisandalara.com" style={link}>
                 yannisandalara.com
               </Link>
-              . The password to access the website is "GREENPARK".
+              . The password to access the website is &quot;GREENPARK&quot;.
             </Text>
 
             <Section style={buttonContainer}>
