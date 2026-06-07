@@ -115,8 +115,7 @@ export const EVENT_DETAILS_UPDATE_SUBJECT =
 EventDetailsUpdateEmail.PreviewProps = {
   guestNames: ["Alara", "Yannis"],
   detailsUrl: DEFAULT_DETAILS_URL,
-  rsvpUrl: "https://www.yannisandalara.com/rsvp?token=example",
-} as EventDetailsUpdateEmailProps;
+} satisfies EventDetailsUpdateEmailProps;
 
 const main = {
   backgroundColor: "#f5f3ed",

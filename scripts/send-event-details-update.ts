@@ -51,7 +51,6 @@ async function main() {
 
   for (const household of householdsToSend) {
     const guestNames = household.guests.map((g) => g.firstName);
-    const rsvpUrl = `${BASE_URL}/rsvp?token=${household.uniqueToken}`;
 
     if (dryRun) {
       console.log(
@@ -65,7 +64,7 @@ async function main() {
         from: "Yannis & Alara <noreply@updates.yannisandalara.com>",
         to: household.email!,
         subject: EVENT_DETAILS_UPDATE_SUBJECT,
-        react: EventDetailsUpdateEmail({ guestNames, detailsUrl, rsvpUrl }),
+        react: EventDetailsUpdateEmail({ guestNames, detailsUrl }),
       });
 
       await db
